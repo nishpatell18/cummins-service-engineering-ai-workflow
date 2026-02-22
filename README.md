@@ -5,7 +5,7 @@
 - Karuna – Figma / UI design
 - Tina – Backend
 - Kyra – Governance and safety
-- Meet – Frontend + Integration + Repo setup
+- Nishad – Frontend + Integration + Repo setup
 
 ## What this project is
 A prototype system with:
