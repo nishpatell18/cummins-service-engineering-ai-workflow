@@ -1,0 +1,74 @@
+{
+  "P0171": {
+    "description": "System Too Lean (Bank 1)",
+    "severity": "P2",
+    "common_causes": [
+      "Mass Air Flow (MAF) sensor malfunction",
+      "Vacuum leak in intake manifold",
+      "Fuel pressure too low",
+      "Exhaust leak before O2 sensor",
+      "Faulty fuel injector"
+    ],
+    "related_systems": ["fuel_delivery", "air_intake"],
+    "typical_fix_time_hours": 2.5,
+    "diagnostic_steps": [
+      "Check for vacuum leaks",
+      "Test MAF sensor",
+      "Check fuel pressure",
+      "Inspect O2 sensors"
+    ]
+  },
+  "P0300": {
+    "description": "Random/Multiple Cylinder Misfire Detected",
+    "severity": "P2",
+    "common_causes": [
+      "Ignition coil failure",
+      "Worn spark plugs",
+      "Fuel injector problem",
+      "Low compression",
+      "Vacuum leak"
+    ],
+    "related_systems": ["ignition", "fuel_delivery", "engine_mechanical"],
+    "typical_fix_time_hours": 3.0,
+    "diagnostic_steps": [
+      "Check spark plugs",
+      "Test ignition coils",
+      "Perform compression test",
+      "Check fuel injectors"
+    ]
+  },
+  "P0420": {
+    "description": "Catalyst System Efficiency Below Threshold (Bank 1)",
+    "severity": "P3",
+    "common_causes": [
+      "Failed catalytic converter",
+      "Oxygen sensor malfunction",
+      "Exhaust leak",
+      "Engine running rich or lean"
+    ],
+    "related_systems": ["exhaust", "emissions"],
+    "typical_fix_time_hours": 4.0,
+    "diagnostic_steps": [
+      "Test O2 sensors",
+      "Check for exhaust leaks",
+      "Inspect catalytic converter",
+      "Check fuel trim values"
+    ]
+  },
+  "P0128": {
+    "description": "Coolant Thermostat (Coolant Temperature Below Thermostat Regulating Temperature)",
+    "severity": "P3",
+    "common_causes": [
+      "Stuck open thermostat",
+      "Low coolant level",
+      "Faulty coolant temperature sensor"
+    ],
+    "related_systems": ["cooling"],
+    "typical_fix_time_hours": 1.5,
+    "diagnostic_steps": [
+      "Check coolant level",
+      "Test thermostat operation",
+      "Verify coolant temperature sensor"
+    ]
+  }
+}

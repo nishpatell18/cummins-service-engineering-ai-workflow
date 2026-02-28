@@ -1,0 +1,122 @@
+ISX15 SERVICE MANUAL
+SECTION 4.2.3 - FUEL SYSTEM SPECIFICATIONS AND DIAGNOSTICS
+
+FUEL PRESSURE SPECIFICATIONS:
+
+Normal Operating Pressure:
+- At idle: 25-30 kPa (3.6-4.4 psi)
+- Under load: 30-35 kPa (4.4-5.1 psi)
+- Minimum acceptable pressure: 20 kPa (2.9 psi)
+- Maximum pressure: 40 kPa (5.8 psi)
+
+FUEL SYSTEM COMPONENTS:
+
+Primary Fuel Filter:
+- Location: Frame rail, driver side
+- Part Number: CUM-FF5485
+- Replacement interval: Every 15,000 miles or 1 year
+- Micron rating: 10 micron
+
+Secondary Fuel Filter:
+- Location: Engine mounted
+- Part Number: CUM-FF5633
+- Replacement interval: Every 30,000 miles
+- Micron rating: 2 micron
+
+Fuel Pump:
+- Type: Gear-driven mechanical pump
+- Flow rate: 180-220 LPH at idle
+- Maximum flow: 250 LPH
+
+LOW FUEL PRESSURE DIAGNOSIS:
+
+If fuel pressure is below 20 kPa, perform the following diagnostic steps:
+
+Step 1: Check Fuel Filter Restriction
+- Install fuel pressure gauge at test port
+- Start engine and observe pressure
+- If pressure is low, check filter restriction
+- Replace filter if restriction exceeds 20 kPa
+
+Step 2: Test Fuel Pump Output
+- Disconnect fuel return line
+- Measure flow rate into container
+- Should be minimum 180 LPH at idle
+- If below specification, replace fuel pump
+
+Step 3: Inspect Fuel Lines
+- Check all fuel lines for:
+  * Kinks or restrictions
+  * Leaks or cracks
+  * Proper routing
+- Replace any damaged lines
+
+Step 4: Check Pressure Regulator
+- Remove and inspect pressure regulator valve
+- Check for:
+  * Stuck open condition
+  * Debris in valve seat
+  * Diaphragm damage
+- Clean or replace as needed
+
+COMMON ISSUES AND SOLUTIONS:
+
+Issue: Low fuel pressure with P0171 code
+Cause: Typically clogged fuel filter (80% of cases)
+Solution: Replace both primary and secondary filters
+Time: 45 minutes
+Cost: $85 (parts)
+
+Issue: Intermittent fuel pressure drop
+Cause: Failing fuel pump (worn gears)
+Solution: Replace fuel pump assembly
+Time: 3 hours
+Cost: $450 (parts + labor)
+
+Issue: High fuel pressure (over 40 kPa)
+Cause: Stuck closed pressure regulator
+Solution: Replace pressure regulator
+Time: 1.5 hours
+Cost: $180
+
+SPECIAL TOOLS REQUIRED:
+
+- Fuel pressure test kit (Part# TOOL-FP100)
+- Fuel line disconnect tool set (Part# TOOL-FL50)
+- Digital multimeter
+- Fuel flow meter (optional but recommended)
+
+SAFETY PRECAUTIONS:
+
+1. Allow engine to cool minimum 30 minutes before service
+2. Relieve fuel system pressure before disconnecting lines
+3. Work in well-ventilated area - fuel vapors are hazardous
+4. Have fire extinguisher readily available
+5. Disconnect battery negative terminal before starting work
+6. Wear safety glasses and fuel-resistant gloves
+7. Dispose of old fuel filters according to local regulations
+
+TESTING PROCEDURES:
+
+Fuel Pressure Test:
+1. Connect fuel pressure gauge to test port
+2. Start engine and allow to reach operating temperature
+3. Record pressure at idle
+4. Increase RPM to 1500 and record pressure
+5. Compare readings to specifications above
+6. If pressure is outside range, proceed with diagnosis
+
+Fuel Flow Test:
+1. Disconnect return line at tank
+2. Route return line into calibrated container
+3. Start engine and run for 1 minute
+4. Measure fuel volume
+5. Should be minimum 3 liters per minute at idle
+6. If below spec, pump replacement required
+
+TORQUE SPECIFICATIONS:
+
+- Fuel filter housing bolts: 25 N⋅m (18 lb-ft)
+- Fuel pump mounting bolts: 35 N⋅m (26 lb-ft)
+- Fuel line fittings: 30 N⋅m (22 lb-ft)
+- Pressure regulator bolts: 15 N⋅m (11 lb-ft)
