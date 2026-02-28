@@ -7,25 +7,20 @@ import json
 import os
 
 """
-The response from our triage agent is basically the details 
+The response from our triage agent is basically the details of the logged issue + system data on warranty etc + some AI analysis.
+It uses LLM + RAG
 
 """
 class TriageAgent:
-    """
-    Agent 1: Triage
-
-    Uses: Ollama (LLM) + RAG (searches manuals and fault code DB)
-    """
 
     def __init__(self):
         self.llm = LLMClient()
         self.vector_store = VectorStore()
         self.vector_store.create_collection()
         self.fault_codes = self._load_fault_codes()
-        print("[TriageAgent] Initialized (REAL LLM + RAG mode)")
 
     def _load_fault_codes(self):
-        """Load fault codes from JSON"""
+        #Load fault codes from JSON
         fault_codes_path = 'data/fault_codes.json'
         if os.path.exists(fault_codes_path):
             with open(fault_codes_path, 'r') as f:
@@ -43,7 +38,6 @@ class TriageAgent:
             Dict with triage results
         """
         ticket_id = ticket_input.get('ticket_id')
-        print(f"\n[TriageAgent] Analyzing {ticket_id} with REAL LLM + RAG...")
 
         # Step 1: Get fault code info
         codes_info = {
