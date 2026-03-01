@@ -1,0 +1,147 @@
+X15 SERVICE MANUAL (SYNTHETIC - PROTOTYPE USE ONLY)
+SECTION 5.2 - COOLING SYSTEM SERVICE AND DIAGNOSIS
+
+NOTE: This document is synthetic data generated for prototype demonstration purposes.
+It is not a real Cummins service document.
+
+========================================
+COOLING SYSTEM OVERVIEW
+========================================
+
+The X15 cooling system maintains engine temperature between 82-96°C (180-205°F)
+during normal operation. The system is pressurized to approximately 103 kPa (15 psi)
+to raise the coolant boiling point and improve cooling efficiency.
+
+Key components:
+- Radiator and coolant reservoir
+- Water pump (gear-driven, engine-mounted)
+- Thermostat (opens at 82°C / 180°F)
+- Deaeration tank (removes air from system)
+- Coolant level sensor (on deaeration tank)
+- Coolant temperature sensor (on engine block)
+- Fan and fan clutch (viscous or electronic)
+- EGR cooler (shares coolant circuit)
+
+Normal operating temperatures:
+  Idle:          82-88°C (180-190°F)
+  Normal load:   88-96°C (190-205°F)
+  High load:     Up to 102°C (215°F) acceptable briefly
+  Warning threshold: 107°C (225°F) — yellow lamp
+  Critical threshold: 113°C (235°F) — red lamp + derate
+  Shutdown threshold: 115°C (239°F) — engine protection shutdown
+
+========================================
+FAULT CODE 110 - COOLANT TEMPERATURE HIGH
+========================================
+
+SPN: 110 | FMI: 0
+Lamp: Red | Triggers derate: Yes | Triggers shutdown: Yes (at 115°C)
+
+CRITICAL: Do not restart engine until root cause is identified.
+Repeated overheating causes head gasket failure and cylinder head warping
+— extremely expensive repairs.
+
+DIAGNOSTIC PROCEDURE - CODE 110:
+
+Step 1: BEFORE anything — check coolant level
+  - Wait minimum 30 minutes after shutdown for pressure to drop
+  - Locate deaeration tank (usually top of engine, painted white or yellow)
+  - Check level against MIN/MAX markings on tank
+  - Low coolant is the #1 cause of overheating — check this first
+  - If low: look for leak before refilling (Step 2)
+  - If level normal: proceed to Step 3
+
+Step 2: Find the coolant leak
+  EXTERNAL leaks (visible):
+  - Inspect radiator core and side tanks for cracks or seepage
+  - Check all hose connections — squeeze hoses to feel for soft spots
+  - Check water pump weep hole (below pump body) — seepage = pump failure
+  - Check EGR cooler hoses — top of engine area
+  - Check heater core hoses if equipped
+
+  INTERNAL leaks (coolant entering combustion or oil):
+  - White smoke from exhaust = head gasket or liner O-ring leak
+  - Coolant in oil = milky oil on dipstick = serious internal leak
+  - Internal leaks require immediate engine shutdown and senior tech
+
+Step 3: Test thermostat
+  - Thermostat failure (stuck closed) is the 2nd most common cause
+  - Remove thermostat housing (typically 4x 13mm bolts on front of engine)
+  - Place thermostat in pot of water on heat source
+  - Heat water and monitor with thermometer
+  - Thermostat should begin opening at 82°C (180°F)
+  - Should be fully open by 96°C (205°F)
+  - If thermostat does not open: replace (CUM-3803702, $65)
+  - Always install new housing gasket when replacing thermostat
+
+Step 4: Test water pump
+  - Check pump shaft for play (side-to-side movement)
+  - More than 1mm play indicates worn bearing — replace pump
+  - Check for coolant weeping from weep hole below pump
+  - Weeping indicates seal failure — replace pump
+  - Part: CUM-3319034 ($420)
+
+Step 5: Check fan and fan clutch
+  - With engine HOT at idle, fan should be pulling strong airflow
+  - Viscous clutch: fan should be difficult to turn by hand when hot
+  - If fan spins freely when hot: fan clutch has failed
+  - Check for debris blocking airflow through radiator
+
+THERMOSTAT REPLACEMENT PROCEDURE:
+Tools: 13mm socket, torque wrench, coolant, new gasket
+1. Allow engine to cool completely
+2. Drain approximately 2 gallons coolant from radiator drain valve
+3. Remove thermostat housing bolts (4x 13mm)
+4. Remove old thermostat — note orientation (jiggle valve position)
+5. Clean mating surface
+6. Install new thermostat with jiggle valve at 12 o'clock position
+7. Install new gasket (never reuse)
+8. Torque housing bolts: 25 N·m (18 lb-ft) in cross pattern
+9. Refill coolant — run engine and check for leaks
+10. Bleed air from system via deaeration tank bleed valve
+
+========================================
+FAULT CODE 111 - COOLANT LEVEL LOW
+========================================
+
+SPN: 111 | FMI: 1
+Lamp: Yellow | Triggers derate: No
+
+Code 111 is a warning — coolant level has dropped below the sensor threshold
+but the engine is not yet overheating. Address promptly to prevent code 110.
+
+DIAGNOSTIC PROCEDURE - CODE 111:
+
+Step 1: Check deaeration tank level
+  - Locate level sensor on deaeration tank
+  - Check actual fluid level vs sensor reading in INSITE
+  - If tank genuinely low: find and fix leak before refilling
+
+Step 2: Check coolant sensor
+  - Drain tank slightly below sensor
+  - Sensor should read "low" — if it reads normal: sensor is stuck
+  - Drain tank above sensor threshold
+  - Sensor should read "normal" — if still reads low: replace sensor
+  - Part: CUM-3957754 ($55)
+
+Step 3: Coolant leak inspection
+  - Same procedure as Code 110 Step 2 above
+  - Pressure test cooling system: connect pressure tester to deaeration tank
+  - Pressurize to 103 kPa (15 psi)
+  - System should hold pressure for 5 minutes
+  - Pressure drop indicates leak — inspect all components
+
+COOLANT SPECIFICATIONS:
+- Use Cummins Fleetguard ES Compleat OAT (orange) or equivalent OAT coolant
+- Concentration: 50/50 premix or field-mixed to 50% antifreeze
+- Never mix OAT and HOAT coolant types
+- Coolant change interval: 6,000 hours or 6 years (whichever comes first)
+- System capacity X15: approximately 40-50 liters (10-13 gallons)
+
+TOOLS REQUIRED:
+- Cooling system pressure tester: TOOL-COOL-PT
+- Coolant refractometer
+- 13mm socket set
+- Torque wrench
+- Drain pan (minimum 15 gallon capacity)
+- New thermostat gasket (if thermostat accessed)

@@ -1,0 +1,202 @@
+X15 SERVICE MANUAL (SYNTHETIC - PROTOTYPE USE ONLY)
+SECTION 8.1 - TURBOCHARGER AND BOOST SYSTEM
+
+NOTE: This document is synthetic data generated for prototype demonstration purposes.
+It is not a real Cummins service document.
+
+========================================
+TURBOCHARGER SYSTEM OVERVIEW
+========================================
+
+The X15 uses a Variable Geometry Turbocharger (VGT) to optimize boost pressure
+across the full RPM range. Unlike fixed geometry turbos, the VGT adjusts its
+internal vane position to control exhaust gas flow, allowing precise boost control
+at low RPM and protecting the engine at high RPM.
+
+Key components:
+- VGT turbocharger assembly
+- VGT actuator (electronic — controls vane position)
+- Charge Air Cooler (CAC) — cools compressed intake air
+- CAC inlet and outlet hoses and boots
+- Boost pressure sensor (intake manifold)
+- Compressor outlet temperature sensor
+- Turbo oil supply line (pressurized engine oil lubricates turbo bearings)
+- Turbo oil drain line (returns oil to sump by gravity)
+
+Normal boost pressure specifications (X15 at rated power):
+  Idle:            Near atmospheric (0-5 kPa above ambient)
+  Light load:      50-100 kPa (7-15 psi) above atmospheric
+  Medium load:     100-150 kPa (15-22 psi) above atmospheric
+  Full load:       150-200 kPa (22-29 psi) above atmospheric
+
+Normal compressor outlet temperature:
+  Light load:      Below 150 deg C (300 deg F)
+  Heavy load:      150-180 deg C (300-356 deg F)
+  Warning:         Above 205 deg C (400 deg F) — Code 1127 activates
+
+========================================
+FAULT CODE 102 - INTAKE MANIFOLD PRESSURE LOW (LOW BOOST)
+========================================
+
+SPN: 102 | FMI: 1
+Lamp: Yellow | Triggers derate: Yes
+
+Low boost means the turbo is not producing expected pressure. The engine
+derates because without adequate air, fuel cannot be burned efficiently.
+
+DIAGNOSTIC PROCEDURE - CODE 102:
+
+Step 1: Check for boost leaks — most common cause
+  Boost leaks allow compressed air to escape before reaching the engine.
+  Even a small crack causes significant power loss and low boost codes.
+
+  Inspection points (in order, intake side to engine):
+  a. Air filter and air filter housing — check for damage or loose clamps
+  b. Air intake tube from filter to turbo inlet — check all clamps
+  c. Turbo compressor outlet boot — most common leak point, check carefully
+  d. CAC inlet hose and clamps
+  e. CAC core — inspect fins for damage, check end tanks for cracks
+  f. CAC outlet hose and clamps
+  g. Intake manifold boots and connections
+
+  Boost leak test procedure:
+  - Seal air intake at filter housing with a rubber plug
+  - Apply compressed air at 69 kPa (10 psi) to CAC outlet port
+  - Listen and feel for air leaks at all connection points
+  - Spray soapy water on suspect areas — bubbles indicate leak
+  - Repair all leaks found before proceeding
+
+Step 2: Check VGT actuator operation
+  - Connect INSITE
+  - Navigate to: Engine > Turbocharger > VGT Actuator Test
+  - Command VGT to minimum position (0%) — record actual position
+  - Command VGT to maximum position (100%) — record actual position
+  - Actuator should move smoothly through full range in under 3 seconds
+  - If actuator does not respond: electrical fault (Step 3)
+  - If actuator moves but boost is still low: turbo mechanical fault (Step 4)
+
+Step 3: VGT actuator electrical diagnosis
+  - Part: CUM-4089174 ($640 — requires approval, not in stock — order required)
+  - Disconnect actuator electrical connector
+  - Measure actuator resistance: specification 8-16 ohms
+  - Check 5V reference signal at ECM pin (refer to wiring diagram)
+  - Check ground circuit continuity
+  - If electrical checks out but no movement: replace actuator
+  - Note: Actuator calibration required after replacement using INSITE
+
+Step 4: Turbocharger mechanical assessment
+  Turbo shaft play check:
+  - Remove air intake pipe from turbo compressor inlet
+  - Grip compressor wheel and check for radial play (side to side)
+  - Acceptable radial play: up to 0.5mm (0.020 in)
+  - Axial play (in/out): up to 0.1mm (0.004 in)
+  - Excessive play indicates worn turbo bearings — replace turbo assembly
+
+  Visual inspection:
+  - Check compressor wheel for blade damage (even small nicks cause imbalance)
+  - Check turbine side for oil coking on blades (indicates oil starvation)
+  - Check for blade contact with housing (blades should spin freely)
+  - Any blade damage: turbo must be replaced
+
+  Oil supply check:
+  - Low oil pressure causes turbo bearing failure
+  - Verify code 100 (oil pressure) is not also present
+  - Check turbo oil supply line for restriction or kinking
+
+VGT ACTUATOR CALIBRATION (required after replacement):
+1. Install new actuator — torque mounting bolts 10 N·m (89 lb-in)
+2. Connect INSITE
+3. Navigate to: Service Routines > VGT Actuator Calibration
+4. Follow INSITE prompts — engine must be at operating temperature
+5. Calibration takes approximately 5 minutes
+6. Verify boost pressure matches specifications before returning equipment
+
+========================================
+FAULT CODE 1127 - TURBO COMPRESSOR OUTLET TEMPERATURE HIGH
+========================================
+
+SPN: 1127 | FMI: 0
+Lamp: Red | Triggers derate: Yes (CM2450 only)
+
+High compressor outlet temperature means the turbo is working excessively hard
+or the charge air is not being cooled adequately by the CAC.
+
+COMMON CAUSES:
+1. Charge Air Cooler restriction or damage (most common)
+2. CAC hose leak (turbo working harder to compensate)
+3. High ambient temperature combined with maximum load
+4. Turbo overspeeding due to VGT malfunction
+5. Severe air restriction at filter
+
+DIAGNOSTIC PROCEDURE - CODE 1127:
+
+Step 1: Check Charge Air Cooler
+  - Inspect CAC fins for debris plugging (mud, insects, crop material)
+  - Clean with low-pressure water or compressed air from engine side out
+  - Inspect CAC end tanks for cracks (pressure test if suspected)
+  - Part (if replacement needed): CUM-5268878 ($910 — not in stock, order required)
+
+Step 2: Check for air restriction
+  - Check air filter restriction indicator
+  - Replace air filter if restriction indicator is red
+  - Check air intake path for debris or collapsed tubing
+
+Step 3: Check ambient and load conditions
+  - High ambient temperature (>40 deg C / 104 deg F) + maximum load is a normal
+    operating condition that may trigger this code temporarily
+  - If code clears when load is reduced: no fault, advise operator on duty cycle
+  - If code persists at normal load: proceed with CAC pressure test
+
+CAC PRESSURE TEST PROCEDURE:
+1. Disconnect CAC inlet and outlet hoses
+2. Install pressure test caps on CAC connections
+3. Apply 207 kPa (30 psi) compressed air to test port
+4. Submerge CAC in water tank or spray with soapy water
+5. Bubbles indicate internal or external leak
+6. Any leak found: replace CAC (requires supervisor approval)
+
+========================================
+TURBOCHARGER OIL SYSTEM
+========================================
+
+The turbocharger bearings are lubricated by pressurized engine oil.
+Oil starvation is the leading cause of premature turbo failure.
+
+Oil supply line:
+- Feeds oil from main gallery to turbo bearing housing
+- Must be inspected for restriction (carbon deposits inside)
+- Clean or replace if restricted — never run with restricted oil supply
+
+Oil drain line:
+- Returns oil to sump by gravity — must not be restricted
+- Kinked or blocked drain line causes oil to back up into compressor housing
+- Oil in intake air (blue/white smoke at startup) often indicates drain restriction
+
+TURBO BREAK-IN PROCEDURE (after replacement or extended shutdown):
+1. Disconnect fuel shutoff solenoid (prevents engine start)
+2. Crank engine for 15-20 seconds — this pre-lubricates turbo bearings
+3. Reconnect fuel solenoid
+4. Start engine — idle for 5 minutes before applying load
+5. Do NOT rev engine or apply load immediately after start
+6. After service: idle engine minimum 3 minutes before shutdown
+   (allows turbo to cool with oil flow before oil pump stops)
+
+MAINTENANCE INTERVALS:
+Every 500 hours:
+  - Check turbo shaft play
+  - Inspect oil supply and drain lines
+  - Check all boost system hoses and clamps
+
+Every 3,000 hours:
+  - Turbocharger removal for inspection and cleaning
+  - Replace oil supply line if carbon deposits found
+  - VGT vane cleaning
+
+TOOLS REQUIRED:
+  - INSITE diagnostic software
+  - Boost leak test kit: TOOL-BOOST-50
+  - Compressed air source with pressure regulator
+  - Dial indicator with magnetic base (shaft play measurement)
+  - 10mm socket set
+  - Torque wrench
+  - Soapy water spray bottle

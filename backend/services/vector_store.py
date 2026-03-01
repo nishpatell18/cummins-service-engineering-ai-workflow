@@ -1,7 +1,14 @@
 # services/vector_store.py - Vector Store with RAG
 
-import chromadb
-from sentence_transformers import SentenceTransformer
+try:
+    import chromadb
+    from sentence_transformers import SentenceTransformer
+    VECTORSTORE_AVAILABLE = True
+except ImportError:
+    VECTORSTORE_AVAILABLE = False
+    print("[VectorStore] WARNING: chromadb or sentence_transformers not installed. "
+          "RAG disabled — run: pip install chromadb sentence-transformers")
+
 from typing import List, Dict
 import re
 
@@ -13,19 +20,29 @@ class VectorStore:
     """
 
     def __init__(self):
-        self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
-        self.client = chromadb.Client()
+        self.available = VECTORSTORE_AVAILABLE
         self.collection = None
-        print("[VectorStore] Initialized")
+        if self.available:
+            try:
+                self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
+                self.client   = chromadb.Client()
+                print("[VectorStore] Initialized")
+            except Exception as e:
+                self.available = False
+                print(f"[VectorStore] Init failed: {e}")
+        else:
+            self.embedder = None
+            self.client   = None
 
     def create_collection(self, name: str = "service_knowledge"):
         """Create or get collection"""
+        if not self.available:
+            return
         try:
             self.collection = self.client.get_or_create_collection(name)
             print(f"[VectorStore] Collection '{name}' ready")
         except Exception as e:
             print(f"[VectorStore] Error creating collection: {e}")
-            raise
 
     def add_document(self, content: str, metadata: dict):
         """
@@ -121,8 +138,9 @@ class VectorStore:
         Returns:
             List of dicts with 'content' and 'metadata'
         """
-        if not self.collection:
-            raise ValueError("Collection not created")
+        if not self.available or not self.collection:
+            print("[VectorStore] Search skipped — not available")
+            return []
 
         # Create query embedding
         query_embedding = self.embedder.encode(query)

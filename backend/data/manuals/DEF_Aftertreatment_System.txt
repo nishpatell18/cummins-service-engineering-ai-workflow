@@ -1,0 +1,179 @@
+X15 SERVICE MANUAL (SYNTHETIC - PROTOTYPE USE ONLY)
+SECTION 7.1 - DEF AND AFTERTREATMENT SYSTEM
+
+NOTE: This document is synthetic data generated for prototype demonstration purposes.
+It is not a real Cummins service document.
+
+========================================
+DEF SYSTEM OVERVIEW
+========================================
+
+The X15 aftertreatment system uses Selective Catalytic Reduction (SCR) to reduce
+NOx emissions. The system requires Diesel Exhaust Fluid (DEF) — a 32.5% urea
+solution conforming to ISO 22241 standard.
+
+Key components:
+- DEF tank (typically 15-25 gallon capacity)
+- DEF level sensor (ultrasonic or float type)
+- DEF quality sensor (measures urea concentration)
+- DEF pump and dosing module
+- DEF dosing injector (injects DEF into exhaust stream)
+- SCR catalyst (converts NOx using DEF)
+- NOx sensors (upstream and downstream of SCR)
+
+CM2450 vs CM2350 differences:
+- CM2450 uses updated DEF injector design (improved atomization)
+- CM2450 has enhanced DEF quality monitoring
+- Both use same DEF fluid specification (ISO 22241)
+
+========================================
+FAULT CODE 3714 - DEF TANK LEVEL LOW
+========================================
+
+SPN: 3031 | FMI: 1
+Lamp: Yellow | Triggers derate: Yes (at 10% level)
+Inducement levels:
+  - 15% DEF remaining: Warning lamp only
+  - 10% DEF remaining: Level 1 derate (25% power reduction)
+  - 5% DEF remaining: Level 2 derate (50% power reduction)
+  - 2.5% DEF remaining: Level 3 inducement (idle only)
+
+DIAGNOSTIC PROCEDURE - CODE 3714:
+
+Step 1: Check actual DEF fluid level visually
+  - Locate DEF tank (typically left frame rail or saddle-mounted)
+  - Remove DEF cap — check fluid level visually
+  - DEF is clear to slightly blue in color
+  - If level is genuinely low: refill with ISO 22241 DEF and clear code
+  - If level appears adequate despite code: proceed to Step 2
+
+Step 2: Test DEF level sensor
+  - Connect INSITE diagnostic software
+  - Navigate to: Aftertreatment > DEF System > DEF Level
+  - Compare INSITE reading vs actual visual level
+  - If readings disagree by more than 5%: sensor is faulty
+  - If readings agree but code persists: check wiring (Step 3)
+
+Step 3: Check sensor wiring and connector
+  - Locate DEF level sensor connector (typically on tank top)
+  - Inspect connector for corrosion, bent pins, moisture intrusion
+  - Check wire harness for chafing against frame
+  - Measure resistance: should be 10-180 ohms depending on level
+  - Open circuit (infinite resistance): broken wire or failed sensor
+
+Step 4: Replace DEF level sensor
+  - Part number: CUM-4309047
+  - Drain DEF tank below sensor level before removal
+  - Remove sensor mounting screws (typically 4x T27 Torx)
+  - Install new sensor — torque to 8 N·m (71 lb-in)
+  - Refill DEF to at least 25% capacity
+  - Clear codes and verify with INSITE
+
+Common mistake: Code 3714 recurring after sensor replacement often indicates
+contaminated DEF or a faulty DEF quality sensor triggering secondary codes.
+Always verify DEF quality (clear, no sediment, no odor of diesel or coolant).
+
+========================================
+FAULT CODE 4334 - DEF QUALITY POOR
+========================================
+
+SPN: 4334 | FMI: 2
+Lamp: Yellow | Triggers derate: Yes
+
+CAUSES OF DEF QUALITY FAULT:
+1. Wrong fluid added to DEF tank (water, diesel, coolant)
+2. DEF degraded from heat exposure (above 35°C / 95°F for extended period)
+3. Frozen DEF that was thawed improperly
+4. Contaminated DEF from dirty filling equipment
+5. DEF quality sensor fault
+
+DEF QUALITY SPECIFICATIONS:
+- Urea concentration: 32.5% ± 0.5%
+- Appearance: Clear, slightly blue tint acceptable
+- Odor: Slight ammonia smell is normal
+- pH: 9.0 - 9.5
+- Freezing point: -11°C (12°F)
+
+DIAGNOSTIC PROCEDURE - CODE 4334:
+
+Step 1: Inspect DEF visually
+  - Remove DEF cap carefully
+  - Normal DEF: clear to pale blue, slight ammonia smell
+  - Contaminated DEF: cloudy, yellow/brown, diesel smell, oily film
+  - If contaminated: proceed to full system flush (Step 3)
+
+Step 2: Test DEF concentration
+  - Use DEF refractometer (Part: TOOL-DEF-REF)
+  - Draw small sample with pipette
+  - Place 2-3 drops on refractometer prism
+  - Read urea concentration
+  - Acceptable range: 32.0% - 33.0%
+  - Outside range: drain and refill with fresh DEF
+
+Step 3: Drain and flush DEF tank
+  - Connect drain hose to DEF tank drain port
+  - Drain completely into appropriate container
+  - Rinse tank with 1 gallon of fresh ISO 22241 DEF
+  - Drain rinse fluid
+  - Refill with fresh DEF to at least 50% capacity
+  - Clear fault codes
+  - Run engine for 20 minutes — code should clear
+
+Step 4: If code persists after fresh DEF
+  - DEF quality sensor may be faulty
+  - Check INSITE: Aftertreatment > DEF Quality Sensor reading
+  - Fresh DEF should read 32.0-33.0% — if reading is off, replace sensor
+
+IMPORTANT: Do not operate equipment with code 4334 active for extended periods.
+Continued operation with poor DEF will not reduce NOx emissions and may
+damage the SCR catalyst (Part CUM-3883438, cost $3,200 — expensive to replace).
+
+========================================
+FAULT CODE 3258 - SCR OPERATOR INDUCEMENT
+========================================
+
+SPN: 3258 | FMI: 14
+Lamp: Red | Triggers derate: Yes (severe — typically 5 mph or idle only)
+
+Code 3258 is a regulatory inducement — it activates when the engine has been
+operating with persistent DEF faults and emissions thresholds have been exceeded.
+It is NOT a sensor fault — it is the system enforcing emissions compliance.
+
+IMPORTANT: Code 3258 requires a drive cycle to clear after root cause is fixed.
+Simply clearing the code will not work — the underlying DEF issue must be resolved
+and the system must complete a verification cycle.
+
+CLEARING PROCEDURE:
+1. Resolve the root cause (code 3714 or 4334 must be fixed first)
+2. Refill DEF to minimum 25% with confirmed fresh ISO 22241 DEF
+3. Clear all aftertreatment fault codes with INSITE
+4. Perform stationary SCR verification:
+   - Run engine at 1200-1500 RPM for 20 minutes
+   - Monitor NOx conversion efficiency in INSITE
+   - Target: >70% NOx conversion efficiency
+5. If conversion efficiency is low despite fresh DEF:
+   - SCR catalyst may be damaged — test with INSITE SCR efficiency test
+   - Catalyst replacement may be required (supervisor approval needed — $3,200)
+
+========================================
+DEF SYSTEM MAINTENANCE
+========================================
+
+DEF fluid replacement interval: With every other fuel fill, or when level reaches 25%
+DEF filter replacement: Every 300,000 miles or 5 years
+DEF injector inspection: Every 100,000 miles — check for crystallization deposits
+
+DEF handling precautions:
+- DEF is corrosive to aluminum, copper, zinc, and carbon steel
+- Use only plastic, stainless steel, or DEF-compatible equipment
+- Rinse skin and eyes immediately if contact occurs
+- Do not store DEF in direct sunlight or above 35°C (95°F)
+- Shelf life: 12 months at 10-30°C, 6 months at 30-35°C
+
+TOOLS REQUIRED FOR DEF SYSTEM SERVICE:
+- INSITE diagnostic software (connected laptop or tablet)
+- DEF refractometer: TOOL-DEF-REF
+- T27 Torx driver set
+- DEF-rated gloves and eye protection
+- Clean plastic funnel and container (no metal)
+- DEF rinse kit for spill cleanup

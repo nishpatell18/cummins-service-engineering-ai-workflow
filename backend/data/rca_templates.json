@@ -1,0 +1,385 @@
+{
+  "DEF": {
+    "system_name": "DEF and Aftertreatment System",
+    "fault_codes": ["3714", "4334", "3258"],
+    "priority": 7,
+    "steps": [
+      {
+        "step": 1,
+        "title": "Understand the active fault codes",
+        "content": "You have {fault_codes_active} active on this machine.\n\nHere is what each means:\n{fault_code_descriptions}\n\nKey distinction: Some codes are ROOT CAUSES and some are INDUCED EFFECTS. An induced code appears because of another fault — fixing the root cause clears the induced code automatically.\n\nFor DEF faults, code 3712 (derate active) is always induced. It is never the root cause. Your job is to find what triggered it.",
+        "what_to_look_for": "Read the fault code descriptions above. Identify which codes are root causes and which are induced effects.",
+        "what_it_doesnt_tell_you": "The fault codes tell you WHAT system is affected — not WHY it failed. That is what the rest of this RCA will help you determine.",
+        "learning_point": "Always separate root cause codes from induced effect codes before doing anything else. Treating an induced code as a root cause wastes time."
+      },
+      {
+        "step": 2,
+        "title": "Read the freeze frame data",
+        "content": "The ECM captured these sensor readings at the exact moment the fault triggered:\n\n  DEF level:       {def_level_pct}%\n  Engine RPM:      {engine_rpm}\n  Engine hours:    {equipment_hours}\n  Derate active:   {derate_active}\n  Fault count:     {fault_count} times\n\nDEF derate threshold: 10% triggers Level 1 derate.\nAt {def_level_pct}% the ECM {'has' if '{derate_active}' == 'Yes' else 'has not'} triggered a derate.",
+        "what_to_look_for": "Look at DEF level percentage. Is it close to the threshold or far below it? Look at fault count — has this happened once or repeatedly?",
+        "what_it_doesnt_tell_you": "Whether {def_level_pct}% is the REAL DEF level or whether the sensor is reading incorrectly. The freeze frame cannot tell you this — only a visual check can.",
+        "learning_point": "Freeze frame tells you the CONDITIONS when the fault triggered — not the root cause. A sensor can report 8% when the tank is actually 40% full."
+      },
+      {
+        "step": 3,
+        "title": "Observe the DEF tank visually",
+        "content": "Walk to the DEF tank. On this machine ({equipment_model}) it is typically on the left frame rail.\n\nObserve the following WITHOUT touching anything:\n\n1. FLUID LEVEL — look at the sight glass or carefully open the cap\n   Normal level: above 25% is adequate\n   Compare to what the ECM reported: {def_level_pct}%\n\n2. FLUID APPEARANCE\n   Normal DEF:      clear to pale blue, faint ammonia smell\n   Contaminated DEF: cloudy, yellow or brown, diesel smell, oily film\n\n3. VISIBLE DAMAGE — any cracks in tank, loose lines, wet spots near tank",
+        "what_to_look_for": "Does the visual level match what the ECM reported ({def_level_pct}%)? If the tank looks half full but ECM says {def_level_pct}% — that is a sensor discrepancy. If the tank is genuinely low — that is a fluid issue.",
+        "what_it_doesnt_tell_you": "Why the tank is low (if it is) — normal consumption, a leak, or wrong fluid added. That requires operator input which comes next.",
+        "learning_point": "The most important observation in a DEF fault is whether the ECM reading matches reality. A mismatch between visual level and ECM reading is the clearest indicator of a sensor fault."
+      },
+      {
+        "step": 4,
+        "title": "Review operator history",
+        "content": "Talk to the operator or check the job log. You need to understand what happened BEFORE the fault appeared.\n\nKey questions to ask — observation and history only, no testing:\n\n1. When did the warning first appear?\n   First time today / recurring over {fault_count} occurrences\n\n2. Has DEF been added recently?\n   If yes: what fluid was used and from where?\n\n3. Has the machine been sitting unused for an extended period?\n   DEF degrades in heat — shelf life 12 months at normal temps\n\n4. Has the machine been working harder than usual?\n   High load = higher DEF consumption rate (2-4% of fuel)",
+        "what_to_look_for": "Any event that correlates with the fault appearing — recent DEF fill, extended storage, unusual duty cycle. These narrow down the root cause significantly.",
+        "what_it_doesnt_tell_you": "Whether the fluid that was added was genuine ISO 22241 DEF or a substitute. Only a refractometer test can confirm that — which is a repair action, not an observation.",
+        "learning_point": "Operator history often contains the root cause. A recent DEF fill with the wrong fluid explains code 4334 (DEF quality). Extended storage explains degraded DEF. Always ask before assuming a sensor fault."
+      },
+      {
+        "step": 5,
+        "title": "Review historical fault patterns",
+        "content": "This fault combination has appeared on X15 engines before.\n\nHistorical cases matching your fault codes ({fault_codes_active}):\n  Similar cases found:  {similar_cases_found}\n  Resolution success rate: {success_rate_pct}%\n  Most common resolution: {most_common_resolution}\n  TSB reference: {tsb_references}\n\nWhat the history tells you:\nIn {similar_cases_found} previous cases with these codes, the resolution was {most_common_resolution} with a {success_rate_pct}% success rate.\n\nCombine this with what you observed in Steps 1-4.",
+        "what_to_look_for": "Does your observation match the historical pattern? If history says sensor replacement and your visual check showed a mismatch between ECM reading and actual level — the pattern is consistent.",
+        "what_it_doesnt_tell_you": "That your case is definitely the same as the historical cases. History informs — it does not decide. Your observations in Steps 3 and 4 carry more weight than historical patterns alone.",
+        "learning_point": "Historical patterns are a reference, not a prescription. Use them to validate your thinking — not to replace it."
+      }
+    ]
+  },
+
+  "DPF": {
+    "system_name": "Diesel Particulate Filter System",
+    "fault_codes": ["3719", "3936"],
+    "priority": 6,
+    "steps": [
+      {
+        "step": 1,
+        "title": "Understand the active fault codes",
+        "content": "You have {fault_codes_active} active on this machine.\n\n{fault_code_descriptions}\n\nThe DPF captures soot from exhaust. It periodically burns off accumulated soot through a process called regeneration (regen). When soot builds up too fast or regen cannot complete, these codes appear.\n\nKey distinction: Code 3936 (pressure high) often appears BEFORE code 3719 (soot load high). They are related but 3936 can also be caused by a faulty pressure sensor — not actual blockage.",
+        "what_to_look_for": "Are both codes active or just one? If only 3936 is active, the priority is determining whether it is a real blockage or a sensor fault.",
+        "what_it_doesnt_tell_you": "How blocked the DPF actually is — only INSITE soot load reading can quantify this. The codes tell you a threshold was crossed, not the current state.",
+        "learning_point": "DPF codes require you to distinguish between a real physical blockage and a sensor reporting incorrectly. These require different responses."
+      },
+      {
+        "step": 2,
+        "title": "Read the freeze frame data",
+        "content": "ECM readings at fault trigger:\n\n  DPF soot load:   {dpf_soot_pct}%\n  Engine RPM:      {engine_rpm}\n  Engine hours:    {equipment_hours}\n  Load at fault:   {engine_load_pct}%\n  Fault count:     {fault_count} times\n\nDPF thresholds:\n  51-75%:  elevated, regen recommended\n  76-90%:  high — derate likely triggered\n  91-100%: critical — immediate regen required\n  Above 100%: DPF may be damaged",
+        "what_to_look_for": "What was the soot load when the fault triggered? Was the machine at high load or idle? Off-highway equipment running at low load or idle cannot complete passive regen — soot accumulates faster.",
+        "what_it_doesnt_tell_you": "What the soot load is RIGHT NOW. The freeze frame is a snapshot from when the fault triggered — current level may be higher or lower.",
+        "learning_point": "Off-highway equipment is especially prone to DPF faults because short duty cycles and idle time prevent passive regeneration. This is an application pattern, not necessarily a component failure."
+      },
+      {
+        "step": 3,
+        "title": "Observe the exhaust and machine externally",
+        "content": "Observe the machine from a safe distance — engine OFF:\n\n1. EXHAUST OUTLET — look at the DPF exhaust outlet\n   Any visible soot deposits around the outlet?\n   Any unusual discoloration on surrounding components?\n\n2. VISIBLE LEAKS — any exhaust leaks visible at pipe joints?\n   White residue at joints indicates exhaust leak\n   Exhaust leaks prevent regen from completing\n\n3. MACHINE DUTY CYCLE — ask the operator:\n   Does this machine idle for long periods?\n   Does it run at low load most of the time?\n   When was the last time it ran hard for 30+ minutes?",
+        "what_to_look_for": "Evidence of exhaust leaks or an operating pattern that prevents passive regen. Either explains why soot is accumulating.",
+        "what_it_doesnt_tell_you": "The actual soot load right now or whether the DPF is physically damaged. These require INSITE and physical inspection — which are repair actions.",
+        "learning_point": "Many DPF faults on off-highway equipment are not component failures — they are duty cycle problems. Understanding how the machine is operated is as important as reading the fault codes."
+      },
+      {
+        "step": 4,
+        "title": "Review regen history",
+        "content": "Ask the operator about recent regen events:\n\n1. Has the cab display shown a regen warning recently?\n   If yes: did the operator allow it to complete or interrupt it?\n\n2. Has a forced regen been performed recently?\n   If yes: when and did it complete successfully?\n\n3. Has the machine been shut down during an active regen?\n   Interrupted regens leave partial soot load and can trigger codes\n\n4. Any recent repairs to the exhaust system or DPF area?",
+        "what_to_look_for": "A pattern of interrupted regens or a recent repair that might have introduced an exhaust leak. Either explains accumulating soot.",
+        "what_it_doesnt_tell_you": "Whether a forced regen will succeed now. The soot load at freeze frame was {dpf_soot_pct}% — if it has climbed further since then, regen conditions matter.",
+        "learning_point": "Regen history is critical context. An operator who repeatedly interrupts active regens will keep generating this fault regardless of whether anything is repaired."
+      },
+      {
+        "step": 5,
+        "title": "Review historical fault patterns",
+        "content": "Historical cases matching {fault_codes_active} on X15 engines:\n\n  Similar cases:       {similar_cases_found}\n  Success rate:        {success_rate_pct}%\n  Common resolution:   {most_common_resolution}\n  TSB reference:       {tsb_references}\n\nCombine with your observations from Steps 1-4:\n- If duty cycle issue identified: forced regen likely sufficient\n- If exhaust leak found: repair leak before regen\n- If pressure sensor suspected: sensor test before regen\n- If soot load >95%: physical inspection before regen attempt",
+        "what_to_look_for": "Does your observation match the historical pattern? Duty cycle issues are the most common cause on off-highway equipment.",
+        "what_it_doesnt_tell_you": "Whether regen is safe to attempt right now — soot load >95% at time of regen can damage the DPF. This requires a current INSITE reading before proceeding.",
+        "learning_point": "DPF faults are often preventable through operator education. If you identify a duty cycle pattern, that is as important to document as the repair itself."
+      }
+    ]
+  },
+
+  "EGR": {
+    "system_name": "EGR Valve and Cooler System",
+    "fault_codes": ["2791", "2789"],
+    "priority": 5,
+    "steps": [
+      {
+        "step": 1,
+        "title": "Understand the active fault codes",
+        "content": "You have {fault_codes_active} active on this machine.\n\n{fault_code_descriptions}\n\nThe EGR system recirculates exhaust gas back into the intake to reduce NOx emissions. The EGR valve controls how much exhaust is recirculated. The EGR cooler reduces the temperature of that exhaust before it enters the intake.\n\nCode 2791 (valve not responding) and code 2789 (cooler temp high) are different problems with different root causes — they should not be assumed to be related even if both are active.",
+        "what_to_look_for": "Are one or both codes active? 2791 is a mechanical or electrical valve issue. 2789 is a cooling flow issue. Identify which you are dealing with before proceeding.",
+        "what_it_doesnt_tell_you": "Whether the valve is mechanically stuck or electrically failed — both produce code 2791. The distinction matters for the repair approach.",
+        "learning_point": "Never assume two active codes are the same problem. EGR valve fault and EGR cooler fault are separate components with separate root causes."
+      },
+      {
+        "step": 2,
+        "title": "Read the freeze frame data",
+        "content": "ECM readings at fault trigger:\n\n  Engine RPM:       {engine_rpm}\n  Engine hours:     {equipment_hours}\n  Coolant temp:     {coolant_temp_f}F\n  Engine load:      {engine_load_pct}%\n  Fault count:      {fault_count} times\n\nContext for EGR:\n  High hours ({equipment_hours} hrs) with code 2791 strongly suggests carbon buildup on the valve — this is the most common cause above 8,000 hours.\n  High coolant temp with code 2789 suggests restricted coolant flow through the EGR cooler.",
+        "what_to_look_for": "Equipment hours are the most important freeze frame value for EGR faults. Above 8,000 hours, carbon buildup is the likely cause of valve issues. Below 8,000, electrical fault is more likely.",
+        "what_it_doesnt_tell_you": "The current state of carbon buildup — that requires physical inspection which is a repair action.",
+        "learning_point": "Equipment hours are a strong predictor for EGR valve faults. High-hour engines accumulate carbon faster due to longer exposure to exhaust gas recirculation."
+      },
+      {
+        "step": 3,
+        "title": "Observe externally — visual and smell check",
+        "content": "With engine OFF and cooled (minimum 60 minutes for EGR components):\n\n1. INTAKE AREA — look at the air intake near the EGR valve\n   Black residue or oily deposits around the EGR connection?\n   This indicates carbon buildup is present\n\n2. COOLANT LEVEL — check the deaeration tank\n   Low coolant reduces flow through EGR cooler\n   A coolant level issue with code 2789 is likely the root cause\n\n3. COOLANT CONDITION — observe color\n   Normal: bright green, orange, or pink\n   Brown or rusty: contaminated — accelerates scale buildup in cooler\n\n4. SMELL — any burning smell from engine area?\n   Burning smell near EGR area can indicate carbon deposits overheating",
+        "what_to_look_for": "Visual carbon deposits, low or contaminated coolant. Either observation narrows the root cause significantly before any testing begins.",
+        "what_it_doesnt_tell_you": "How severe the carbon buildup is inside the valve — only removal and inspection reveals this.",
+        "learning_point": "Carbon deposits around EGR connections are visible externally and are a reliable indicator of internal buildup. If you can see carbon outside, there is almost certainly more inside."
+      },
+      {
+        "step": 4,
+        "title": "Review maintenance and operating history",
+        "content": "Ask the operator or check the maintenance log:\n\n1. When was the last EGR valve inspection or cleaning?\n   Recommended interval: every 3,000 hours\n   Machine is at {equipment_hours} hours — when was last service?\n\n2. What coolant type is being used?\n   X15 requires OAT coolant only\n   Mixing coolant types causes accelerated scale buildup in EGR cooler\n\n3. Has the machine had excessive idle time recently?\n   High idle = more EGR cycling = faster carbon accumulation\n\n4. Any recent coolant system work?\n   Incorrect coolant added during a top-up is a common cause of cooler issues",
+        "what_to_look_for": "Overdue EGR service interval, incorrect coolant type, or high idle operation. Any of these explains the fault without requiring component testing.",
+        "what_it_doesnt_tell_you": "The actual condition of the valve or cooler internally.",
+        "learning_point": "EGR faults are often maintenance-related. An overdue service interval combined with high idle operation is a predictable failure pattern — not a random component failure."
+      },
+      {
+        "step": 5,
+        "title": "Review historical fault patterns",
+        "content": "Historical cases matching {fault_codes_active} on X15 engines:\n\n  Similar cases:       {similar_cases_found}\n  Success rate:        {success_rate_pct}%\n  Common resolution:   {most_common_resolution}\n  TSB reference:       {tsb_references}\n\nCombine with your observations:\n- High hours + carbon deposits visible: valve cleaning likely needed\n- Low/contaminated coolant + code 2789: coolant issue is root cause\n- Overdue service + high idle: maintenance-driven failure\n- Recent coolant work + code 2789: incorrect coolant type suspected",
+        "what_to_look_for": "Does your observation match a consistent pattern across steps 2, 3, and 4? Multiple observations pointing to the same root cause increases confidence.",
+        "what_it_doesnt_tell_you": "Whether cleaning will be sufficient or replacement is needed — that determination happens during the repair procedure.",
+        "learning_point": "A strong RCA has multiple observations pointing to the same root cause. Single-observation diagnoses are less reliable."
+      }
+    ]
+  },
+
+  "Fuel": {
+    "system_name": "Fuel System",
+    "fault_codes": ["157", "1347", "559"],
+    "priority": 3,
+    "steps": [
+      {
+        "step": 1,
+        "title": "Understand the active fault codes",
+        "content": "You have {fault_codes_active} active on this machine.\n\n{fault_code_descriptions}\n\nThe fuel system delivers high-pressure fuel from the tank to the injectors. Low fuel pressure (codes 157, 1347, 559) can come from the supply side (pump, filters, lift pump) or the high-pressure side (rail, injectors).\n\nImportant: Multiple fuel codes appearing together almost always indicate ONE underlying fuel system problem — not multiple separate failures. Look for the common cause.",
+        "what_to_look_for": "Are the codes all fuel-related? Multiple fuel codes together point to a systemic fuel supply issue rather than individual component failures.",
+        "what_it_doesnt_tell_you": "Whether the problem is on the low-pressure supply side or the high-pressure rail side — freeze frame data helps narrow this.",
+        "learning_point": "Multiple codes from the same system usually mean one root cause. Resist the temptation to treat each code as a separate problem."
+      },
+      {
+        "step": 2,
+        "title": "Read the freeze frame data",
+        "content": "ECM readings at fault trigger:\n\n  Fuel rail pressure:  {fuel_pressure_kpa} kPa\n  Engine RPM:          {engine_rpm}\n  Engine hours:        {equipment_hours}\n  Engine load:         {engine_load_pct}%\n  Fault count:         {fault_count} times\n\nFuel pressure reference:\n  Normal at idle:      >20,000 kPa\n  Normal at load:      25,000-35,000 kPa\n  Warning threshold:   <17,000 kPa\n  Critical threshold:  <14,000 kPa\n\nAt {fuel_pressure_kpa} kPa the pressure was {'critically' if '{fuel_pressure_kpa}' < '14000' else 'significantly'} below specification.",
+        "what_to_look_for": "How far below specification was the pressure? Did the fault occur at idle or under load? A fault only under load suggests a pump that works at low demand but cannot keep up at high demand.",
+        "what_it_doesnt_tell_you": "Whether the low pressure is caused by a supply restriction (filters, lift pump) or a high-pressure pump failure. Those require different repairs.",
+        "learning_point": "Fuel pressure at the moment of fault combined with RPM and load tells you how severe the supply problem is — not where the problem is located."
+      },
+      {
+        "step": 3,
+        "title": "Observe the fuel system externally",
+        "content": "With engine OFF — observe without opening any fuel system components:\n\n1. FUEL LEVEL in tank\n   Obvious but important — confirm adequate fuel level\n   Very low fuel allows air into the system\n\n2. VISIBLE FUEL LEAKS\n   Check around fuel filter housing — wet spots or dried fuel residue?\n   Check fuel lines from tank to engine — any wet areas?\n   Check around injector return lines on top of engine\n\n3. FUEL FILTER HOUSING — look at the water-in-fuel indicator\n   Many X15 installations have a visual indicator on the primary filter\n   Red indicator = water contamination present\n\n4. FUEL CONDITION — if cap is accessible, look at fuel color\n   Normal diesel: clear to light amber\n   Contaminated: dark, cloudy, or black — indicates microbial growth",
+        "what_to_look_for": "Any external leak, the water-in-fuel indicator status, and fuel level. These are visible root causes that require no testing.",
+        "what_it_doesnt_tell_you": "Fuel filter condition internally — a clogged filter looks normal from outside.",
+        "learning_point": "Fuel system leaks are often visible as dried residue even when no active drip is present. Look for staining patterns, not just wet spots."
+      },
+      {
+        "step": 4,
+        "title": "Review fuel and maintenance history",
+        "content": "Ask operator or check maintenance log:\n\n1. When were fuel filters last replaced?\n   Primary filter interval: 500 hours\n   Secondary filter interval: 1,000 hours\n   Machine is at {equipment_hours} hours\n\n2. Was the machine recently fueled?\n   From which source — known good supplier or field tank?\n   Field tanks are common sources of water and microbial contamination\n\n3. Has the machine been stored for an extended period?\n   Diesel degrades in storage — microbial growth in fuel is common\n   above 6 months storage\n\n4. Any previous fuel system work recently?\n   Air can enter the system if fuel lines were disconnected",
+        "what_to_look_for": "Overdue filter replacement, suspect fuel source, or recent storage. Any of these is a plausible root cause that does not require component testing to identify.",
+        "what_it_doesnt_tell_you": "Actual filter restriction level — only a differential pressure test measures this.",
+        "learning_point": "Fuel quality issues are underdiagnosed because they are not visible in fault codes. Always ask about fuel source — especially on equipment using field storage tanks."
+      },
+      {
+        "step": 5,
+        "title": "Review historical fault patterns",
+        "content": "Historical cases matching {fault_codes_active} on X15 engines:\n\n  Similar cases:       {similar_cases_found}\n  Success rate:        {success_rate_pct}%\n  Common resolution:   {most_common_resolution}\n  TSB reference:       {tsb_references}\n\nPattern assessment:\n- Overdue filters + low pressure: filter replacement is likely resolution\n- Water indicator positive: water contamination, filter + fuel drain needed\n- Recent fueling from field tank: contamination suspected\n- No obvious supply issue: high-pressure pump assessment needed",
+        "what_to_look_for": "A consistent story across freeze frame, visual observation, and maintenance history. Fuel system root causes usually have multiple supporting observations.",
+        "what_it_doesnt_tell_you": "High-pressure pump condition — that requires live pressure testing which is a repair procedure.",
+        "learning_point": "Fuel system diagnosis follows a supply chain logic — start at the tank and work toward the injectors. The most common failures are always on the supply side first."
+      }
+    ]
+  },
+
+  "Cooling": {
+    "system_name": "Engine Cooling System",
+    "fault_codes": ["110", "111"],
+    "priority": 2,
+    "steps": [
+      {
+        "step": 1,
+        "title": "Understand the active fault codes",
+        "content": "You have {fault_codes_active} active on this machine.\n\n{fault_code_descriptions}\n\nCRITICAL: Code 110 (coolant temperature high) is a safety-critical fault. Do NOT restart the engine until the root cause is identified. Repeated overheating causes head gasket failure and cylinder head warping — repairs that cost significantly more than the original fault.\n\nCode 111 (coolant level low) is a warning that often precedes code 110. If both are active, low coolant likely caused the overheating.",
+        "what_to_look_for": "Is this a temperature fault (110), a level fault (111), or both? If both are active the level fault is likely the root cause of the temperature fault.",
+        "what_it_doesnt_tell_you": "WHY the coolant level dropped — leak, internal consumption, or evaporation. That is what Steps 3 and 4 will help determine.",
+        "learning_point": "Cooling system faults cascade — level drops, temperature rises, derate activates. Always trace back to the first event in the sequence."
+      },
+      {
+        "step": 2,
+        "title": "Read the freeze frame data",
+        "content": "ECM readings at fault trigger:\n\n  Coolant temperature: {coolant_temp_f}F\n  Engine RPM:          {engine_rpm}\n  Engine hours:        {equipment_hours}\n  Engine load:         {engine_load_pct}%\n  Fault count:         {fault_count} times\n\nCooling system thresholds:\n  Normal operating:    180-205F\n  Warning threshold:   225F — yellow lamp\n  Critical threshold:  235F — red lamp + derate\n  Shutdown threshold:  239F — engine protection shutdown\n\nAt {coolant_temp_f}F the engine was {'at shutdown threshold' if '{coolant_temp_f}' >= '239' else 'above critical threshold'}.",
+        "what_to_look_for": "How hot did it get and at what load? A fault at low RPM and load suggests a more severe cooling restriction than a fault only at maximum load.",
+        "what_it_doesnt_tell_you": "Current coolant temperature — allow minimum 30 minutes cool-down before checking coolant level. Opening a pressurized hot cooling system is dangerous.",
+        "learning_point": "Never open the cooling system while hot. The freeze frame temperature is historical — the system may still be dangerously pressurized."
+      },
+      {
+        "step": 3,
+        "title": "Observe externally — cooling system visual check",
+        "content": "WAIT — minimum 30 minutes after shutdown before approaching the cooling system.\n\nWith engine OFF and cooled:\n\n1. COOLANT LEVEL — deaeration tank (white or yellow tank, top of engine)\n   Check level against MIN/MAX markings — do not open if hot\n   Low level is the most common cause of overheating\n\n2. EXTERNAL LEAKS — walk around the engine\n   Radiator core — any green/orange staining or wet fins?\n   Hose connections — any wet spots or dried residue at clamps?\n   Water pump area — wet below the pump body? (weep hole location)\n   EGR cooler hoses — top of engine area\n\n3. EXHAUST SMOKE — recall what the operator observed\n   White smoke = coolant burning in combustion = internal leak\n   Normal exhaust = external leak or low level only\n\n4. OIL DIPSTICK — pull and observe\n   Milky or frothy oil = coolant in oil = serious internal leak",
+        "what_to_look_for": "Any external leak, low coolant level, white smoke report from operator, or milky oil. Each observation points to a different severity of failure.",
+        "what_it_doesnt_tell_you": "Whether the thermostat is stuck — that requires removal and testing which is a repair action.",
+        "learning_point": "Milky oil or white smoke indicates an internal coolant leak — a much more serious failure than an external leak. These two observations change the urgency of escalation significantly."
+      },
+      {
+        "step": 4,
+        "title": "Review operating history",
+        "content": "Ask the operator:\n\n1. How long had the temperature warning been on before shutdown?\n   Minutes or hours? Longer exposure means higher risk of damage.\n\n2. Was there any steam visible from the engine area?\n   Steam indicates coolant reached boiling point\n\n3. Any unusual smell — sweet smell indicates coolant burning\n\n4. Has coolant been added recently?\n   If yes: what type? X15 requires OAT coolant only\n   Mixing types causes accelerated scale buildup\n\n5. Any recent work on the cooling system or nearby components?\n   Disturbed hose clamps are a common post-repair leak source",
+        "what_to_look_for": "Duration of overheating, steam observation, coolant type used, recent work. Duration is the most important — brief overheating may cause no damage, extended overheating likely did.",
+        "what_it_doesnt_tell_you": "Whether engine damage has already occurred. Head gasket assessment requires a cooling system pressure test and combustion leak test — repair actions.",
+        "learning_point": "Duration of overheating matters as much as peak temperature. A brief exceedance to 235F is very different from running at 235F for 20 minutes."
+      },
+      {
+        "step": 5,
+        "title": "Review historical fault patterns",
+        "content": "Historical cases matching {fault_codes_active} on X15 engines:\n\n  Similar cases:       {similar_cases_found}\n  Success rate:        {success_rate_pct}%\n  Common resolution:   {most_common_resolution}\n  TSB reference:       {tsb_references}\n\nPattern assessment based on your observations:\n- Low level + external leak found: leak repair and refill likely resolution\n- Low level + no leak found: thermostat or water pump suspected\n- Normal level + overheating: thermostat stuck closed most likely\n- Milky oil or white smoke: internal leak — escalation strongly recommended\n- Extended overheating duration: potential engine damage — escalation recommended",
+        "what_to_look_for": "Any observation of milky oil, white smoke, or extended overheating duration should weigh heavily toward escalation regardless of the historical pattern.",
+        "what_it_doesnt_tell_you": "Whether engine damage has occurred. This is the most important unknown in a cooling fault — and it cannot be determined through observation alone.",
+        "learning_point": "Cooling faults have the widest range of outcomes — from a simple thermostat replacement to a full engine rebuild. Your observations determine which end of that range you are dealing with."
+      }
+    ]
+  },
+
+  "Oil": {
+    "system_name": "Engine Oil and Lubrication System",
+    "fault_codes": ["100"],
+    "priority": 1,
+    "steps": [
+      {
+        "step": 1,
+        "title": "Understand the active fault codes",
+        "content": "You have {fault_codes_active} active on this machine.\n\n{fault_code_descriptions}\n\nCRITICAL: Code 100 (oil pressure low) is the highest priority fault on an X15. Running an engine with low oil pressure causes catastrophic bearing failure — a failure that destroys the engine entirely.\n\nDo NOT restart the engine under any circumstances until the root cause is identified. This is not a fault to clear and retest.",
+        "what_to_look_for": "Is the engine currently shut down? If not, shutdown is the immediate priority before any RCA begins.",
+        "what_it_doesnt_tell_you": "Whether the low pressure is real or a sensor fault. Both are possible — but the consequence of being wrong about a real low pressure event is engine destruction.",
+        "learning_point": "Code 100 is treated as real until proven otherwise. The cost of unnecessary caution is a delayed repair. The cost of insufficient caution is a destroyed engine."
+      },
+      {
+        "step": 2,
+        "title": "Read the freeze frame data",
+        "content": "ECM readings at fault trigger:\n\n  Oil pressure:    {oil_pressure_psi} psi\n  Engine RPM:      {engine_rpm}\n  Engine hours:    {equipment_hours}\n  Coolant temp:    {coolant_temp_f}F\n  Fault count:     {fault_count} times\n\nOil pressure specifications:\n  Normal at hot idle:   20-25 psi minimum\n  Normal at 1200 RPM:   40-60 psi\n  Warning threshold:    <20 psi at idle\n  Critical threshold:   <15 psi at idle\n  Shutdown threshold:   <10 psi\n\nAt {oil_pressure_psi} psi the pressure was {'at or below shutdown threshold' if '{oil_pressure_psi}' <= '10' else 'below critical threshold'}.",
+        "what_to_look_for": "How far below specification? Did it fault at idle or under load? A fault only under load is different from a fault at idle — idle low pressure is more serious as it indicates the pump cannot maintain minimum pressure at any operating condition.",
+        "what_it_doesnt_tell_you": "Current oil pressure — the engine is off. The freeze frame is historical.",
+        "learning_point": "Oil pressure at idle is the most revealing measurement. If pressure is adequate at speed but low at idle, the pump can move volume but cannot maintain pressure — a bearing clearance problem."
+      },
+      {
+        "step": 3,
+        "title": "Observe oil level and condition",
+        "content": "With engine OFF — this is safe to check immediately:\n\n1. OIL LEVEL — pull the dipstick (yellow handle, right side of engine)\n   Wipe clean, reinsert fully, remove and read\n   Normal: between MIN and MAX marks\n   Low oil is the most common cause of code 100\n   X15 capacity: approximately 10 gallons with filter\n\n2. OIL CONDITION — observe what is on the dipstick\n   Normal: amber to dark brown, fluid consistency\n   Milky or frothy: coolant contamination — serious internal leak\n   Very thin or watery: fuel dilution — injector leak\n   Black with grit: severely overdue oil change\n\n3. EXTERNAL OIL LEAKS — walk around engine\n   Valve cover area — top of engine\n   Front crankshaft seal — timing cover area\n   Oil filter — wet at base?\n   Turbocharger oil lines — top rear of engine",
+        "what_to_look_for": "Oil level first — if genuinely low, where did it go? A leak visible externally explains low level. Milky or thin oil indicates a different and more serious problem.",
+        "what_it_doesnt_tell_you": "Whether the oil pressure sensor is accurate. A faulty sensor can report low pressure when actual pressure is normal — but you establish this only after confirming oil level and condition are normal.",
+        "learning_point": "Always check oil level before any other diagnosis on code 100. It takes 30 seconds and eliminates the most common cause."
+      },
+      {
+        "step": 4,
+        "title": "Review maintenance and operating history",
+        "content": "Ask operator or check maintenance log:\n\n1. When was the last oil change?\n   Severe service interval: 500 hours\n   Machine is at {equipment_hours} hours\n   When was last oil change recorded?\n\n2. Has oil level been checked recently?\n   Was it low then too?\n\n3. Any recent engine work — filters replaced, oil lines disturbed?\n   Air can enter the system if oil circuit was opened\n\n4. Did the operator hear any unusual noise before shutdown?\n   Knocking or rattling at low oil pressure indicates bearing distress\n   This observation significantly changes the escalation decision\n\n5. How long did the machine run with the warning active?\n   Duration of low pressure exposure determines damage risk",
+        "what_to_look_for": "Overdue oil change, recent oil circuit work, operator-reported noise, duration of fault. Noise during low pressure event is the most critical observation.",
+        "what_it_doesnt_tell_you": "Whether bearing damage has already occurred — that requires oil analysis and internal inspection.",
+        "learning_point": "A knocking noise during a low oil pressure event means bearing damage is likely occurring or has already occurred. This single observation changes a sensor fault investigation into an engine assessment."
+      },
+      {
+        "step": 5,
+        "title": "Review historical fault patterns",
+        "content": "Historical cases matching {fault_codes_active} on X15 engines:\n\n  Similar cases:       {similar_cases_found}\n  Success rate:        {success_rate_pct}%\n  Common resolution:   {most_common_resolution}\n  TSB reference:       {tsb_references}\n\nPattern assessment:\n- Low oil level + external leak: repair leak, refill, recheck pressure\n- Low oil level + no visible leak: internal leak suspected — escalate\n- Normal oil level + milky oil: coolant contamination — escalate immediately\n- Normal oil level + normal oil: sensor fault possible — but verify with manual gauge first\n- Operator reported knocking: bearing distress — escalate immediately\n- Overdue oil change + high hours: oil degradation contributing factor",
+        "what_to_look_for": "Any observation of noise, milky oil, or very low level without visible leak should result in escalation — these indicate engine damage risk that exceeds field repair scope.",
+        "what_it_doesnt_tell_you": "Bearing condition internally. This is unknowable through observation alone and is the key uncertainty in oil pressure faults.",
+        "learning_point": "Code 100 has two very different outcomes — a simple sensor replacement or an engine rebuild. Your observations in Steps 3 and 4 determine which path you are on."
+      }
+    ]
+  },
+
+  "Turbo": {
+    "system_name": "Turbocharger and Boost System",
+    "fault_codes": ["102", "1127"],
+    "priority": 4,
+    "steps": [
+      {
+        "step": 1,
+        "title": "Understand the active fault codes",
+        "content": "You have {fault_codes_active} active on this machine.\n\n{fault_code_descriptions}\n\nThe X15 uses a Variable Geometry Turbocharger (VGT). Unlike standard turbos, the VGT has adjustable internal vanes controlled by an electronic actuator. This gives precise boost control but adds an additional failure mode — the actuator itself.\n\nCode 102 (low boost) and code 1127 (compressor temp high) have different root causes. Low boost means not enough pressure is being produced. High compressor temp means the air is not being cooled adequately after compression.",
+        "what_to_look_for": "Is it a boost production problem (102) or a boost cooling problem (1127)? The most common cause of each is different — boost leaks for 102, Charge Air Cooler restriction for 1127.",
+        "what_it_doesnt_tell_you": "Where specifically the boost is being lost or why the temperature is elevated. Visual inspection of the boost system is the next step.",
+        "learning_point": "VGT turbos add actuator failures to the list of possible causes — something standard turbos do not have. Always consider actuator, mechanical, and boost leak causes for code 102."
+      },
+      {
+        "step": 2,
+        "title": "Read the freeze frame data",
+        "content": "ECM readings at fault trigger:\n\n  Boost pressure:      {boost_pressure_kpa} kPa above atmospheric\n  Engine RPM:          {engine_rpm}\n  Engine hours:        {equipment_hours}\n  Engine load:         {engine_load_pct}%\n  Fault count:         {fault_count} times\n\nBoost pressure reference:\n  Light load:    50-100 kPa above atmospheric\n  Medium load:   100-150 kPa above atmospheric\n  Full load:     150-200 kPa above atmospheric\n\nAt {boost_pressure_kpa} kPa under {engine_load_pct}% load the boost was below expected range.",
+        "what_to_look_for": "Was the machine at high load when the fault triggered? A boost fault only at maximum load suggests a system that works but cannot meet peak demand — common with boost leaks. A fault at all load levels suggests a more fundamental problem.",
+        "what_it_doesnt_tell_you": "Where the boost is being lost — that requires a boost leak test which is a repair procedure.",
+        "learning_point": "Boost pressure relative to load tells you how far the system is from specification. A system producing 80% of expected boost under full load is a different problem from one producing 40%."
+      },
+      {
+        "step": 3,
+        "title": "Observe the boost system externally",
+        "content": "With engine OFF — observe without opening any components:\n\n1. INTAKE HOSES AND BOOTS — trace the path from air filter to engine\n   Look at every connection point — clamps, boots, flexible sections\n   Collapsed, cracked, or loose boot is a common boost leak source\n   Compressor outlet boot (turbo to CAC inlet) is most common failure point\n\n2. CHARGE AIR COOLER (CAC) — typically in front of radiator\n   Look at fins — plugged with mud, debris, or crop material?\n   Look at end tanks — any cracks or damage visible?\n   Any oil residue on CAC fins? (indicates turbo oil leak into intake)\n\n3. AIR FILTER — check restriction indicator if equipped\n   Red indicator = replace filter\n   A severely restricted filter reduces boost significantly\n\n4. TURBO AREA — look at turbo housing (engine off, cooled)\n   Oil residue around compressor housing inlet?\n   Any visible physical damage to turbo housing?",
+        "what_to_look_for": "Cracked or loose hose connections, plugged CAC fins, restricted air filter. These are visible root causes that require no testing to identify.",
+        "what_it_doesnt_tell_you": "Turbo shaft play or VGT actuator condition — these require hands-on inspection which is a repair procedure.",
+        "learning_point": "Boost leaks are the most common cause of code 102 and they are often visible externally. A cracked boot at a connection point can cause significant power loss and is a simple repair."
+      },
+      {
+        "step": 4,
+        "title": "Review operating history",
+        "content": "Ask the operator:\n\n1. When did the power loss begin?\n   Sudden onset vs gradual decline over days/weeks?\n   Sudden loss suggests boost leak or actuator failure\n   Gradual loss suggests progressive restriction (CAC, filter, or carbon)\n\n2. Any visible black smoke from exhaust recently?\n   Black smoke under load = insufficient air for fuel being injected\n   Consistent with low boost condition\n\n3. Any unusual noise from the turbo area?\n   High-pitched whine = turbo overspeeding or bearing wear\n   Rattling = blade contact or loose component\n\n4. Recent air filter replacement or any intake system work?\n   Improperly reinstalled intake components are a common post-service boost leak source\n\n5. What is the operating environment?\n   Dusty conditions accelerate filter restriction\n   Crop material or debris can plug CAC rapidly",
+        "what_to_look_for": "Onset pattern (sudden vs gradual), smoke, noise, recent intake work. Sudden onset with recent intake work strongly suggests a post-service boost leak.",
+        "what_it_doesnt_tell_you": "VGT actuator condition — electronic actuator faults do not produce audible symptoms.",
+        "learning_point": "Onset pattern is a valuable diagnostic indicator. Sudden power loss after intake service almost always means something was not reinstalled correctly."
+      },
+      {
+        "step": 5,
+        "title": "Review historical fault patterns",
+        "content": "Historical cases matching {fault_codes_active} on X15 engines:\n\n  Similar cases:       {similar_cases_found}\n  Success rate:        {success_rate_pct}%\n  Common resolution:   {most_common_resolution}\n  TSB reference:       {tsb_references}\n\nPattern assessment:\n- Visible cracked or loose boot: boost leak — simple repair\n- Plugged CAC fins: cleaning required before further diagnosis\n- Restricted air filter: replace filter, recheck boost\n- Recent intake work + sudden onset: reinstallation issue\n- No visible cause found: VGT actuator test needed (repair procedure)\n- Oil in intake / on CAC: turbo seal failure — escalate",
+        "what_to_look_for": "Oil in the intake system is a flag for escalation — it indicates a turbo seal failure that will worsen and may cause engine damage if left unaddressed.",
+        "what_it_doesnt_tell_you": "VGT actuator condition or turbo shaft play — both require hands-on testing.",
+        "learning_point": "Most boost faults are on the intake side of the turbo — hoses, filter, CAC. The turbo itself is less commonly the root cause, especially at lower equipment hours."
+      }
+    ]
+  },
+
+  "MAF": {
+    "system_name": "Mass Air Flow and Air Intake System",
+    "fault_codes": ["132"],
+    "priority": 8,
+    "steps": [
+      {
+        "step": 1,
+        "title": "Understand the active fault codes",
+        "content": "You have {fault_codes_active} active on this machine.\n\n{fault_code_descriptions}\n\nThe Mass Air Flow (MAF) sensor measures the volume of air entering the engine. The ECM uses this reading to calculate the correct fuel quantity. An incorrect MAF reading causes poor fuel economy, black smoke, and reduced power — but is generally not safety-critical.\n\nCode 132 can mean the sensor is dirty, failed electrically, or the reading is outside expected range. It is one of the more straightforward diagnostic paths.",
+        "what_to_look_for": "Is this the only active code or are there other system codes alongside it? Isolated code 132 is typically a sensor issue. Code 132 alongside fuel codes suggests an air supply problem affecting both systems.",
+        "what_it_doesnt_tell_you": "Whether the sensor is dirty or failed — both produce the same code. Cleaning is always attempted before replacement.",
+        "learning_point": "MAF sensor faults are among the most commonly misdiagnosed — sensors get replaced when cleaning would have resolved the fault. Always establish whether the sensor is dirty before assuming it has failed."
+      },
+      {
+        "step": 2,
+        "title": "Read the freeze frame data",
+        "content": "ECM readings at fault trigger:\n\n  Engine RPM:      {engine_rpm}\n  Engine hours:    {equipment_hours}\n  Engine load:     {engine_load_pct}%\n  Fault count:     {fault_count} times\n\nContext:\nA fault count of {fault_count} is important for MAF diagnosis.\n  Low count (1-2):  likely intermittent — connector or contamination\n  High count (5+):  persistent — sensor degradation or failure\n\nEquipment hours {equipment_hours}: MAF sensors typically last 5,000-8,000 hours in clean environments, less in dusty off-highway conditions.",
+        "what_to_look_for": "Fault count and equipment hours together. High hours in a dusty environment with high fault count strongly suggests sensor contamination or degradation.",
+        "what_it_doesnt_tell_you": "Current MAF reading accuracy — only INSITE live data shows this.",
+        "learning_point": "Fault count tells you whether this is an intermittent event or a persistent problem. Intermittent faults often have different root causes than persistent ones even with the same fault code."
+      },
+      {
+        "step": 3,
+        "title": "Observe the air intake system",
+        "content": "With engine OFF:\n\n1. AIR FILTER — locate and check restriction indicator\n   A severely restricted filter starves the MAF sensor of airflow\n   Red indicator = replace filter immediately\n   Check filter housing for cracks or gaps (unfiltered air bypass)\n\n2. MAF SENSOR LOCATION — typically in the intake pipe between filter and turbo\n   Look at the intake pipe around the sensor location\n   Any cracks, holes, or loose clamps near the sensor?\n   Any oil residue or dirt visible on intake pipe interior?\n\n3. CONNECTOR — observe the MAF sensor electrical connector\n   Is it fully seated?\n   Any visible corrosion, bent pins, or damaged wiring?\n   Wiring chafing against the intake pipe or clamps?\n\n4. OPERATING ENVIRONMENT — observe surroundings\n   Dusty quarry or construction site?\n   Crop dust or chaff from agricultural operation?\n   These environments dramatically accelerate MAF sensor contamination",
+        "what_to_look_for": "Restricted air filter, loose or damaged intake components near sensor, connector issues, operating environment. A dusty environment with a dirty air filter explains most MAF faults.",
+        "what_it_doesnt_tell_you": "Whether the sensor element itself is contaminated — that requires sensor removal and visual inspection.",
+        "learning_point": "Environment matters enormously for MAF sensor life. A sensor that lasts 8,000 hours in a highway truck may last 2,000 hours in a quarry or agricultural setting."
+      },
+      {
+        "step": 4,
+        "title": "Review maintenance and service history",
+        "content": "Ask operator or check maintenance log:\n\n1. When was the air filter last replaced?\n   Replacement interval depends on environment — dusty conditions require more frequent changes\n   Machine is at {equipment_hours} hours\n\n2. Has the MAF sensor been cleaned or replaced before?\n   Recurring code 132 after cleaning suggests sensor has degraded\n\n3. Has any intake system work been done recently?\n   Disturbed intake connections are a source of air leaks\n   Air leaks downstream of MAF sensor cause incorrect readings\n\n4. Has fuel consumption increased recently?\n   Inaccurate MAF reading causes rich or lean fueling\n   Increased fuel consumption with black smoke = rich running from low MAF signal",
+        "what_to_look_for": "Overdue filter replacement, recurring MAF fault history, recent intake work, and fuel consumption changes. These narrow down whether this is a maintenance-driven fault or a failed component.",
+        "what_it_doesnt_tell_you": "The actual MAF reading accuracy — only INSITE live data comparison can confirm this.",
+        "learning_point": "A MAF sensor that has been cleaned and still generates code 132 is likely degraded and needs replacement. Cleaning is a diagnostic step, not a permanent fix for a worn sensor."
+      },
+      {
+        "step": 5,
+        "title": "Review historical fault patterns",
+        "content": "Historical cases matching {fault_codes_active} on X15 engines:\n\n  Similar cases:       {similar_cases_found}\n  Success rate:        {success_rate_pct}%\n  Common resolution:   {most_common_resolution}\n  TSB reference:       {tsb_references}\n\nPattern assessment:\n- Dusty environment + restricted filter + high fault count: contamination — cleaning likely resolution\n- Recent intake work + low fault count: air leak from disturbed connection\n- High hours + recurring after previous cleaning: sensor degraded, replacement needed\n- Connector damage found: wiring repair before sensor replacement\n- No obvious cause: INSITE live data comparison needed (repair procedure)",
+        "what_to_look_for": "The combination of environment, filter condition, hours, and fault history gives you high confidence in whether this is a cleaning or replacement situation.",
+        "what_it_doesnt_tell_you": "Whether cleaning will resolve this specific fault — that is determined by attempting the cleaning procedure.",
+        "learning_point": "MAF sensor diagnosis is one of the most straightforward on the X15 — but only if you establish the operating environment and maintenance history first. Without that context the sensor often gets replaced unnecessarily."
+      }
+    ]
+  }
+}

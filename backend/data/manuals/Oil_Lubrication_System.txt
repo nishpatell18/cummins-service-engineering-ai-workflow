@@ -1,0 +1,172 @@
+X15 SERVICE MANUAL (SYNTHETIC - PROTOTYPE USE ONLY)
+SECTION 4.4 - ENGINE OIL AND LUBRICATION SYSTEM
+
+NOTE: This document is synthetic data generated for prototype demonstration purposes.
+It is not a real Cummins service document.
+
+========================================
+LUBRICATION SYSTEM OVERVIEW
+========================================
+
+The X15 lubrication system delivers pressurized oil to all critical engine
+components. The gear-driven oil pump is mounted at the front of the engine
+and draws oil from the sump through a pickup screen.
+
+Key components:
+- Oil pump (gear-driven, high volume)
+- Oil pressure relief valve (limits max pressure)
+- Oil filter (full-flow, spin-on type)
+- Oil filter bypass valve (opens if filter is clogged)
+- Oil cooler (plate-and-frame, cooled by engine coolant)
+- Oil pressure sensor (on main oil gallery)
+- Piston cooling nozzles (spray oil on piston underside for cooling)
+
+Normal oil pressure specifications:
+  Hot idle (90 deg C oil temp):    138-172 kPa (20-25 psi) MINIMUM
+  Normal operating (1200 RPM):    276-414 kPa (40-60 psi)
+  High RPM (1800+ RPM):           345-483 kPa (50-70 psi)
+
+  Warning threshold:  <138 kPa (20 psi) at idle — yellow lamp
+  Critical threshold: <103 kPa (15 psi) at idle — red lamp + derate
+  Shutdown threshold: <69 kPa (10 psi) — engine protection shutdown
+
+========================================
+FAULT CODE 100 - ENGINE OIL PRESSURE LOW
+========================================
+
+SPN: 100 | FMI: 1
+Lamp: Red | Triggers derate: Yes | Triggers shutdown: Yes
+
+CRITICAL: Do NOT restart engine until root cause is identified.
+Running with low oil pressure causes catastrophic bearing failure.
+This is a genuine safety fault — never dismiss or clear without diagnosis.
+
+IMMEDIATE ACTIONS WHEN CODE 100 OCCURS:
+1. Shut down engine immediately if not already shut down
+2. Do NOT attempt restart to see if code clears on its own
+3. Check oil level before any further diagnostics
+
+DIAGNOSTIC PROCEDURE - CODE 100:
+
+Step 1: Check oil level — always do this first
+  - Locate dipstick (right side of engine, yellow handle)
+  - Wipe clean, reinsert fully, remove and read
+  - Normal range: between MIN and MAX marks on dipstick
+  - Low oil is the most common cause of code 100
+  - X15 oil capacity: approximately 38 liters (10 gallons) with filter
+  - If low: inspect for leaks before adding oil
+  - Do NOT overfill — overfill causes oil aeration and foam, dropping pressure
+  - If oil level is correct: proceed to Step 2
+
+Step 2: Verify with INSITE before condemning components
+  - Connect INSITE diagnostic software
+  - Navigate to: Engine > Lube System > Oil Pressure
+  - Compare INSITE reading to the specifications above
+  - If INSITE shows normal pressure but code is active: sensor fault (Step 3)
+  - If INSITE confirms low pressure with correct oil level: mechanical (Step 4)
+
+Step 3: Oil pressure sensor test and replacement
+  - Part: CUM-4089916 ($48, in stock)
+  - Location: main oil gallery, passenger side of block near front
+  - Tools: 27mm deep socket, thread sealant
+  - Remove sensor and install manual test gauge in sensor port
+  - Start engine briefly — 10 seconds maximum
+  - Compare manual gauge reading to INSITE
+  - If manual gauge reads normal pressure: replace sensor
+  - If manual gauge confirms low pressure: sensor is accurate, go to Step 4
+  - Install new sensor with thread sealant — torque 40 N·m (30 lb-ft)
+
+Step 4: Mechanical low oil pressure diagnosis
+
+  Oil filter bypass:
+  - Replace oil filter first — it is cheap and fast
+  - Part: CUM-3102765 ($28, in stock)
+  - A stuck-open bypass valve allows unfiltered oil to bypass the filter
+  - It also reduces system pressure — replacing filter resolves this
+  - Recheck pressure after filter replacement before further diagnosis
+
+  Oil condition check:
+  - Drain small sample of oil into clear container
+  - Milky or frothy oil: coolant contamination — internal leak, stop diagnosis here
+  - Very thin, watery oil: fuel dilution — injector leak
+  - Sludgy/dark with grit: severely overdue oil change — change oil and recheck
+
+  Oil pump inspection:
+  - If pressure remains low after filter replacement:
+  - Remove oil pan (2-3 hour job, requires oil drain)
+  - Inspect pump gears for scoring or wear
+  - Check pump intake screen for blockage
+  - Measure pump clearances with feeler gauge
+    Tip clearance specification: 0.025-0.076 mm (0.001-0.003 in)
+    Side clearance specification: 0.025-0.102 mm (0.001-0.004 in)
+  - Outside specifications: replace oil pump assembly
+
+  Main bearing assessment:
+  - Worn main bearings allow oil to escape faster than pump can supply
+  - Symptom: low pressure at all RPM ranges despite correct oil level
+  - This requires engine overhaul — escalate to senior tech immediately
+  - Do not continue operating equipment in this condition
+
+========================================
+OIL CHANGE PROCEDURE
+========================================
+
+Service interval (off-highway severe service): Every 500 hours or 1 year
+Oil specification: CES 20078 compliant
+  - SAE 15W-40 for ambient temps above -18°C (0°F)
+  - SAE 10W-30 for ambient temps -18°C to -29°C (-0°F to -20°F)
+System capacity: 38 liters / 10 gallons with filter
+
+Procedure:
+1. Warm engine to operating temperature (improves oil drainage)
+2. Shut down — allow 5 minutes for oil to drain back to sump
+3. Position drain pan under drain plug (drain plug: 40mm socket)
+4. Remove drain plug — allow full drainage, 10-15 minutes minimum
+5. Remove old oil filter (use filter wrench if needed)
+6. Pre-fill new filter with clean oil before installation
+7. Apply thin film of clean oil to new filter gasket
+8. Install filter hand-tight plus 3/4 turn — do not use wrench to install
+9. Install drain plug with new sealing washer
+   Torque: 100 N·m (74 lb-ft)
+10. Add correct quantity of fresh oil via fill tube (top of valve cover)
+11. Start engine — check for leaks at drain plug and filter
+12. Verify oil pressure in INSITE (should reach normal range within 10 seconds)
+13. Shut down — wait 5 minutes — recheck dipstick, top up if needed
+
+OIL ANALYSIS PROGRAM:
+For equipment over 15,000 hours, send an oil sample to a certified lab
+every 250 hours. Early warning of bearing wear (copper, lead particles)
+or coolant contamination allows intervention before catastrophic failure.
+
+========================================
+PREVENTIVE MAINTENANCE — LUBRICATION SYSTEM
+========================================
+
+Every 500 hours:
+  - Oil and filter change (as above)
+  - Inspect for external oil leaks (valve cover, rear seal, front seal)
+
+Every 2,000 hours:
+  - Oil cooler inspection — check for restricted coolant flow
+  - Crankcase breather inspection and cleaning
+
+Every 6,000 hours:
+  - Oil cooler pressure test
+  - Review oil analysis history for bearing wear trends
+
+Common oil leak locations on X15:
+  - Valve cover gasket (top of engine — relatively easy repair)
+  - Front crankshaft seal (timing cover area — moderate repair)
+  - Rear crankshaft seal (flywheel area — requires transmission separation)
+  - Oil cooler housing O-rings (passenger side of block)
+  - Turbocharger oil supply and drain lines
+
+TOOLS REQUIRED FOR LUBE SYSTEM SERVICE:
+  - INSITE diagnostic software
+  - 27mm deep socket (oil pressure sensor)
+  - 40mm socket (drain plug)
+  - Oil filter wrench
+  - Torque wrench (0-150 N·m range)
+  - Drain pan minimum 50 liter capacity
+  - Oil sample extraction kit (for oil analysis)
+  - Feeler gauge set (pump clearance measurement)

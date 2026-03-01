@@ -1,0 +1,191 @@
+ISX15 SERVICE MANUAL
+SECTION 5.1.2 - MAF SENSOR SERVICE AND CLEANING PROCEDURE
+
+MASS AIR FLOW (MAF) SENSOR OVERVIEW:
+
+The MAF sensor measures the mass of air entering the engine and sends this information to the ECM (Engine Control Module). This data is critical for proper fuel delivery and engine performance.
+
+Location: Air intake tube, between air filter and throttle body
+Part Number: CUM-MAF-5588
+Replacement Cost: $180-220
+Expected Lifespan: 100,000 miles (under normal conditions)
+
+SYMPTOMS OF MAF SENSOR FAILURE:
+
+Common symptoms include:
+- Rough idle or stalling
+- Hesitation during acceleration
+- Black smoke from exhaust (running rich)
+- Poor fuel economy
+- Fault codes: P0171 (lean), P0172 (rich), P0101 (MAF range/performance)
+- Check engine light illuminated
+
+MAF SENSOR CLEANING PROCEDURE:
+
+IMPORTANT: Cleaning can often resolve MAF sensor issues and save the cost of replacement. Attempt cleaning before replacing sensor.
+
+Tools Required:
+- 10mm socket wrench
+- Flat-head screwdriver
+- MAF sensor cleaner spray (CRC brand recommended - Part# CLEAN-MAF)
+- Clean, lint-free cloth
+- Nitrile gloves
+
+Estimated Time: 30 minutes
+Skill Level Required: Level 1 (Junior technician capable)
+
+Step-by-Step Procedure:
+
+1. PREPARATION
+   - Allow engine to cool (minimum 30 minutes)
+   - Disconnect battery negative terminal
+   - Wait 5 minutes for systems to power down
+
+2. REMOVE AIR INTAKE TUBE
+   - Loosen hose clamp at throttle body
+   - Loosen hose clamp at air filter housing
+   - Carefully remove intake tube
+   - Set aside on clean surface
+
+3. LOCATE MAF SENSOR
+   - MAF sensor is integrated into air intake tube
+   - Wiring harness connector on top of sensor
+   - Do NOT touch sensor element with fingers
+
+4. DISCONNECT ELECTRICAL CONNECTOR
+   - Press release tab on connector
+   - Pull connector straight off sensor
+   - Inspect connector for corrosion or damage
+
+5. REMOVE MAF SENSOR
+   - Remove 2 mounting screws (10mm socket)
+   - Carefully pull sensor from intake tube
+   - Note orientation for reassembly
+
+6. INSPECT SENSOR ELEMENT
+   - Look inside sensor opening
+   - Check for:
+     * Oil contamination (common)
+     * Dirt or debris
+     * Physical damage to wire element
+   - If wire is broken, sensor must be replaced
+
+7. CLEAN SENSOR ELEMENT
+   - Hold sensor with element facing down
+   - Spray MAF cleaner liberally on element
+   - Allow cleaner to drain out bottom
+   - DO NOT use compressed air
+   - DO NOT touch element with cloth or brush
+   - Repeat spray 3-4 times until clean
+   - Allow to air dry for 10-15 minutes
+
+8. CLEAN SENSOR HOUSING
+   - Wipe exterior with clean cloth
+   - Clean electrical connector with contact cleaner
+   - Ensure no debris in mounting holes
+
+9. REINSTALL SENSOR
+   - Install sensor in correct orientation
+   - Install 2 mounting screws
+   - Torque: 3 N⋅m (2.2 lb-ft) - DO NOT OVERTIGHTEN
+   - Reconnect electrical connector (listen for click)
+
+10. REINSTALL AIR INTAKE TUBE
+    - Position tube between air filter and throttle
+    - Tighten hose clamps (5 N⋅m / 44 lb-in)
+    - Ensure no air leaks
+
+11. RECONNECT BATTERY
+    - Connect battery negative terminal
+    - Tighten terminal bolt
+
+12. CLEAR FAULT CODES
+    - Connect OBD-II scanner
+    - Clear all stored fault codes
+    - Clear freeze frame data
+
+13. TEST DRIVE
+    - Start engine and verify smooth idle
+    - Drive vehicle 10-15 minutes
+    - Verify no check engine light
+    - Monitor MAF sensor data with scanner
+    - Expected values at idle: 2-7 g/s
+    - Expected values at 2500 RPM: 15-25 g/s
+
+WHEN TO REPLACE INSTEAD OF CLEAN:
+
+Replace MAF sensor if:
+- Sensor element wire is broken or damaged
+- Cleaning does not resolve symptoms
+- MAF sensor readings are erratic after cleaning
+- Sensor has been cleaned 3+ times previously
+- Physical damage to sensor housing
+- Sensor is more than 150,000 miles old
+
+COMMON MISTAKES TO AVOID:
+
+1. Using wrong type of cleaner
+   - NEVER use carburetor cleaner
+   - NEVER use brake cleaner
+   - ONLY use MAF-specific cleaner
+
+2. Touching sensor element
+   - Oils from skin will contaminate sensor
+   - Always wear gloves
+   - Never touch wire element
+
+3. Using compressed air
+   - Can damage delicate sensor wire
+   - Can blow debris further into sensor
+   - Air dry only
+
+4. Over-tightening mounting screws
+   - Sensor housing is plastic
+   - Easy to strip threads
+   - Use torque wrench: 3 N⋅m maximum
+
+PREVENTION OF MAF SENSOR CONTAMINATION:
+
+To extend MAF sensor life:
+- Replace air filter every 15,000 miles
+- Use quality air filters (OEM or equivalent)
+- Ensure air filter housing is sealed properly
+- Avoid oiling air filters excessively
+- Check for engine oil leaks (oil vapor contaminates MAF)
+- Inspect PCV system for proper operation
+
+DIAGNOSTIC DATA PARAMETERS:
+
+Normal MAF Sensor Readings (ISX15):
+
+At Idle (800 RPM):
+- Airflow: 2-7 grams/second
+- Voltage: 0.6-1.2 volts
+
+At 1500 RPM:
+- Airflow: 8-15 grams/second
+- Voltage: 1.5-2.5 volts
+
+At 2500 RPM (light load):
+- Airflow: 15-25 grams/second
+- Voltage: 2.5-3.8 volts
+
+If readings are outside these ranges after cleaning, replacement is required.
+
+RELATED FAULT CODES:
+
+- P0101: MAF sensor circuit range/performance
+- P0102: MAF sensor circuit low input
+- P0103: MAF sensor circuit high input
+- P0104: MAF sensor circuit intermittent
+- P0171: System too lean (often caused by MAF issue)
+- P0174: System too lean Bank 2 (V-engines)
+
+WARRANTY INFORMATION:
+
+MAF sensors are covered under:
+- Emissions warranty: 80,000 miles / 8 years
+- Powertrain warranty: 60,000 miles / 5 years
+
+Cleaning service is not covered under warranty but is recommended maintenance.
+Replacement under warranty requires documented testing showing sensor failure.

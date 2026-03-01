@@ -1,0 +1,174 @@
+X15 SERVICE MANUAL (SYNTHETIC - PROTOTYPE USE ONLY)
+SECTION 7.2 - DIESEL PARTICULATE FILTER (DPF) SYSTEM
+
+NOTE: This document is synthetic data generated for prototype demonstration purposes.
+It is not a real Cummins service document.
+
+========================================
+DPF SYSTEM OVERVIEW
+========================================
+
+The Diesel Particulate Filter (DPF) captures soot particles from exhaust gas.
+Accumulated soot is periodically burned off through a process called regeneration.
+
+Key components:
+- DPF filter element (cordierite or silicon carbide substrate)
+- DPF differential pressure sensor (measures soot load)
+- DPF inlet/outlet temperature sensors
+- DPF pressure ports (upstream and downstream)
+
+Soot load scale:
+  0-50%:   Normal operation
+  51-75%:  Elevated — regen recommended at next opportunity
+  76-90%:  High — derate may be triggered, forced regen needed
+  91-100%: Critical — immediate forced regen required
+  >100%:   DPF may be damaged — inspect before regen attempt
+
+Regen types:
+  Passive regen:  Occurs automatically during highway/high load driving
+                  Exhaust temp >300°C sustained for 20+ minutes
+  Active regen:   ECM injects extra fuel to raise exhaust temp
+                  Occurs automatically, engine RPM may increase slightly
+  Forced regen:   Technician-initiated via INSITE (stationary)
+                  Required when soot load >80% or active regen fails
+
+========================================
+FAULT CODE 3719 - DPF SOOT LOAD HIGH
+========================================
+
+SPN: 3251 | FMI: 0
+Lamp: Yellow | Triggers derate: Yes (typically at 85% soot load)
+
+COMMON CAUSES:
+1. Short duty cycles preventing passive regen (common in off-highway equipment)
+2. Failed active regen (injector issue, exhaust leak)
+3. DPF differential pressure sensor fault (reads high incorrectly)
+4. Actual DPF blockage requiring cleaning or replacement
+5. EGR issues causing excess soot production
+
+DIAGNOSTIC PROCEDURE - CODE 3719:
+
+Step 1: Check actual soot load via INSITE
+  - Connect INSITE
+  - Navigate to: Aftertreatment > DPF > Soot Load
+  - Record current soot load percentage
+  - If 76-95%: attempt forced stationary regen (Step 2)
+  - If >95%: inspect DPF before attempting regen (Step 3)
+
+Step 2: Perform stationary forced regeneration
+  PRE-CONDITIONS (all must be met):
+  - Engine coolant temperature: >60°C (140°F)
+  - Engine oil level: within normal range
+  - DEF level: >15%
+  - No active engine fault codes (only aftertreatment codes acceptable)
+  - Equipment on level ground, clear of combustible materials
+  - Parking brake engaged
+  - DPF exhaust outlet clear — regen produces high heat and smoke
+
+  PROCEDURE:
+  1. Connect INSITE laptop
+  2. Navigate to: Service Routines > DPF Regen > Forced Stationary Regen
+  3. Follow INSITE prompts — engine RPM will increase to 1000-1200
+  4. Exhaust temperature will reach 500-650°C — this is normal
+  5. Duration: typically 20-45 minutes depending on soot load
+  6. Monitor: INSITE will show soot load decreasing in real time
+  7. Regen complete when soot load <15% and INSITE confirms success
+  8. Allow engine to idle 5 minutes before shutdown (turbo cool-down)
+
+  REGEN ABORT CONDITIONS (INSITE will stop automatically):
+  - Coolant temperature exceeds 107°C
+  - Oil pressure drops below minimum
+  - Any new engine fault codes
+  - DPF outlet temperature exceeds 700°C
+
+Step 3: Inspect DPF if soot load >95% or regen fails
+  - Check DPF differential pressure with engine running at 1500 RPM
+  - Normal pressure differential: 2-8 kPa at 1500 RPM
+  - High pressure (>15 kPa): DPF is physically blocked, needs cleaning
+  - DPF cleaning: remove unit, send to certified cleaning service
+  - If cleaning fails: DPF replacement (CUM-4965315, $2,850 — requires approval)
+
+Step 4: After successful regen
+  - Clear fault codes
+  - Check DPF soot load <15% in INSITE
+  - Verify no codes return within 1 hour of operation
+
+WHY OFF-HIGHWAY EQUIPMENT GETS DPF ISSUES:
+Off-highway equipment (excavators, loaders, haul trucks) often runs at varying
+loads with many idle periods. Passive regen requires sustained high exhaust temps.
+Short cycles prevent this. Recommend operators to run equipment at higher load
+for at least 30 minutes weekly to support passive regen.
+
+========================================
+FAULT CODE 3936 - DPF DIFFERENTIAL PRESSURE HIGH
+========================================
+
+SPN: 3936 | FMI: 0
+Lamp: Yellow | Triggers derate: No (warning only)
+
+Code 3936 often appears before 3719. It indicates the pressure differential
+across the DPF is elevated but soot load may not yet be critically high.
+
+DIFFERENTIAL PRESSURE SPECIFICATIONS:
+  At idle (700-800 RPM):   0.5 - 2.0 kPa
+  At 1000 RPM:             1.0 - 4.0 kPa
+  At 1500 RPM:             2.0 - 8.0 kPa
+  At rated speed:          4.0 - 12.0 kPa
+
+  WARNING threshold:       >12 kPa at 1500 RPM
+  Critical threshold:      >20 kPa at 1500 RPM
+
+DIAGNOSTIC PROCEDURE - CODE 3936:
+
+Step 1: Check if sensor is faulty before assuming DPF blockage
+  - Locate DPF differential pressure sensor (on DPF housing)
+  - Part number: CUM-5303870
+  - Inspect sensor ports — often blocked with soot deposits
+  - Use compressed air to blow out sensor ports carefully
+  - Re-read pressure in INSITE after cleaning ports
+
+Step 2: Verify readings with manual gauge
+  - Install manual differential pressure gauge at DPF test ports
+  - Compare reading to INSITE sensor reading
+  - If readings differ by >2 kPa: replace differential pressure sensor
+  - If readings agree and pressure is high: DPF is genuinely blocked
+
+Step 3: Sensor replacement procedure
+  - Part: CUM-5303870 ($125, in stock)
+  - Disconnect pressure lines and electrical connector
+  - Remove sensor (typically 2x 10mm bolts)
+  - Install new sensor — do not overtighten fittings (15 N·m max)
+  - Reconnect lines — check for leaks at idle
+
+========================================
+DPF REMOVAL AND INSTALLATION
+========================================
+
+Tools required:
+- DPF removal tool set: TOOL-DPF-100
+- Torque wrench (0-100 N·m range)
+- High-temp anti-seize compound
+- New DPF gaskets (required — never reuse)
+- Heat resistant gloves (DPF housing stays hot for 2+ hours)
+
+CRITICAL: Allow DPF to cool minimum 2 hours before removal.
+Surface temperatures can exceed 200°C even after engine shutdown.
+
+Removal procedure:
+1. Allow 2 hour cool-down
+2. Disconnect DPF inlet and outlet temperature sensor connectors
+3. Disconnect differential pressure sensor lines
+4. Remove DPF inlet clamp (loosen band clamp, 13mm socket)
+5. Remove DPF outlet clamp
+6. Support DPF weight (unit weighs 25-40 kg)
+7. Slide DPF rearward and lower from mounts
+8. Inspect gasket surfaces for damage before reinstallation
+
+Installation:
+1. Install new gaskets — never reuse old gaskets
+2. Apply high-temp anti-seize to clamp threads
+3. Torque inlet clamp: 14 N·m (10 lb-ft)
+4. Torque outlet clamp: 14 N·m (10 lb-ft)
+5. Reconnect all sensor connectors
+6. Run engine — check for exhaust leaks at connections
+7. Perform forced regen to verify system function after installation

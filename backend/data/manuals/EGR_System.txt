@@ -1,0 +1,161 @@
+X15 SERVICE MANUAL (SYNTHETIC - PROTOTYPE USE ONLY)
+SECTION 6.3 - EGR VALVE AND COOLER SERVICE
+
+NOTE: This document is synthetic data generated for prototype demonstration purposes.
+It is not a real Cummins service document.
+
+========================================
+EGR SYSTEM OVERVIEW
+========================================
+
+The Exhaust Gas Recirculation (EGR) system reduces NOx emissions by recirculating
+a portion of exhaust gas back into the intake manifold. This lowers combustion
+temperature and reduces NOx formation.
+
+Key components:
+- EGR valve (controls exhaust flow into intake)
+- EGR cooler (cools recirculated exhaust gas before intake)
+- EGR cooler coolant temperature sensor
+- EGR position sensor (monitors valve position)
+- ECM controls valve position via PWM signal
+
+Normal EGR operation:
+- At light load / idle: EGR valve partially open (20-60%)
+- At high load: EGR valve partially or fully closed
+- At engine brake: EGR valve closed
+- Cold start: EGR valve closed until coolant temp >60°C
+
+========================================
+FAULT CODE 2791 - EGR VALVE NOT RESPONDING
+========================================
+
+SPN: 2659 | FMI: 7
+Lamp: Yellow | Triggers derate: Yes
+
+This code means the ECM commanded the EGR valve to move but the position
+sensor did not confirm movement. Either the valve is mechanically stuck
+or the actuator has failed.
+
+DIAGNOSTIC PROCEDURE - CODE 2791:
+
+Step 1: Confirm with INSITE actuator test
+  - Connect INSITE
+  - Navigate to: Engine > EGR System > EGR Valve Actuator Test
+  - Command valve to 0% (closed) — record actual position
+  - Command valve to 100% (open) — record actual position
+  - Valve should move within 2 seconds of command
+  - If valve does not move: proceed to Step 2
+
+Step 2: Determine if mechanical or electrical fault
+  - Disconnect EGR valve electrical connector
+  - Measure actuator resistance across pins A and B
+  - Specification: 8-12 ohms at 20°C
+  - Open circuit (infinite): failed actuator — replace valve assembly
+  - Correct resistance but no movement: valve mechanically stuck (Step 3)
+
+Step 3: Attempt EGR valve cleaning (mechanical stuck)
+  - WARNING: EGR components are extremely hot — allow 60 min cool-down
+  - Remove EGR valve assembly (see removal procedure below)
+  - Inspect valve plate and bore for carbon deposits
+  - Heavy carbon buildup is the most common cause of stuck valves
+  - Cleaning procedure:
+    a. Spray EGR cleaner liberally into valve bore
+    b. Work valve manually back and forth with pliers on stem
+    c. Allow cleaner to soak 15 minutes
+    d. Repeat spray and work until valve moves freely
+    e. Wipe out loosened carbon deposits
+  - If valve moves freely after cleaning: reinstall and retest
+  - If valve remains stuck after 3 cleaning attempts: replace assembly
+
+Step 4: EGR valve replacement
+  - Part: CUM-3689260 ($520 — requires supervisor approval)
+  - Remove old valve (see procedure below)
+  - Install new valve — no cleaning required
+  - Torque mounting bolts: 25 N·m (18 lb-ft)
+  - Clear codes, perform INSITE actuator test to verify
+
+EGR VALVE REMOVAL PROCEDURE:
+Tools: 10mm, 13mm socket, EGR cleaner spray, gasket scraper
+1. Allow engine to cool minimum 60 minutes
+2. Remove air intake duct to access EGR valve
+3. Disconnect EGR valve electrical connector (press tab, pull straight)
+4. Disconnect EGR inlet pipe — loosen clamp (13mm)
+5. Remove 4 EGR valve mounting bolts (10mm, 22 N·m torque)
+6. Remove valve — expect heavy carbon deposits
+7. Clean mating surface thoroughly before installing new valve
+8. Always install new gasket — never reuse old gasket
+
+IMPORTANT NOTE FROM HISTORICAL CASES:
+Cleaning is often attempted first but fails in high-hour engines (>8,000 hrs).
+Carbon buildup is too hardened to clean effectively. If equipment has
+>8,000 hours and valve is stuck, proceed directly to replacement.
+
+========================================
+FAULT CODE 2789 - EGR COOLER COOLANT TEMPERATURE HIGH
+========================================
+
+SPN: 2789 | FMI: 0
+Lamp: Yellow | Triggers derate: Yes
+
+High EGR cooler temperature indicates restricted coolant flow through the cooler.
+Left uncorrected this can cause EGR cooler failure — coolant leaking into exhaust
+is an expensive failure mode.
+
+DIAGNOSTIC PROCEDURE - CODE 2789:
+
+Step 1: Check coolant level and condition
+  - Low coolant level reduces flow through EGR cooler
+  - Check coolant level in deaeration tank (should be at MIN-MAX line)
+  - Check coolant color — brown/rusty indicates contamination
+  - Normal coolant: bright green, orange, or pink (depending on type)
+
+Step 2: Check EGR cooler coolant flow
+  - Run engine to operating temp
+  - Check EGR cooler inlet and outlet hose temperatures by touch
+    (use caution — components are hot)
+  - Inlet should be hotter than outlet
+  - If both feel same temperature: flow is blocked (Step 3)
+  - Large temperature difference is normal
+
+Step 3: Check for EGR cooler internal blockage
+  - Most common cause: scale buildup from hard water or incorrect coolant
+  - Remove EGR cooler inlet hose
+  - Inspect with flashlight for scale deposits
+  - If heavily scaled: cooler requires replacement
+  - Part: CUM-4089268 ($780 — requires supervisor approval, not in stock)
+  - Note: Order required — allow 2-3 business days
+
+Step 4: Verify coolant specification
+  - X15 requires Cummins Fleetguard ES Compleat OAT coolant
+  - Mixing coolant types causes accelerated scale buildup
+  - If incorrect coolant found: full system flush required before new cooler install
+
+EGR COOLER REPLACEMENT:
+Skill level: Level 2 (senior technician recommended)
+Time estimate: 4-5 hours
+Note: Requires coolant drain and refill — approximately 8 gallons of coolant
+
+========================================
+EGR SYSTEM MAINTENANCE
+========================================
+
+Inspection interval: Every 3,000 hours or 2 years
+- Check EGR valve for carbon buildup
+- Inspect EGR cooler hoses for cracking or swelling
+- Verify coolant condition (should test >50% freeze protection)
+- Check EGR valve response with INSITE actuator test
+
+Prevention of premature EGR failures:
+- Use correct coolant specification (OAT type only)
+- Replace coolant per schedule — never extend beyond 6,000 hours
+- Avoid excessive idling (increases EGR carbon accumulation rate)
+- Ensure air filter is clean (dirty filter increases EGR duty cycle)
+
+TOOLS REQUIRED:
+- INSITE diagnostic software
+- 10mm, 13mm socket set
+- Torque wrench
+- EGR valve cleaner spray
+- Coolant test strips or refractometer
+- New EGR valve gasket (always required)
+- New EGR cooler gaskets if cooler is replaced

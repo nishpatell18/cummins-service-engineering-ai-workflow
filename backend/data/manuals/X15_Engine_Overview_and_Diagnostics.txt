@@ -1,0 +1,201 @@
+X15 SERVICE MANUAL (SYNTHETIC - PROTOTYPE USE ONLY)
+SECTION 1.1 - X15 ENGINE OVERVIEW AND GENERAL DIAGNOSTICS
+
+NOTE: This document is synthetic data generated for prototype demonstration purposes.
+It is not a real Cummins service document.
+
+========================================
+X15 ENGINE FAMILY OVERVIEW
+========================================
+
+The Cummins X15 is a 15-liter inline 6-cylinder diesel engine designed for
+heavy-duty on-highway and off-highway applications. It replaced the ISX15
+in the product lineup and features improved emissions compliance and
+performance over its predecessor.
+
+Engine configurations:
+  X15 Performance Series:
+    - Power range: 400-605 HP
+    - Torque range: 1,450-2,050 lb-ft
+    - Designed for maximum performance applications
+    - Typically paired with CM2450 electronic control module
+
+  X15 Efficiency Series:
+    - Power range: 310-500 HP
+    - Torque range: 1,250-1,650 lb-ft
+    - Optimized for fuel economy
+    - Available with CM2350 or CM2450 electronic control module
+
+Electronic Control Modules:
+  CM2350: Previous generation ECM
+    - Used in engines manufactured approximately 2013-2021
+    - Supports Cummins INSITE diagnostics
+    - Full fault code and freeze frame capture
+
+  CM2450: Current generation ECM
+    - Used in engines manufactured approximately 2020-present
+    - Enhanced diagnostics and telematics capability
+    - Improved DEF system monitoring
+    - Some fault codes are CM2450-specific (e.g. Code 1127)
+
+Common off-highway applications:
+  - Mining haul trucks and loaders
+  - Construction excavators and wheel loaders
+  - Forestry equipment (skidders, feller bunchers)
+  - Quarry equipment
+  - Drilling rigs
+  - Pipeline construction equipment
+  - Road construction equipment (pavers, graders, compactors)
+
+========================================
+INSITE DIAGNOSTIC SOFTWARE — OVERVIEW
+========================================
+
+Cummins INSITE is the primary diagnostic tool for the X15.
+It connects to the engine ECM via a Cummins-approved adapter.
+
+Key INSITE functions for field technicians:
+  Fault Code Viewing:
+    - Active faults: currently triggered, engine may be derated
+    - Inactive faults: previously triggered, may indicate intermittent issues
+    - Fault counts: how many times each code has triggered
+    - Freeze frame data: sensor snapshot at moment of fault
+
+  Actuator Tests:
+    - EGR valve position test
+    - VGT actuator position test
+    - Injector cutout test (identify misfiring cylinder)
+    - DEF dosing system test
+
+  Service Routines:
+    - Forced DPF regeneration
+    - SCR verification drive cycle
+    - VGT actuator calibration
+    - Injector trim code reset after replacement
+
+  Data Monitoring (real-time):
+    - All sensor values live
+    - Calculated parameters (engine load %, fuel rate)
+    - Aftertreatment system status
+
+INSITE connection procedure:
+1. Connect Cummins inline adapter to diagnostic port (typically cab or frame)
+2. Connect laptop to adapter via USB
+3. Launch INSITE software
+4. Select engine from detected devices list
+5. Verify ECM serial number matches engine serial number
+
+========================================
+GENERAL FAULT CODE APPROACH
+========================================
+
+Fault code priority on X15:
+  P1 — Critical: Potential for engine damage or safety hazard
+       Examples: Code 100 (oil pressure), Code 110 (coolant temp)
+       Action: Immediate shutdown, do not restart without diagnosis
+
+  P2 — High: Significant performance impact, derate likely
+       Examples: Code 157 (fuel pressure), Code 3719 (DPF soot)
+       Action: Address within 2-4 hours, limit equipment use
+
+  P3 — Medium: Reduced efficiency, no immediate safety risk
+       Examples: Code 132 (MAF sensor), Code 3936 (DPF pressure)
+       Action: Schedule repair within 1-2 days
+
+  P4 — Low: Informational, monitor
+       Action: Schedule at next maintenance interval
+
+Fault code reading order:
+1. Start with P1 codes — these take priority over everything
+2. Look for induced codes — Code 3712 (derate active) is always
+   induced by another code, not the root cause
+3. Look for patterns — multiple fuel system codes together indicate
+   a single fuel system problem, not multiple separate failures
+4. Check fault counts — a code with count=1 may be intermittent
+   A code with count=8 is a persistent, real problem
+
+Freeze frame interpretation:
+  The freeze frame captures sensor values at the exact moment the fault code
+  triggered. This is critical diagnostic data — it tells you the conditions
+  the engine was in when the problem occurred.
+
+  Key freeze frame values and what they tell you:
+    Engine RPM: Was engine under load or at idle?
+    Load %: What was the demand on the engine?
+    Fuel pressure kPa: Below 20 = fuel system problem
+    Coolant temp F: Above 220 = cooling problem
+    Oil pressure psi: Below 20 = lubrication problem
+    DEF level %: Below 15 = DEF fluid low
+    DPF soot %: Above 80 = regen needed immediately
+    Boost pressure psi: Below 15 at load = boost problem
+
+========================================
+X15 FLUID SPECIFICATIONS SUMMARY
+========================================
+
+Engine oil:
+  Specification: CES 20078 compliant
+  Grade: SAE 15W-40 (standard) or 10W-30 (cold climate)
+  Capacity: 38 liters / 10 gallons (with filter)
+  Change interval: 500 hours severe service / 1,000 hours normal
+
+Coolant:
+  Specification: OAT (Organic Acid Technology)
+  Type: Cummins Fleetguard ES Compleat OAT or equivalent
+  Mix: 50/50 with deionized water
+  Capacity: 40-50 liters / 10-13 gallons (system dependent)
+  Change interval: 6,000 hours or 6 years
+
+DEF (Diesel Exhaust Fluid):
+  Specification: ISO 22241 (32.5% urea solution)
+  Acceptable brands: Any ISO 22241 certified DEF
+  Do NOT use: Water, windshield washer fluid, any other fluid
+  Consumption rate: Approximately 2-4% of fuel consumption
+  Tank capacity: Varies by application (15-25 gallons typical)
+
+Fuel:
+  Specification: Ultra-low sulfur diesel (ULSD), max 15 ppm sulfur
+  Biodiesel blends: B5 acceptable, B20 with written approval only
+  Fuel filter primary: Replace every 500 hours
+  Fuel filter secondary: Replace every 1,000 hours
+
+========================================
+X15 MAINTENANCE SCHEDULE SUMMARY
+========================================
+
+Every 500 hours:
+  - Engine oil and filter change
+  - Primary fuel filter replacement
+  - Air filter inspection (replace if restriction indicated)
+  - Check belt condition and tension
+  - Check all fluid levels
+  - Visual inspection for leaks
+
+Every 1,000 hours:
+  - All 500-hour items
+  - Secondary fuel filter replacement
+  - Coolant sample analysis
+  - DPF inspection and forced regen if soot load >50%
+
+Every 3,000 hours:
+  - All 1,000-hour items
+  - Valve lash adjustment inspection
+  - Turbocharger inspection
+  - EGR valve inspection and cleaning if needed
+  - Fuel injector trim code check
+
+Every 6,000 hours:
+  - All 3,000-hour items
+  - Coolant replacement (full drain and fill)
+  - Injector inspection
+  - Full engine tune-up
+
+TORQUE SPECIFICATIONS QUICK REFERENCE:
+  Oil drain plug: 100 N·m (74 lb-ft)
+  Oil filter: Hand tight plus 3/4 turn
+  Thermostat housing: 25 N·m (18 lb-ft)
+  EGR valve mounting: 25 N·m (18 lb-ft)
+  VGT actuator: 10 N·m (89 lb-in)
+  DEF sensor: 8 N·m (71 lb-in)
+  DPF clamps: 14 N·m (10 lb-ft)
+  Fuel filter housing: 25 N·m (18 lb-ft)
