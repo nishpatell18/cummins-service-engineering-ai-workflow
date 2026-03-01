@@ -1,0 +1,219 @@
+[
+  {
+    "ticket_id": "HIST-2023-001",
+    "serial_number": "X15-CM2450-0004",
+    "equipment_model": "X15 Performance Series",
+    "cm_version": "CM2450",
+    "fault_codes": [
+      "3714",
+      "3712"
+    ],
+    "resolution_type": "Replaced DEF Level Sensor",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-4309047"
+    ],
+    "total_cost_usd": 145.0,
+    "tsb_references": [
+      "TSB-X15-2023-04"
+    ],
+    "resolution_notes": "DEF level sensor was reading incorrectly despite adequate fluid. Replaced sensor, cleared codes. Derate resolved immediately.",
+    "tech_skill_level": 1,
+    "resolution_time_hours": 2.5,
+    "resolved_at": "2023-11-10"
+  },
+  {
+    "ticket_id": "HIST-2023-002",
+    "serial_number": "X15-CM2350-0005",
+    "equipment_model": "X15 Efficiency Series",
+    "cm_version": "CM2350",
+    "fault_codes": [
+      "3719",
+      "3936"
+    ],
+    "resolution_type": "Forced DPF Regen + Sensor Cleaned",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-5303870"
+    ],
+    "total_cost_usd": 125.0,
+    "tsb_references": [
+      "TSB-X15-2022-11"
+    ],
+    "resolution_notes": "DPF soot load at 94%. Performed stationary forced regen using INSITE. DPF differential pressure sensor was dirty, cleaned and recalibrated. Regen completed successfully.",
+    "tech_skill_level": 2,
+    "resolution_time_hours": 4.0,
+    "resolved_at": "2023-08-22"
+  },
+  {
+    "ticket_id": "HIST-2023-003",
+    "serial_number": "X15-CM2350-0006",
+    "equipment_model": "X15 Efficiency Series",
+    "cm_version": "CM2350",
+    "fault_codes": [
+      "157",
+      "559"
+    ],
+    "resolution_type": "Replaced Primary + Secondary Fuel Filters",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-5579552",
+      "CUM-4936082"
+    ],
+    "total_cost_usd": 80.0,
+    "tsb_references": [],
+    "resolution_notes": "Fuel pressure low at 11 kPa. Both filters badly clogged due to contaminated fuel. Replaced both filters, bled fuel system, pressure restored to 27 kPa. Codes cleared.",
+    "tech_skill_level": 1,
+    "resolution_time_hours": 1.5,
+    "resolved_at": "2023-06-14"
+  },
+  {
+    "ticket_id": "HIST-2023-004",
+    "serial_number": "X15-CM2450-0001",
+    "equipment_model": "X15 Performance Series",
+    "cm_version": "CM2450",
+    "fault_codes": [
+      "2791"
+    ],
+    "resolution_type": "EGR Valve Replaced",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-3689260"
+    ],
+    "total_cost_usd": 520.0,
+    "tsb_references": [
+      "TSB-X15-2023-07"
+    ],
+    "resolution_notes": "EGR valve stuck partially closed due to heavy carbon buildup. Attempted cleaning first \u2014 valve still not responding to commands. Replaced valve assembly. Derate cleared after replacement.",
+    "tech_skill_level": 2,
+    "resolution_time_hours": 5.0,
+    "resolved_at": "2023-09-03"
+  },
+  {
+    "ticket_id": "HIST-2023-005",
+    "serial_number": "X15-CM2350-0009",
+    "equipment_model": "X15 Efficiency Series",
+    "cm_version": "CM2350",
+    "fault_codes": [
+      "100",
+      "3712"
+    ],
+    "resolution_type": "Oil Top-Up + Oil Pressure Sensor Replaced",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-4089916"
+    ],
+    "total_cost_usd": 48.0,
+    "tsb_references": [],
+    "resolution_notes": "Engine oil was 3 quarts low. Topped up oil, cleared codes, sensor also replaced as precaution due to erratic readings. Oil pressure restored to normal 42 psi. Shutdown protection had triggered correctly.",
+    "tech_skill_level": 1,
+    "resolution_time_hours": 1.0,
+    "resolved_at": "2023-05-28"
+  },
+  {
+    "ticket_id": "HIST-2024-001",
+    "serial_number": "X15-CM2450-0010",
+    "equipment_model": "X15 Performance Series",
+    "cm_version": "CM2450",
+    "fault_codes": [
+      "4334",
+      "3258"
+    ],
+    "resolution_type": "DEF Tank Drained and Refilled with Correct Fluid",
+    "resolution_success": true,
+    "parts_used": [],
+    "total_cost_usd": 35.0,
+    "tsb_references": [
+      "TSB-X15-2023-04"
+    ],
+    "resolution_notes": "DEF quality fault. Operator had inadvertently added water to DEF tank. Drained full tank, flushed system, refilled with correct ISO 22241 DEF. SCR inducement cleared after 20 min drive cycle.",
+    "tech_skill_level": 1,
+    "resolution_time_hours": 3.0,
+    "resolved_at": "2024-01-15"
+  },
+  {
+    "ticket_id": "HIST-2024-002",
+    "serial_number": "X15-CM2350-0012",
+    "equipment_model": "X15 Efficiency Series",
+    "cm_version": "CM2350",
+    "fault_codes": [
+      "102"
+    ],
+    "resolution_type": "VGT Actuator Replaced",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-4089174"
+    ],
+    "total_cost_usd": 640.0,
+    "tsb_references": [
+      "TSB-X15-2024-02"
+    ],
+    "resolution_notes": "Boost pressure consistently low (8-12 psi, target 24+). VGT actuator not responding to ECM commands. Replaced actuator, boost restored to 25 psi. Fault count was high (11 occurrences) indicating long-standing issue.",
+    "tech_skill_level": 2,
+    "resolution_time_hours": 6.0,
+    "resolved_at": "2024-03-08"
+  },
+  {
+    "ticket_id": "HIST-2024-003",
+    "serial_number": "X15-CM2450-0007",
+    "equipment_model": "X15 Performance Series",
+    "cm_version": "CM2450",
+    "fault_codes": [
+      "110",
+      "111"
+    ],
+    "resolution_type": "Thermostat Replaced + Coolant System Pressure Tested",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-3803702"
+    ],
+    "total_cost_usd": 65.0,
+    "tsb_references": [],
+    "resolution_notes": "Coolant temp reached 238F before derate. Thermostat stuck closed. Replaced thermostat kit, pressure tested system (no leaks found). Coolant level was also 1.5L low \u2014 topped up. Engine temp now stable at 195F.",
+    "tech_skill_level": 1,
+    "resolution_time_hours": 2.5,
+    "resolved_at": "2024-02-19"
+  },
+  {
+    "ticket_id": "HIST-2024-004",
+    "serial_number": "X15-CM2450-0002",
+    "equipment_model": "X15 Performance Series",
+    "cm_version": "CM2450",
+    "fault_codes": [
+      "651"
+    ],
+    "resolution_type": "Injector Cylinder 3 Replaced",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-4928420"
+    ],
+    "total_cost_usd": 490.0,
+    "tsb_references": [],
+    "resolution_notes": "Cylinder 3 injector open circuit confirmed via INSITE injector cutout test. Wiring harness checked and intact. Injector replaced, misfire resolved, all cylinders balanced within 2% of each other.",
+    "tech_skill_level": 2,
+    "resolution_time_hours": 4.5,
+    "resolved_at": "2024-04-30"
+  },
+  {
+    "ticket_id": "HIST-2024-005",
+    "serial_number": "X15-CM2350-0015",
+    "equipment_model": "X15 Efficiency Series",
+    "cm_version": "CM2350",
+    "fault_codes": [
+      "132"
+    ],
+    "resolution_type": "MAF Sensor Cleaned + Air Filter Replaced",
+    "resolution_success": true,
+    "parts_used": [
+      "CUM-4940715"
+    ],
+    "total_cost_usd": 180.0,
+    "tsb_references": [
+      "TSB-X15-2023-09"
+    ],
+    "resolution_notes": "MAF sensor reading erratically \u2014 air mass values jumping 20-40% during steady state. Sensor cleaned with MAF cleaner (no improvement). Air filter was severely clogged. Replaced both. Readings now stable.",
+    "tech_skill_level": 1,
+    "resolution_time_hours": 1.5,
+    "resolved_at": "2024-06-12"
+  }
+]

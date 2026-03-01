@@ -1,0 +1,241 @@
+[
+  {
+    "part_number": "CUM-4309047",
+    "description": "DEF Tank Level Sensor",
+    "cost_usd": 145.0,
+    "in_stock": true,
+    "warehouse_location": "Bin A-14",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-5579406",
+    "description": "DEF Dosing Injector",
+    "cost_usd": 310.0,
+    "in_stock": true,
+    "warehouse_location": "Bin A-15",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-4965315",
+    "description": "DPF (Diesel Particulate Filter)",
+    "cost_usd": 2850.0,
+    "in_stock": false,
+    "warehouse_location": "Warehouse B - Special Order",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": true
+  },
+  {
+    "part_number": "CUM-3689260",
+    "description": "EGR Valve Assembly",
+    "cost_usd": 520.0,
+    "in_stock": true,
+    "warehouse_location": "Bin C-03",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": true
+  },
+  {
+    "part_number": "CUM-4089268",
+    "description": "EGR Cooler Assembly",
+    "cost_usd": 780.0,
+    "in_stock": false,
+    "warehouse_location": "Warehouse B - Order Required",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": true
+  },
+  {
+    "part_number": "CUM-5579552",
+    "description": "Fuel Filter (Primary)",
+    "cost_usd": 38.0,
+    "in_stock": true,
+    "warehouse_location": "Bin B-01",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-4936082",
+    "description": "Fuel Filter (Secondary)",
+    "cost_usd": 42.0,
+    "in_stock": true,
+    "warehouse_location": "Bin B-02",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-4928594",
+    "description": "Fuel Lift Pump",
+    "cost_usd": 285.0,
+    "in_stock": true,
+    "warehouse_location": "Bin B-07",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-4928420",
+    "description": "Fuel Injector (Single)",
+    "cost_usd": 490.0,
+    "in_stock": true,
+    "warehouse_location": "Bin B-12",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": true
+  },
+  {
+    "part_number": "CUM-3803702",
+    "description": "Thermostat Kit",
+    "cost_usd": 65.0,
+    "in_stock": true,
+    "warehouse_location": "Bin D-05",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-3319034",
+    "description": "Water Pump Assembly",
+    "cost_usd": 420.0,
+    "in_stock": true,
+    "warehouse_location": "Bin D-08",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-3957754",
+    "description": "Coolant Level Sensor",
+    "cost_usd": 55.0,
+    "in_stock": true,
+    "warehouse_location": "Bin D-02",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-4089916",
+    "description": "Oil Pressure Sensor",
+    "cost_usd": 48.0,
+    "in_stock": true,
+    "warehouse_location": "Bin E-01",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-3102765",
+    "description": "Oil Filter",
+    "cost_usd": 28.0,
+    "in_stock": true,
+    "warehouse_location": "Bin E-03",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-4089174",
+    "description": "VGT Turbocharger Actuator",
+    "cost_usd": 640.0,
+    "in_stock": false,
+    "warehouse_location": "Warehouse B - Order Required",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": true
+  },
+  {
+    "part_number": "CUM-5268878",
+    "description": "Charge Air Cooler (CAC)",
+    "cost_usd": 910.0,
+    "in_stock": false,
+    "warehouse_location": "Warehouse B - Special Order",
+    "compatible_models": [
+      "X15 CM2450"
+    ],
+    "approval_required": true
+  },
+  {
+    "part_number": "CUM-4940715",
+    "description": "MAF / Intake Air Flow Sensor",
+    "cost_usd": 180.0,
+    "in_stock": true,
+    "warehouse_location": "Bin F-04",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-3883438",
+    "description": "SCR Catalyst Assembly",
+    "cost_usd": 3200.0,
+    "in_stock": false,
+    "warehouse_location": "Warehouse B - Special Order",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": true
+  },
+  {
+    "part_number": "CUM-5303870",
+    "description": "DPF Differential Pressure Sensor",
+    "cost_usd": 125.0,
+    "in_stock": true,
+    "warehouse_location": "Bin A-18",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": false
+  },
+  {
+    "part_number": "CUM-4089321",
+    "description": "Engine Wiring Harness (Injector)",
+    "cost_usd": 360.0,
+    "in_stock": true,
+    "warehouse_location": "Bin B-15",
+    "compatible_models": [
+      "X15 CM2350",
+      "X15 CM2450"
+    ],
+    "approval_required": true
+  }
+]

@@ -1,0 +1,137 @@
+[
+  {
+    "warranty_id": "WR-0001",
+    "serial_number": "X15-CM2450-0001",
+    "expiry_date": "2025-03-14",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Full Powertrain"
+  },
+  {
+    "warranty_id": "WR-0002",
+    "serial_number": "X15-CM2450-0002",
+    "expiry_date": "2025-05-20",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Full Powertrain"
+  },
+  {
+    "warranty_id": "WR-0003",
+    "serial_number": "X15-CM2450-0003",
+    "expiry_date": "2025-07-08",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Emissions Components"
+  },
+  {
+    "warranty_id": "WR-0004",
+    "serial_number": "X15-CM2450-0004",
+    "expiry_date": "2024-09-15",
+    "warranty_active": false,
+    "billable_to": "Customer - Blackrock Quarrying Ltd.",
+    "authorization_required": true,
+    "coverage_type": "Expired"
+  },
+  {
+    "warranty_id": "WR-0005",
+    "serial_number": "X15-CM2350-0005",
+    "expiry_date": "2023-11-03",
+    "warranty_active": false,
+    "billable_to": "Customer - Cascade Aggregate Corp.",
+    "authorization_required": true,
+    "coverage_type": "Expired"
+  },
+  {
+    "warranty_id": "WR-0006",
+    "serial_number": "X15-CM2350-0006",
+    "expiry_date": "2024-01-22",
+    "warranty_active": false,
+    "billable_to": "Customer - Ironwood Land Clearing",
+    "authorization_required": true,
+    "coverage_type": "Expired"
+  },
+  {
+    "warranty_id": "WR-0007",
+    "serial_number": "X15-CM2450-0007",
+    "expiry_date": "2026-02-10",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Full Powertrain"
+  },
+  {
+    "warranty_id": "WR-0008",
+    "serial_number": "X15-CM2450-0008",
+    "expiry_date": "2026-03-18",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Full Powertrain"
+  },
+  {
+    "warranty_id": "WR-0009",
+    "serial_number": "X15-CM2350-0009",
+    "expiry_date": "2024-06-30",
+    "warranty_active": false,
+    "billable_to": "Customer - Greenfield Pipeline Co.",
+    "authorization_required": true,
+    "coverage_type": "Expired"
+  },
+  {
+    "warranty_id": "WR-0010",
+    "serial_number": "X15-CM2450-0010",
+    "expiry_date": "2025-08-25",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Emissions Components"
+  },
+  {
+    "warranty_id": "WR-0011",
+    "serial_number": "X15-CM2450-0011",
+    "expiry_date": "2026-05-05",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Full Powertrain"
+  },
+  {
+    "warranty_id": "WR-0012",
+    "serial_number": "X15-CM2350-0012",
+    "expiry_date": "2023-04-17",
+    "warranty_active": false,
+    "billable_to": "Customer - Northern Gravel Works",
+    "authorization_required": true,
+    "coverage_type": "Expired"
+  },
+  {
+    "warranty_id": "WR-0013",
+    "serial_number": "X15-CM2450-0013",
+    "expiry_date": "2026-07-12",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Full Powertrain"
+  },
+  {
+    "warranty_id": "WR-0014",
+    "serial_number": "X15-CM2450-0014",
+    "expiry_date": "2025-12-01",
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "authorization_required": false,
+    "coverage_type": "Emissions Components"
+  },
+  {
+    "warranty_id": "WR-0015",
+    "serial_number": "X15-CM2350-0015",
+    "expiry_date": "2024-09-08",
+    "warranty_active": false,
+    "billable_to": "Customer - Valley Road Contractors",
+    "authorization_required": true,
+    "coverage_type": "Expired"
+  }
+]

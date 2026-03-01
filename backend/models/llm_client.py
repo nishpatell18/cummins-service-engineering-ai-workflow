@@ -15,7 +15,7 @@ class LLMClient:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance.client = Client(host='http://localhost:11434')
-            cls._instance.model = 'llama3.2:8b'
+            cls._instance.model = 'llama3:latest'
             print("[LLMClient] Connected to Ollama")
         return cls._instance
 

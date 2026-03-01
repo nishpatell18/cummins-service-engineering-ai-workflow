@@ -1,0 +1,167 @@
+[
+  {
+    "ticket_id": "TKT-2024-001",
+    "serial_number": "X15-CM2450-0001",
+    "customer": "Summit Construction LLC",
+    "location": "Denver, CO - Site 4B",
+    "issue_description": "Machine losing power on grades. Check engine light on. Operator reports DEF warning has been on for 2 days.",
+    "tech_id": "TECH-014",
+    "ecm_snapshot_id": "ECM-SNAP-001",
+    "submitted_at": "2024-09-12T08:20:00Z",
+    "equipment_type": "Excavator"
+  },
+  {
+    "ticket_id": "TKT-2024-002",
+    "serial_number": "X15-CM2450-0002",
+    "customer": "Hartwell Mining Co.",
+    "location": "Butte, MT - Pit 7",
+    "issue_description": "CEL on, black smoke during high load. DPF warning light active. Last regen was 3 days ago and may have failed.",
+    "tech_id": "TECH-007",
+    "ecm_snapshot_id": "ECM-SNAP-002",
+    "submitted_at": "2024-09-13T10:40:00Z",
+    "equipment_type": "Haul Truck"
+  },
+  {
+    "ticket_id": "TKT-2024-003",
+    "serial_number": "X15-CM2450-0003",
+    "customer": "Ridgeline Forestry Inc.",
+    "location": "Eugene, OR - Block 12",
+    "issue_description": "Engine hard to start, rough idle, CEL on. Power derate active. Fuel system suspected.",
+    "tech_id": "TECH-022",
+    "ecm_snapshot_id": "ECM-SNAP-003",
+    "submitted_at": "2024-09-14T07:55:00Z",
+    "equipment_type": "Skidder"
+  },
+  {
+    "ticket_id": "TKT-2024-004",
+    "serial_number": "X15-CM2450-0004",
+    "customer": "Blackrock Quarrying Ltd.",
+    "location": "Reno, NV - Quarry A",
+    "issue_description": "Power loss under load, exhaust smoke increased. CEL on for the past week. Noticed worse fuel economy.",
+    "tech_id": "TECH-031",
+    "ecm_snapshot_id": "ECM-SNAP-004",
+    "submitted_at": "2024-09-14T13:30:00Z",
+    "equipment_type": "Wheel Loader"
+  },
+  {
+    "ticket_id": "TKT-2024-005",
+    "serial_number": "X15-CM2350-0005",
+    "customer": "Cascade Aggregate Corp.",
+    "location": "Portland, OR - Plant 2",
+    "issue_description": "Engine overheating and triggered auto-shutdown in the field. Coolant temp gauge was pegged. Operator unsure of coolant level.",
+    "tech_id": "TECH-009",
+    "ecm_snapshot_id": "ECM-SNAP-005",
+    "submitted_at": "2024-09-15T06:15:00Z",
+    "equipment_type": "Crusher Drive Unit"
+  },
+  {
+    "ticket_id": "TKT-2024-006",
+    "serial_number": "X15-CM2350-0006",
+    "customer": "Ironwood Land Clearing",
+    "location": "Boise, ID - Site 8",
+    "issue_description": "Engine shutdown unexpectedly. Red warning lamp came on before shutdown. Low oil pressure suspected by operator.",
+    "tech_id": "TECH-003",
+    "ecm_snapshot_id": "ECM-SNAP-006",
+    "submitted_at": "2024-09-15T10:00:00Z",
+    "equipment_type": "Bulldozer"
+  },
+  {
+    "ticket_id": "TKT-2024-007",
+    "serial_number": "X15-CM2450-0007",
+    "customer": "BlueSky Earthworks",
+    "location": "Phoenix, AZ - Project 5",
+    "issue_description": "DEF system warning, operator says they refilled DEF but warning persists. Possible wrong fluid added. Derate active.",
+    "tech_id": "TECH-018",
+    "ecm_snapshot_id": "ECM-SNAP-007",
+    "submitted_at": "2024-09-16T11:25:00Z",
+    "equipment_type": "Motor Grader"
+  },
+  {
+    "ticket_id": "TKT-2024-008",
+    "serial_number": "X15-CM2450-0008",
+    "customer": "Titan Demolition Services",
+    "location": "Las Vegas, NV - Site 2",
+    "issue_description": "Engine misfiring on one cylinder, rough running. CEL on. Power noticeably reduced during work cycles.",
+    "tech_id": "TECH-025",
+    "ecm_snapshot_id": "ECM-SNAP-008",
+    "submitted_at": "2024-09-16T14:50:00Z",
+    "equipment_type": "Excavator"
+  },
+  {
+    "ticket_id": "TKT-2024-009",
+    "serial_number": "X15-CM2350-0009",
+    "customer": "Greenfield Pipeline Co.",
+    "location": "Tulsa, OK - Trench Section 3",
+    "issue_description": "Turbo not building boost, noticeable power loss especially on grades. CEL on. Engine sounds normal at idle.",
+    "tech_id": "TECH-011",
+    "ecm_snapshot_id": "ECM-SNAP-009",
+    "submitted_at": "2024-09-17T08:10:00Z",
+    "equipment_type": "Trencher"
+  },
+  {
+    "ticket_id": "TKT-2024-010",
+    "serial_number": "X15-CM2450-0010",
+    "customer": "Apex Logging & Timber",
+    "location": "Bend, OR - Harvest Zone 3",
+    "issue_description": "CEL and red lamp on. Turbo area very hot. Machine in derate. Operator says it happened suddenly at full load.",
+    "tech_id": "TECH-019",
+    "ecm_snapshot_id": "ECM-SNAP-010",
+    "submitted_at": "2024-09-17T12:40:00Z",
+    "equipment_type": "Feller Buncher"
+  },
+  {
+    "ticket_id": "TKT-2024-011",
+    "serial_number": "X15-CM2450-0011",
+    "customer": "Redstone Drilling Inc.",
+    "location": "Midland, TX - Pad 14",
+    "issue_description": "Intermittent CEL, slight power reduction at high load. No derate currently active. Issue started after air filter service.",
+    "tech_id": "TECH-028",
+    "ecm_snapshot_id": "ECM-SNAP-011",
+    "submitted_at": "2024-09-18T09:20:00Z",
+    "equipment_type": "Drill Rig"
+  },
+  {
+    "ticket_id": "TKT-2024-012",
+    "serial_number": "X15-CM2350-0012",
+    "customer": "Northern Gravel Works",
+    "location": "Billings, MT - Pit 3",
+    "issue_description": "Power loss, engine hunting at idle, hard to maintain RPM under load. Fuel-related issue suspected. Multiple CEL codes.",
+    "tech_id": "TECH-005",
+    "ecm_snapshot_id": "ECM-SNAP-012",
+    "submitted_at": "2024-09-18T15:10:00Z",
+    "equipment_type": "Wheel Loader"
+  },
+  {
+    "ticket_id": "TKT-2024-013",
+    "serial_number": "X15-CM2450-0013",
+    "customer": "Crestview Paving Co.",
+    "location": "Salt Lake City, UT - Highway 89 Project",
+    "issue_description": "Coolant temp elevated and climbing. Yellow then red warning lamps. Operator stopped machine. Possibly coolant leak.",
+    "tech_id": "TECH-033",
+    "ecm_snapshot_id": "ECM-SNAP-013",
+    "submitted_at": "2024-09-19T07:35:00Z",
+    "equipment_type": "Asphalt Paver"
+  },
+  {
+    "ticket_id": "TKT-2024-014",
+    "serial_number": "X15-CM2450-0014",
+    "customer": "Stonebridge Excavating",
+    "location": "Albuquerque, NM - Lot C",
+    "issue_description": "Power loss and elevated exhaust temp. EGR related fault suspected. Machine has been running in derate for 2 hours.",
+    "tech_id": "TECH-016",
+    "ecm_snapshot_id": "ECM-SNAP-014",
+    "submitted_at": "2024-09-19T11:55:00Z",
+    "equipment_type": "Excavator"
+  },
+  {
+    "ticket_id": "TKT-2024-015",
+    "serial_number": "X15-CM2350-0015",
+    "customer": "Valley Road Contractors",
+    "location": "Cheyenne, WY - Route 80",
+    "issue_description": "DEF warning light just came on. No derate yet. Operator wants to address before it escalates. Machine running normally otherwise.",
+    "tech_id": "TECH-002",
+    "ecm_snapshot_id": "ECM-SNAP-015",
+    "submitted_at": "2024-09-20T07:05:00Z",
+    "equipment_type": "Motor Grader"
+  }
+]

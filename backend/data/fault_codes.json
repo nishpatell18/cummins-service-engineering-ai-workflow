@@ -1,0 +1,388 @@
+{
+  "3714": {
+    "fault_code": "3714",
+    "spn": 3031,
+    "fmi": 1,
+    "description": "Aftertreatment DEF Tank Level - Low",
+    "system": "Aftertreatment",
+    "severity_level": "P2",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Low DEF fluid level",
+      "DEF level sensor fault",
+      "DEF consumption higher than normal"
+    ],
+    "default_sla_hours": 4,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "3712": {
+    "fault_code": "3712",
+    "spn": 5246,
+    "fmi": 0,
+    "description": "Engine Derate - Active (induced by other faults)",
+    "system": "Engine Protection",
+    "severity_level": "P1",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Active critical fault causing derate",
+      "Multiple simultaneous faults"
+    ],
+    "default_sla_hours": 2,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Red"
+  },
+  "3719": {
+    "fault_code": "3719",
+    "spn": 3251,
+    "fmi": 0,
+    "description": "Aftertreatment DPF Soot Load - High",
+    "system": "Aftertreatment",
+    "severity_level": "P2",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Missed or failed regeneration",
+      "Short duty cycles preventing regen",
+      "DPF sensor fault"
+    ],
+    "default_sla_hours": 4,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "2791": {
+    "fault_code": "2791",
+    "spn": 2659,
+    "fmi": 7,
+    "description": "EGR Valve - Mechanical System Not Responding",
+    "system": "EGR",
+    "severity_level": "P2",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "EGR valve stuck open or closed",
+      "Carbon buildup on valve",
+      "EGR actuator failure"
+    ],
+    "default_sla_hours": 6,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "157": {
+    "fault_code": "157",
+    "spn": 157,
+    "fmi": 1,
+    "description": "Injector Metering Rail 1 Pressure - Low",
+    "system": "Fuel System",
+    "severity_level": "P1",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Fuel filter clogged",
+      "Lift pump failure",
+      "Fuel leak in high-pressure circuit",
+      "Injector return line restriction"
+    ],
+    "default_sla_hours": 2,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Red"
+  },
+  "110": {
+    "fault_code": "110",
+    "spn": 110,
+    "fmi": 0,
+    "description": "Engine Coolant Temperature - High",
+    "system": "Cooling",
+    "severity_level": "P1",
+    "triggers_derate": true,
+    "triggers_shutdown": true,
+    "common_causes": [
+      "Low coolant level",
+      "Thermostat stuck closed",
+      "Radiator blockage",
+      "Water pump failure",
+      "Fan clutch failure"
+    ],
+    "default_sla_hours": 2,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Red"
+  },
+  "100": {
+    "fault_code": "100",
+    "spn": 100,
+    "fmi": 1,
+    "description": "Engine Oil Pressure - Low",
+    "system": "Lubrication",
+    "severity_level": "P1",
+    "triggers_derate": true,
+    "triggers_shutdown": true,
+    "common_causes": [
+      "Low oil level",
+      "Oil pump wear",
+      "Oil filter bypass valve stuck",
+      "Worn main bearings",
+      "Oil cooler blockage"
+    ],
+    "default_sla_hours": 1,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Red"
+  },
+  "102": {
+    "fault_code": "102",
+    "spn": 102,
+    "fmi": 1,
+    "description": "Engine Intake Manifold Pressure - Low (Low Boost)",
+    "system": "Turbocharger",
+    "severity_level": "P2",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Turbocharger failure",
+      "Charge air cooler leak",
+      "Air intake restriction",
+      "VGT actuator fault"
+    ],
+    "default_sla_hours": 4,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "651": {
+    "fault_code": "651",
+    "spn": 651,
+    "fmi": 5,
+    "description": "Injector Cylinder 1 - Open Circuit",
+    "system": "Fuel System",
+    "severity_level": "P1",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Failed fuel injector",
+      "Injector wiring harness damage",
+      "ECM driver circuit fault"
+    ],
+    "default_sla_hours": 3,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Red"
+  },
+  "4334": {
+    "fault_code": "4334",
+    "spn": 4334,
+    "fmi": 2,
+    "description": "Aftertreatment DEF Quality - Poor",
+    "system": "Aftertreatment",
+    "severity_level": "P2",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Wrong fluid in DEF tank (e.g. water or diesel)",
+      "Degraded DEF from heat exposure",
+      "DEF quality sensor fault"
+    ],
+    "default_sla_hours": 4,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "3936": {
+    "fault_code": "3936",
+    "spn": 3936,
+    "fmi": 0,
+    "description": "Aftertreatment DPF Differential Pressure - High",
+    "system": "Aftertreatment",
+    "severity_level": "P2",
+    "triggers_derate": false,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "DPF nearing capacity",
+      "Failed regen cycle",
+      "DPF pressure sensor fault",
+      "Ash accumulation"
+    ],
+    "default_sla_hours": 8,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "132": {
+    "fault_code": "132",
+    "spn": 132,
+    "fmi": 2,
+    "description": "Engine Intake Air Mass Flow Rate - Data Erratic",
+    "system": "Air Intake",
+    "severity_level": "P3",
+    "triggers_derate": false,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "MAF sensor contamination",
+      "Air intake leak",
+      "MAF sensor wiring fault",
+      "Dirty air filter"
+    ],
+    "default_sla_hours": 8,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "111": {
+    "fault_code": "111",
+    "spn": 111,
+    "fmi": 1,
+    "description": "Engine Coolant Level - Low",
+    "system": "Cooling",
+    "severity_level": "P2",
+    "triggers_derate": false,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Coolant leak (external)",
+      "Coolant leak (internal, head gasket)",
+      "Coolant level sensor fault"
+    ],
+    "default_sla_hours": 4,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "2789": {
+    "fault_code": "2789",
+    "spn": 2789,
+    "fmi": 0,
+    "description": "EGR Cooler Coolant Temperature - High",
+    "system": "EGR",
+    "severity_level": "P2",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "EGR cooler internal blockage",
+      "Coolant flow restriction",
+      "EGR cooler failure"
+    ],
+    "default_sla_hours": 6,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "1347": {
+    "fault_code": "1347",
+    "spn": 1347,
+    "fmi": 1,
+    "description": "Fuel Supply Pump Pressure - Low",
+    "system": "Fuel System",
+    "severity_level": "P2",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Clogged fuel filter",
+      "Lift pump wear",
+      "Fuel line restriction",
+      "Air in fuel system"
+    ],
+    "default_sla_hours": 4,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  },
+  "1127": {
+    "fault_code": "1127",
+    "spn": 1127,
+    "fmi": 0,
+    "description": "Turbocharger 1 Compressor Outlet Temperature - High",
+    "system": "Turbocharger",
+    "severity_level": "P1",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Charge air cooler restriction",
+      "Turbo overspeeding",
+      "High ambient temp + high load",
+      "CAC duct leak"
+    ],
+    "default_sla_hours": 3,
+    "cm_versions": [
+      "CM2450"
+    ],
+    "lamp": "Red"
+  },
+  "3258": {
+    "fault_code": "3258",
+    "spn": 3258,
+    "fmi": 14,
+    "description": "Aftertreatment SCR Operator Inducement - Active",
+    "system": "Aftertreatment",
+    "severity_level": "P1",
+    "triggers_derate": true,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Persistent DEF quality or level fault",
+      "Operator ignored earlier warnings",
+      "SCR catalyst efficiency below threshold"
+    ],
+    "default_sla_hours": 2,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Red"
+  },
+  "559": {
+    "fault_code": "559",
+    "spn": 559,
+    "fmi": 1,
+    "description": "Fuel Delivery Pressure - Low",
+    "system": "Fuel System",
+    "severity_level": "P2",
+    "triggers_derate": false,
+    "triggers_shutdown": false,
+    "common_causes": [
+      "Fuel filter restriction",
+      "Low fuel level",
+      "Lift pump performance degraded"
+    ],
+    "default_sla_hours": 4,
+    "cm_versions": [
+      "CM2350",
+      "CM2450"
+    ],
+    "lamp": "Yellow"
+  }
+}

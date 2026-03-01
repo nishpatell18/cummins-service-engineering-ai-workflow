@@ -1,0 +1,522 @@
+[
+  {
+    "snapshot_id": "ECM-SNAP-001",
+    "ticket_id": "TKT-2024-001",
+    "serial_number": "X15-CM2450-0001",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124B-2022-001",
+    "fault_codes": {
+      "active": [
+        "3714",
+        "3712"
+      ],
+      "inactive": [
+        "3714"
+      ],
+      "fault_counts": {
+        "3714": 5,
+        "3712": 5
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1650,
+      "coolant_temp_f": 202,
+      "oil_pressure_psi": 42,
+      "fuel_pressure_kpa": 26,
+      "def_level_pct": 8,
+      "dpf_soot_load_pct": 44,
+      "boost_pressure_psi": 24,
+      "exhaust_temp_f": 860,
+      "load_pct": 78,
+      "equipment_hours": 4820
+    },
+    "captured_at": "2024-09-12T08:14:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-002",
+    "ticket_id": "TKT-2024-002",
+    "serial_number": "X15-CM2450-0002",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124B-2022-001",
+    "fault_codes": {
+      "active": [
+        "3719",
+        "3936"
+      ],
+      "inactive": [
+        "3936"
+      ],
+      "fault_counts": {
+        "3719": 2,
+        "3936": 4
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1800,
+      "coolant_temp_f": 198,
+      "oil_pressure_psi": 44,
+      "fuel_pressure_kpa": 28,
+      "def_level_pct": 62,
+      "dpf_soot_load_pct": 91,
+      "boost_pressure_psi": 26,
+      "exhaust_temp_f": 920,
+      "load_pct": 88,
+      "equipment_hours": 6210
+    },
+    "captured_at": "2024-09-13T10:32:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-003",
+    "ticket_id": "TKT-2024-003",
+    "serial_number": "X15-CM2450-0003",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124A-2022-003",
+    "fault_codes": {
+      "active": [
+        "157",
+        "3712"
+      ],
+      "inactive": [
+        "559",
+        "157"
+      ],
+      "fault_counts": {
+        "157": 3,
+        "3712": 3,
+        "559": 7
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1400,
+      "coolant_temp_f": 205,
+      "oil_pressure_psi": 40,
+      "fuel_pressure_kpa": 12,
+      "def_level_pct": 55,
+      "dpf_soot_load_pct": 38,
+      "boost_pressure_psi": 18,
+      "exhaust_temp_f": 780,
+      "load_pct": 65,
+      "equipment_hours": 3580
+    },
+    "captured_at": "2024-09-14T07:45:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-004",
+    "ticket_id": "TKT-2024-004",
+    "serial_number": "X15-CM2450-0004",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124B-2022-001",
+    "fault_codes": {
+      "active": [
+        "2791"
+      ],
+      "inactive": [
+        "2791"
+      ],
+      "fault_counts": {
+        "2791": 6
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1750,
+      "coolant_temp_f": 207,
+      "oil_pressure_psi": 41,
+      "fuel_pressure_kpa": 27,
+      "def_level_pct": 48,
+      "dpf_soot_load_pct": 52,
+      "boost_pressure_psi": 20,
+      "exhaust_temp_f": 895,
+      "load_pct": 82,
+      "equipment_hours": 9340
+    },
+    "captured_at": "2024-09-14T13:20:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-005",
+    "ticket_id": "TKT-2024-005",
+    "serial_number": "X15-CM2350-0005",
+    "cm_version": "CM2350",
+    "ecm_calibration_id": "CAL-CM2350-X15E-2020-007",
+    "fault_codes": {
+      "active": [
+        "110",
+        "3712"
+      ],
+      "inactive": [
+        "111",
+        "110"
+      ],
+      "fault_counts": {
+        "110": 2,
+        "3712": 2,
+        "111": 3
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": true,
+    "freeze_frame": {
+      "engine_rpm": 900,
+      "coolant_temp_f": 242,
+      "oil_pressure_psi": 38,
+      "fuel_pressure_kpa": 25,
+      "def_level_pct": 72,
+      "dpf_soot_load_pct": 30,
+      "boost_pressure_psi": 14,
+      "exhaust_temp_f": 710,
+      "load_pct": 40,
+      "equipment_hours": 18750
+    },
+    "captured_at": "2024-09-15T06:05:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-006",
+    "ticket_id": "TKT-2024-006",
+    "serial_number": "X15-CM2350-0006",
+    "cm_version": "CM2350",
+    "ecm_calibration_id": "CAL-CM2350-X15E-2020-007",
+    "fault_codes": {
+      "active": [
+        "100",
+        "3712"
+      ],
+      "inactive": [
+        "100"
+      ],
+      "fault_counts": {
+        "100": 2,
+        "3712": 2
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": true,
+    "freeze_frame": {
+      "engine_rpm": 800,
+      "coolant_temp_f": 195,
+      "oil_pressure_psi": 14,
+      "fuel_pressure_kpa": 26,
+      "def_level_pct": 65,
+      "dpf_soot_load_pct": 28,
+      "boost_pressure_psi": 12,
+      "exhaust_temp_f": 640,
+      "load_pct": 35,
+      "equipment_hours": 22400
+    },
+    "captured_at": "2024-09-15T09:50:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-007",
+    "ticket_id": "TKT-2024-007",
+    "serial_number": "X15-CM2450-0007",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124B-2023-002",
+    "fault_codes": {
+      "active": [
+        "4334",
+        "3258"
+      ],
+      "inactive": [
+        "3714",
+        "4334"
+      ],
+      "fault_counts": {
+        "4334": 4,
+        "3258": 1,
+        "3714": 2
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1600,
+      "coolant_temp_f": 200,
+      "oil_pressure_psi": 45,
+      "fuel_pressure_kpa": 27,
+      "def_level_pct": 55,
+      "dpf_soot_load_pct": 41,
+      "boost_pressure_psi": 25,
+      "exhaust_temp_f": 845,
+      "load_pct": 75,
+      "equipment_hours": 2120
+    },
+    "captured_at": "2024-09-16T11:15:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-008",
+    "ticket_id": "TKT-2024-008",
+    "serial_number": "X15-CM2450-0008",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124B-2023-002",
+    "fault_codes": {
+      "active": [
+        "651"
+      ],
+      "inactive": [],
+      "fault_counts": {
+        "651": 1
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1500,
+      "coolant_temp_f": 203,
+      "oil_pressure_psi": 43,
+      "fuel_pressure_kpa": 25,
+      "def_level_pct": 70,
+      "dpf_soot_load_pct": 35,
+      "boost_pressure_psi": 22,
+      "exhaust_temp_f": 810,
+      "load_pct": 70,
+      "equipment_hours": 1840
+    },
+    "captured_at": "2024-09-16T14:40:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-009",
+    "ticket_id": "TKT-2024-009",
+    "serial_number": "X15-CM2350-0009",
+    "cm_version": "CM2350",
+    "ecm_calibration_id": "CAL-CM2350-X15E-2021-009",
+    "fault_codes": {
+      "active": [
+        "102"
+      ],
+      "inactive": [
+        "102"
+      ],
+      "fault_counts": {
+        "102": 8
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1900,
+      "coolant_temp_f": 204,
+      "oil_pressure_psi": 40,
+      "fuel_pressure_kpa": 28,
+      "def_level_pct": 58,
+      "dpf_soot_load_pct": 45,
+      "boost_pressure_psi": 11,
+      "exhaust_temp_f": 870,
+      "load_pct": 90,
+      "equipment_hours": 14200
+    },
+    "captured_at": "2024-09-17T08:00:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-010",
+    "ticket_id": "TKT-2024-010",
+    "serial_number": "X15-CM2450-0010",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124B-2022-001",
+    "fault_codes": {
+      "active": [
+        "1127",
+        "3712"
+      ],
+      "inactive": [
+        "102",
+        "1127"
+      ],
+      "fault_counts": {
+        "1127": 3,
+        "3712": 3,
+        "102": 5
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 2000,
+      "coolant_temp_f": 208,
+      "oil_pressure_psi": 42,
+      "fuel_pressure_kpa": 27,
+      "def_level_pct": 45,
+      "dpf_soot_load_pct": 50,
+      "boost_pressure_psi": 28,
+      "exhaust_temp_f": 1040,
+      "load_pct": 95,
+      "equipment_hours": 7650
+    },
+    "captured_at": "2024-09-17T12:30:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-011",
+    "ticket_id": "TKT-2024-011",
+    "serial_number": "X15-CM2450-0011",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124A-2023-004",
+    "fault_codes": {
+      "active": [
+        "132"
+      ],
+      "inactive": [
+        "132"
+      ],
+      "fault_counts": {
+        "132": 4
+      }
+    },
+    "derate_active": false,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1700,
+      "coolant_temp_f": 199,
+      "oil_pressure_psi": 44,
+      "fuel_pressure_kpa": 27,
+      "def_level_pct": 80,
+      "dpf_soot_load_pct": 22,
+      "boost_pressure_psi": 21,
+      "exhaust_temp_f": 830,
+      "load_pct": 72,
+      "equipment_hours": 980
+    },
+    "captured_at": "2024-09-18T09:10:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-012",
+    "ticket_id": "TKT-2024-012",
+    "serial_number": "X15-CM2350-0012",
+    "cm_version": "CM2350",
+    "ecm_calibration_id": "CAL-CM2350-X15E-2020-007",
+    "fault_codes": {
+      "active": [
+        "1347",
+        "559"
+      ],
+      "inactive": [
+        "559",
+        "1347"
+      ],
+      "fault_counts": {
+        "1347": 5,
+        "559": 9
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1550,
+      "coolant_temp_f": 206,
+      "oil_pressure_psi": 39,
+      "fuel_pressure_kpa": 9,
+      "def_level_pct": 50,
+      "dpf_soot_load_pct": 60,
+      "boost_pressure_psi": 19,
+      "exhaust_temp_f": 800,
+      "load_pct": 68,
+      "equipment_hours": 26100
+    },
+    "captured_at": "2024-09-18T15:00:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-013",
+    "ticket_id": "TKT-2024-013",
+    "serial_number": "X15-CM2450-0013",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124B-2023-002",
+    "fault_codes": {
+      "active": [
+        "111",
+        "110"
+      ],
+      "inactive": [
+        "111"
+      ],
+      "fault_counts": {
+        "111": 3,
+        "110": 1
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1200,
+      "coolant_temp_f": 228,
+      "oil_pressure_psi": 41,
+      "fuel_pressure_kpa": 26,
+      "def_level_pct": 66,
+      "dpf_soot_load_pct": 33,
+      "boost_pressure_psi": 17,
+      "exhaust_temp_f": 750,
+      "load_pct": 55,
+      "equipment_hours": 1250
+    },
+    "captured_at": "2024-09-19T07:25:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-014",
+    "ticket_id": "TKT-2024-014",
+    "serial_number": "X15-CM2450-0014",
+    "cm_version": "CM2450",
+    "ecm_calibration_id": "CAL-CM2450-X124B-2022-001",
+    "fault_codes": {
+      "active": [
+        "2789",
+        "2791"
+      ],
+      "inactive": [
+        "2791"
+      ],
+      "fault_counts": {
+        "2789": 2,
+        "2791": 3
+      }
+    },
+    "derate_active": true,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1650,
+      "coolant_temp_f": 212,
+      "oil_pressure_psi": 42,
+      "fuel_pressure_kpa": 27,
+      "def_level_pct": 52,
+      "dpf_soot_load_pct": 48,
+      "boost_pressure_psi": 21,
+      "exhaust_temp_f": 890,
+      "load_pct": 80,
+      "equipment_hours": 5430
+    },
+    "captured_at": "2024-09-19T11:45:00Z"
+  },
+  {
+    "snapshot_id": "ECM-SNAP-015",
+    "ticket_id": "TKT-2024-015",
+    "serial_number": "X15-CM2350-0015",
+    "cm_version": "CM2350",
+    "ecm_calibration_id": "CAL-CM2350-X15E-2021-009",
+    "fault_codes": {
+      "active": [
+        "3714"
+      ],
+      "inactive": [],
+      "fault_counts": {
+        "3714": 1
+      }
+    },
+    "derate_active": false,
+    "shutdown_active": false,
+    "freeze_frame": {
+      "engine_rpm": 1750,
+      "coolant_temp_f": 200,
+      "oil_pressure_psi": 43,
+      "fuel_pressure_kpa": 28,
+      "def_level_pct": 14,
+      "dpf_soot_load_pct": 25,
+      "boost_pressure_psi": 23,
+      "exhaust_temp_f": 820,
+      "load_pct": 74,
+      "equipment_hours": 11800
+    },
+    "captured_at": "2024-09-20T06:55:00Z"
+  }
+]
