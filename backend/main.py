@@ -37,7 +37,6 @@ class TicketInput(BaseModel):
     equipment_hours: int
     fault_codes: List[str]
     issue_description: str
-    tech_id: str
 
 
 class ChatRequest(BaseModel):

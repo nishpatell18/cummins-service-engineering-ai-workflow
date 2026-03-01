@@ -9,9 +9,6 @@
 #   parts_lookup        → relevant parts from inventory
 #   warranty_lookup     → serial number → warranty status
 #   safety_rules        → warnings from systems + freeze frame thresholds
-#
-# Phase 2 — LLM narrative:
-#   Takes structured evidence from Phase 1.
 #   LLM explains the diagnosis — does NOT make it.
 #
 # Fallback:
@@ -21,6 +18,7 @@ import json
 import uuid
 import os
 from datetime import datetime, timezone
+from fileinput import close
 
 from models.llm_client import LLMClient
 from services.data_loader import get_ecm_snapshot_by_ticket, get_ecm_snapshot_by_serial
@@ -42,10 +40,6 @@ class TriageAgent:
             self.llm = LLMClient()
         self._ensure_log_dir()
         print("[TriageAgent] Initialized")
-
-    # ──────────────────────────────────────────────────────────────────────
-    # PUBLIC
-    # ──────────────────────────────────────────────────────────────────────
 
     def analyze(self, ticket_input: dict) -> dict:
         """
@@ -166,10 +160,6 @@ class TriageAgent:
               f"+ {len(history.get('rag_cases', []))} semantic")
 
         return triage_result
-
-    # ──────────────────────────────────────────────────────────────────────
-    # PHASE 2: LLM NARRATIVE
-    # ──────────────────────────────────────────────────────────────────────
 
     def _generate_narrative(self, evidence: dict) -> str:
         """
