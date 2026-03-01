@@ -121,5 +121,15 @@ class DatabaseExtended(Database):
         }
 
 
+    def save_assignment(self, ticket_id: str, assignment: dict):
+        if not hasattr(self, 'assignments'):
+            self.assignments = {}
+        self.assignments[ticket_id] = assignment
+        print(f"[Database] Saved assignment for: {ticket_id}")
+
+    def get_assignment(self, ticket_id: str):
+        return getattr(self, 'assignments', {}).get(ticket_id)
+
+
 # Replace the global db instance with extended version
 db = DatabaseExtended()

@@ -499,3 +499,84 @@ def get_escalation(ticket_id: str):
         raise HTTPException(status_code=404,
             detail=f"No escalation found for ticket '{ticket_id}'.")
     return {"success": True, "package": package}
+
+
+# ============================================================================
+# ASSIGNMENT ENDPOINTS (appended)
+# ============================================================================
+
+from services.assignment_service import assignment_service
+
+
+class AssignmentApproval(BaseModel):
+    ticket_id:       str
+    tech_id:         str
+    approver_id:     str
+    approver_name:   str
+    is_override:     bool = False
+    override_reason: Optional[str] = None
+
+
+@app.get("/api/assign/{ticket_id}")
+def get_recommendations(ticket_id: str, top_n: int = 3):
+    """
+    Run the assignment model for a ticket.
+    Returns top N technician recommendations with:
+      - FTF probability (first-time fix)
+      - SLA probability
+      - Plain-language reasoning
+      - Feature values used for scoring
+    """
+    try:
+        result = assignment_service.recommend(ticket_id, top_n=top_n)
+        if 'error' in result:
+            raise HTTPException(status_code=400, detail=result['error'])
+        return {"success": True, **result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[API] Assignment error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/assign/{ticket_id}/approve")
+def approve_assignment(ticket_id: str, body: AssignmentApproval):
+    """
+    Supervisor approves technician assignment.
+    Named approver is required and logged for governance audit trail.
+    If supervisor selects a tech other than the top recommendation,
+    is_override=true and override_reason is required.
+    """
+    try:
+        if body.is_override and not body.override_reason:
+            raise HTTPException(status_code=400,
+                detail="override_reason is required when is_override=true")
+
+        result = assignment_service.approve(
+            ticket_id=ticket_id,
+            tech_id=body.tech_id,
+            approver_id=body.approver_id,
+            approver_name=body.approver_name,
+            is_override=body.is_override,
+            override_reason=body.override_reason,
+        )
+
+        if 'error' in result:
+            raise HTTPException(status_code=400, detail=result['error'])
+
+        return {"success": True, **result}
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[API] Approve error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/api/assign/{ticket_id}/status")
+def get_assignment_status(ticket_id: str):
+    """Get current assignment status for a ticket."""
+    assignment = db.get_assignment(ticket_id)
+    if not assignment:
+        return {"assigned": False}
+    return {"assigned": True, "assignment": assignment}

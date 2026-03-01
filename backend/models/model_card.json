@@ -1,0 +1,32 @@
+{
+  "model_type": "RandomForestClassifier (scikit-learn)",
+  "targets": {
+    "first_time_fix": "Will the tech resolve the fault on the first visit?",
+    "met_sla": "Will the tech meet the SLA deadline?"
+  },
+  "features": [
+    "cert_level",
+    "years_experience",
+    "proximity_km",
+    "active_tickets",
+    "has_specialization",
+    "prior_experience",
+    "prior_success_rate",
+    "shift_match",
+    "fault_priority",
+    "fault_system_encoded",
+    "sla_hours",
+    "priority_cert_match"
+  ],
+  "training_samples": 500,
+  "data_source": "Synthetic \u2014 generated with engineered patterns",
+  "trained_at": "2026-03-01T11:40:28.228729",
+  "performance": {
+    "ftf_test_accuracy": 0.8,
+    "ftf_cv_accuracy": 0.77,
+    "sla_test_accuracy": 0.75,
+    "sla_cv_accuracy": 0.678
+  },
+  "production_note": "In production this model would be retrained monthly on real assignment outcome data from the fleet. Features and architecture remain the same \u2014 only training data changes.",
+  "license": "scikit-learn BSD license \u2014 commercial use permitted"
+}
