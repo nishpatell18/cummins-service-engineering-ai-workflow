@@ -241,14 +241,22 @@ class EscalationService:
         parts_in_stock  = []
         parts_on_order  = []
         for p in resources.get('parts', []):
-            entry = f"{p.get('part_number')} — {p.get('description')} (${p.get('estimated_cost', 0)})"
+            # FIX Bug 2: use 'cost_usd' — the key set by parts_lookup.py.
+            # The original code used 'estimated_cost' which doesn't exist,
+            # causing every part to silently show $0 in the escalation package.
+            entry = f"{p.get('part_number')} — {p.get('description')} (${p.get('cost_usd', 0):.2f})"
             if p.get('in_stock'):
                 parts_in_stock.append(entry)
             else:
                 parts_on_order.append(entry)
 
-        parts_cost        = resources.get('total_estimated_cost', 0)
-        approval_required = parts_cost > APPROVAL_THRESHOLDS['parts_approval']
+        parts_cost = resources.get('total_estimated_cost', 0)
+
+        # FIX Bug 5: use the approval_required flag already computed by the
+        # triage / parts_lookup layer (driven by per-part flags in the JSON data)
+        # instead of recalculating from total cost vs a hardcoded threshold.
+        # The two approaches could disagree and confuse the supervisor.
+        approval_required = resources.get('approval_required', False)
 
         return {
             'parts_in_stock':       parts_in_stock,

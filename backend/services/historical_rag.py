@@ -42,7 +42,7 @@ class HistoricalRAG:
 
         if self.available:
             try:
-                self._client   = chromadb.Client()
+                self._client   = chromadb.PersistentClient(path="./chroma_db")
                 self._embedder = SentenceTransformer('all-MiniLM-L6-v2')
                 print("[HistoricalRAG] Initialized (ChromaDB + sentence-transformers)")
             except Exception as e:

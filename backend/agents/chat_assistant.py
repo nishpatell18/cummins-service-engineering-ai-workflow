@@ -63,7 +63,13 @@ class ChatAssistant:
             image_paths = file_storage.get_image_paths_for_llm(ticket_id, file_ids)
 
         # Step 5: Build prompt
-        prompt = self._build_prompt(question, ctx, history, manual_chunks, lang_name)
+        # FIX Bug 4: pass image_paths into _build_prompt so the image instruction
+        # is conditionally included. Previously image_instruction was built with
+        # `if False` (always empty) and was never referenced in the prompt string —
+        # meaning photos were passed to the LLM but it received no instruction to
+        # analyse them.
+        prompt = self._build_prompt(question, ctx, history, manual_chunks,
+                                    lang_name, image_paths)
 
         # Step 6: Call LLM (with images if any)
         try:
@@ -167,8 +173,18 @@ class ChatAssistant:
                 f"[{d['metadata']['source']}]\n{d['content']}"
                 for d in docs
             ])
-            sources = [{'source': d['metadata']['source'],
-                        'type': d['metadata'].get('type', 'manual')} for d in docs]
+            # Deduplicate — if multiple chunks from same doc, merge chunks and show once
+            seen = {}
+            for d in docs:
+                src = d['metadata']['source']
+                if src not in seen:
+                    seen[src] = {'source': src,
+                                 'type':   d['metadata'].get('type', 'manual'),
+                                 'chunk':  d['content'][:400]}
+                else:
+                    # append extra chunk text so highlight covers more
+                    seen[src]['chunk'] += ' ... ' + d['content'][:200]
+            sources = list(seen.values())
             print(f"[ChatAssistant] RAG: {len(docs)} manual chunks retrieved")
             return context, sources
         except Exception as e:
@@ -178,7 +194,20 @@ class ChatAssistant:
     # ── PROMPT ─────────────────────────────────────────────────────────────
 
     def _build_prompt(self, question: str, ctx: dict, history: list,
-                      manual_chunks: str, lang_name: str) -> str:
+                      manual_chunks: str, lang_name: str,
+                      image_paths: list = None) -> str:
+        # FIX Bug 4: image_instruction is now driven by the actual image_paths
+        # list (populated in answer() when file_ids are present). Previously the
+        # condition was hardcoded to `if False`, so the block was always empty
+        # AND was never inserted into the returned prompt string. Both defects are
+        # corrected here: the condition checks the real list, and {image_instruction}
+        # is placed in the prompt where the model will read it.
+        image_instruction = (
+            "\nIMAGE NOTE: One or more photos have been attached by the technician. "
+            "Analyze the image(s) and reference what you see in your answer. "
+            "This may show a fault code display, a damaged component, or sensor readings.\n"
+            if image_paths else ''
+        )
 
         if ctx['has_triage']:
             context_block = f"""CURRENT TICKET CONTEXT (already diagnosed — do not re-diagnose):
@@ -224,13 +253,6 @@ Safety warnings:
             if lang_name != 'English' else ''
         )
 
-        image_instruction = (
-            "\nIMAGE NOTE: One or more photos have been attached by the technician. "
-            "Analyze the image(s) and reference what you see in your answer. "
-            "This may show a fault code display, a damaged component, or sensor readings.\n"
-            if False else ''  # set dynamically in answer() if images present
-        )
-
         return f"""You are a Cummins X15 field service assistant helping a technician on-site.
 
 {language_instruction}YOUR ROLE:
@@ -245,7 +267,7 @@ Safety warnings:
 - Keep answers concise and practical — the tech is working in the field
 
 {context_block}
-{history_block}
+{history_block}{image_instruction}
 RETRIEVED MANUAL DOCUMENTATION:
 {manual_chunks}
 

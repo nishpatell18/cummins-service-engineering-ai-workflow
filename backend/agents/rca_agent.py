@@ -302,15 +302,18 @@ physical to the machine — this step is observation only."""
             'priority':               severity.get('priority', 'Unknown'),
             'derate_active':          'Yes' if severity.get('derate_active') else 'No',
             'shutdown_active':        'Yes' if severity.get('shutdown_active') else 'No',
-            # Freeze frame values
+            # FIX Bug 3: use the correct key names from ecm_snapshots.json.
+            # 'engine_load_pct' does not exist — the actual key is 'load_pct'.
+            # 'boost_pressure_kpa' does not exist — the actual key is 'boost_pressure_psi'.
+            # Using the wrong keys caused these values to always be 'N/A' in RCA steps.
             'engine_rpm':             freeze.get('engine_rpm', 'N/A'),
-            'engine_load_pct':        freeze.get('engine_load_pct', 'N/A'),
+            'engine_load_pct':        freeze.get('load_pct', 'N/A'),
             'coolant_temp_f':         freeze.get('coolant_temp_f', 'N/A'),
             'oil_pressure_psi':       freeze.get('oil_pressure_psi', 'N/A'),
             'fuel_pressure_kpa':      freeze.get('fuel_pressure_kpa', 'N/A'),
             'def_level_pct':          freeze.get('def_level_pct', 'N/A'),
             'dpf_soot_pct':           freeze.get('dpf_soot_load_pct', 'N/A'),
-            'boost_pressure_kpa':     freeze.get('boost_pressure_kpa', 'N/A'),
+            'boost_pressure_kpa':     freeze.get('boost_pressure_psi', 'N/A'),
             'fault_count':            freeze.get('fault_count', 1),
             # Historical
             'similar_cases_found':    evidence.get('similar_cases_found', 0),

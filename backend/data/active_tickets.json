@@ -137,7 +137,7 @@
     "customer": "Crestview Paving Co.",
     "location": "Salt Lake City, UT - Highway 89 Project",
     "issue_description": "Coolant temp elevated and climbing. Yellow then red warning lamps. Operator stopped machine. Possibly coolant leak.",
-    "tech_id": "TECH-033",
+    "tech_id": "TECH-014",
     "ecm_snapshot_id": "ECM-SNAP-013",
     "submitted_at": "2024-09-19T07:35:00Z",
     "equipment_type": "Asphalt Paver"
@@ -148,7 +148,7 @@
     "customer": "Stonebridge Excavating",
     "location": "Albuquerque, NM - Lot C",
     "issue_description": "Power loss and elevated exhaust temp. EGR related fault suspected. Machine has been running in derate for 2 hours.",
-    "tech_id": "TECH-016",
+    "tech_id": "TECH-014",
     "ecm_snapshot_id": "ECM-SNAP-014",
     "submitted_at": "2024-09-19T11:55:00Z",
     "equipment_type": "Excavator"

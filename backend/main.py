@@ -3,13 +3,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timezone  # FIX Bug 1: import timezone
 import os
 
 from agents.triage_agent import TriageAgent
 from agents.chat_assistant import ChatAssistant
 from agents.report_generator import ReportGenerator
+from agents.rca_agent import rca_agent                        # FIX Bug 6: moved to top
 from services.file_storage import file_storage
+from services.escalation_service import escalation_service    # FIX Bug 6: moved to top
+from services.assignment_service import assignment_service    # FIX Bug 6: moved to top
 from database.db import db
 
 app = FastAPI(
@@ -35,6 +38,54 @@ chat_assistant  = ChatAssistant()
 report_generator = ReportGenerator()
 
 
+@app.on_event("startup")
+async def seed_db():
+    """
+    Seed the in-memory DB from JSON files on startup.
+    This means GET /api/tickets always returns real data immediately —
+    no triage call needed just to list tickets.
+    """
+    from services.data_loader import (
+        ACTIVE_TICKETS, ECM_SNAPSHOTS, WARRANTY_RECORDS, PRODUCT_CONFIG
+    )
+
+    # Index lookups
+    ecm_by_ticket  = {e["ticket_id"]: e      for e in ECM_SNAPSHOTS}
+    war_by_serial  = {w["serial_number"]: w  for w in WARRANTY_RECORDS}
+    prod_by_serial = {p["serial_number"]: p  for p in PRODUCT_CONFIG}
+
+    for t in ACTIVE_TICKETS:
+        tid     = t["ticket_id"]
+        ecm     = ecm_by_ticket.get(tid, {})
+        war     = war_by_serial.get(t["serial_number"], {})
+        prod    = prod_by_serial.get(t["serial_number"], {})
+        ff      = ecm.get("freeze_frame", {})
+
+        # Build enriched ticket so the frontend gets everything in one call
+        enriched = {
+            **t,
+            # from product_config
+            "equipment_model":  prod.get("engine_model", "X15"),
+            "cm_version":       prod.get("cm_version", ""),
+            # from ecm_snapshots
+            "fault_codes":      ecm.get("fault_codes", {}).get("active", []),
+            "inactive_codes":   ecm.get("fault_codes", {}).get("inactive", []),
+            "derate_active":    ecm.get("derate_active", False),
+            "shutdown_active":  ecm.get("shutdown_active", False),
+            "equipment_hours":  ff.get("equipment_hours", 0),
+            "freeze_frame":     ff,
+            # from warranty
+            "warranty_active":  war.get("warranty_active", False),
+            "warranty_expiry":  war.get("expiry_date", ""),
+            "billable_to":      war.get("billable_to", ""),
+            "coverage_type":    war.get("coverage_type", ""),
+            "auth_required":    war.get("authorization_required", False),
+        }
+        db.save_ticket(tid, enriched)
+
+    print(f"[Startup] Seeded {len(ACTIVE_TICKETS)} tickets into DB")
+
+
 # ── REQUEST MODELS ─────────────────────────────────────────────────────────────
 
 class TicketInput(BaseModel):
@@ -45,6 +96,7 @@ class TicketInput(BaseModel):
     serial_number:     str   # scanned or typed from engine block
     issue_description: str
     tech_id:           str
+    ticket_id:         Optional[str] = None  # pass existing ID to link triage to ticket
 
 
 class ChatRequest(BaseModel):
@@ -103,7 +155,7 @@ def triage_endpoint(ticket: TicketInput):
                 detail=f"No ECM snapshot found for '{ticket.serial_number}'. "
                        f"Ensure INSITE data has been uploaded for this machine.")
 
-        ticket_id   = f"TKT-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        ticket_id   = ticket.ticket_id or f"TKT-{datetime.now().strftime('%Y%m%d%H%M%S')}"
         ticket_data = {
             **ticket.dict(),
             'ticket_id':       ticket_id,
@@ -243,9 +295,11 @@ def resolve_endpoint(ticket_id: str, resolution: ResolutionInput):
                 detail=f"ai_diagnosis_correct must be one of: {sorted(valid_ai_ratings)}")
 
         # Save resolution
+        # FIX Bug 1: use timezone.utc so resolved_at is offset-aware and
+        # can be subtracted from created_at (also UTC-aware) without a TypeError.
         resolution_data = {
             **resolution.dict(),
-            'resolved_at': datetime.now().isoformat(),
+            'resolved_at': datetime.now(timezone.utc).isoformat(),
             'resolved_by': resolution.tech_id,
         }
         db.save_resolution(ticket_id, resolution_data)
@@ -283,8 +337,14 @@ def report_endpoint(request: ReportRequest):
 
 @app.get("/api/tickets")
 def list_tickets():
-    tickets = db.list_tickets()
-    return {"tickets": tickets, "count": len(tickets)}
+    """
+    Returns all tickets with fault codes, freeze frame, warranty, and product
+    data pre-joined — frontend can render the home screen in one call.
+    """
+    summary = db.list_tickets()
+    full    = [db.get_ticket(t["ticket_id"]) for t in summary if t.get("ticket_id")]
+    full    = [t for t in full if t]
+    return {"tickets": full, "count": len(full)}
 
 
 @app.get("/api/tickets/{ticket_id}")
@@ -309,13 +369,7 @@ if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)
 
 
-# ============================================================================
-# RCA AND ESCALATION ENDPOINTS (appended)
-# ============================================================================
-
-from agents.rca_agent import rca_agent
-from services.escalation_service import escalation_service
-
+# ── REQUEST MODELS FOR RCA / ESCALATION / ASSIGNMENT ──────────────────────────
 
 class RCAStepInput(BaseModel):
     step_number: int
@@ -338,7 +392,16 @@ class EscalationInput(BaseModel):
     current_step: Optional[int] = None   # RCA step tech was on when escalating
 
 
-# ── RCA ENDPOINTS ──────────────────────────────────────────────────────────
+class AssignmentApproval(BaseModel):
+    ticket_id:       str
+    tech_id:         str
+    approver_id:     str
+    approver_name:   str
+    is_override:     bool = False
+    override_reason: Optional[str] = None
+
+
+# ── RCA ENDPOINTS ──────────────────────────────────────────────────────────────
 
 @app.get("/api/rca/{ticket_id}")
 def get_rca(ticket_id: str):
@@ -434,7 +497,7 @@ def get_rca_status(ticket_id: str):
     return {"success": True, "status": rca_agent.get_status(ticket_id)}
 
 
-# ── ESCALATION ENDPOINT ────────────────────────────────────────────────────
+# ── ESCALATION ENDPOINTS ───────────────────────────────────────────────────────
 
 @app.post("/api/escalate/{ticket_id}")
 def escalate_ticket(ticket_id: str, body: EscalationInput):
@@ -501,21 +564,7 @@ def get_escalation(ticket_id: str):
     return {"success": True, "package": package}
 
 
-# ============================================================================
-# ASSIGNMENT ENDPOINTS (appended)
-# ============================================================================
-
-from services.assignment_service import assignment_service
-
-
-class AssignmentApproval(BaseModel):
-    ticket_id:       str
-    tech_id:         str
-    approver_id:     str
-    approver_name:   str
-    is_override:     bool = False
-    override_reason: Optional[str] = None
-
+# ── ASSIGNMENT ENDPOINTS ───────────────────────────────────────────────────────
 
 @app.get("/api/assign/{ticket_id}")
 def get_recommendations(ticket_id: str, top_n: int = 3):
@@ -580,3 +629,16 @@ def get_assignment_status(ticket_id: str):
     if not assignment:
         return {"assigned": False}
     return {"assigned": True, "assignment": assignment}
+
+
+@app.get("/api/manual/{filename}")
+def get_manual(filename: str):
+    """Serve full manual text for the frontend document viewer."""
+    import pathlib
+    safe = pathlib.Path(filename).name          # strip any path traversal
+    manual_path = os.path.join("data", "manuals", safe)
+    if not os.path.exists(manual_path):
+        raise HTTPException(status_code=404, detail=f"Manual '{safe}' not found")
+    with open(manual_path, "r", encoding="utf-8") as f:
+        text = f.read()
+    return {"filename": safe, "content": text}

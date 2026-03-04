@@ -226,15 +226,21 @@ class TriageAgent:
             for p in parts['relevant_parts'][:4]
         ]) or '  No specific parts identified.'
 
-        prompt = f"""You are an expert Cummins X15 off-highway engine service advisor.
-You are helping a junior field technician understand a diagnosis that the system has already computed.
+        prompt = f"""You are a diagnostic system generating a clinical fault assessment for a Cummins X15 engine.
+Output a structured technical diagnosis. Do NOT use conversational language, greetings, or first-person.
 
-Your job: Write a clear, practical diagnostic narrative in plain English.
-- Reference the actual data provided — be specific, not generic
-- Tell the technician what is likely wrong and why the system thinks so
-- Tell them what to check or do first based on the historical cases
-- Mention any semantic cases if they reveal a pattern the exact matches missed
-- Keep it under 250 words
+FORMAT YOUR RESPONSE EXACTLY LIKE THIS — no extra words:
+
+PRIMARY FAULT: [One sentence. State the most likely root cause clinically. E.g. "DEF level sensor failure indicated by out-of-range signal — fault code 3714 active."]
+
+FAULT EVIDENCE:
+• [Key data point 1 — e.g. "DEF level: 8% — below 10% derate threshold"]
+• [Key data point 2 — e.g. "2 historical cases with identical codes resolved by sensor replacement (100% success rate)"]
+• [Key data point 3 — e.g. "Engine load 78% at fault trigger — consistent with sensor error under load"]
+
+RECOMMENDED ACTION: [1–2 sentences. State exactly what to inspect or replace first, and why.]
+
+Do not add any other sections. Do not use "I", "we", "let's", or any conversational phrasing. Be direct and technical.
 - Do NOT invent numbers — only use what is provided below
 
 === COMPUTED DIAGNOSIS DATA ===

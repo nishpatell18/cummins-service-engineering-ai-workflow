@@ -19,14 +19,16 @@ class VectorStore:
     Handles document chunking, embedding, and semantic search
     """
 
-    def __init__(self):
+    def __init__(self, persist_path: str = "./chroma_db"):
         self.available = VECTORSTORE_AVAILABLE
         self.collection = None
         if self.available:
             try:
                 self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
-                self.client   = chromadb.Client()
-                print("[VectorStore] Initialized")
+                # PersistentClient writes to disk — survives server restarts
+                # load_data.py writes once; chat_assistant reads the same DB every time
+                self.client   = chromadb.PersistentClient(path=persist_path)
+                print(f"[VectorStore] Initialized (persistent @ {persist_path})")
             except Exception as e:
                 self.available = False
                 print(f"[VectorStore] Init failed: {e}")
