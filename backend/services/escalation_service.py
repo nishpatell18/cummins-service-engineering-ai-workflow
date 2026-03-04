@@ -3,9 +3,8 @@
 # for the back-office supervisor.
 #
 # Escalation types:
-#   senior_tech     — tech is stuck, needs senior technician on site
-#   parts_approval  — parts cost exceeds approval threshold
-#   remote_support  — supervisor reviews remotely, advises without site visit
+#   parts_warranty    — parts cost / warranty / billing approval needed
+#   technical_support — tech needs senior technical expertise
 #   unsafe          — tech sees safety hazard, stops job immediately
 #
 # Every escalation requires a named human approver — governance requirement.
@@ -18,14 +17,13 @@ from models.llm_client import LLMClient
 
 
 ESCALATION_TYPES = {
-    'senior_tech':    'Senior Technician Required',
-    'parts_approval': 'Parts/Budget Approval Required',
-    'remote_support': 'Remote Support Requested',
+    'parts_warranty':    'Parts / Warranty & Billing',
+    'technical_support': 'Technical Support Required',
     'unsafe':         'Unsafe to Proceed — Safety Stop',
 }
 
 APPROVAL_THRESHOLDS = {
-    'parts_approval': 500,   # $ — any parts above this need approval
+    'parts_warranty': 500,   # $ — any parts above this need approval
 }
 
 
@@ -43,7 +41,7 @@ class EscalationService:
 
         Args:
             ticket_id:       ticket being escalated
-            escalation_type: senior_tech | parts_approval | remote_support | unsafe
+            escalation_type: parts_warranty | technical_support | unsafe
             reason:          tech's explanation of why they are escalating
             approver_id:     ID of the named human approver
             approver_name:   name of the named human approver
@@ -263,7 +261,7 @@ class EscalationService:
             'parts_on_order':       parts_on_order,
             'total_parts_cost':     parts_cost,
             'approval_required':    approval_required,
-            'approval_threshold':   APPROVAL_THRESHOLDS['parts_approval'],
+            'approval_threshold':   APPROVAL_THRESHOLDS.get('parts_warranty', 500),
             'warranty_active':      warranty.get('active'),
             'billable_to':          warranty.get('billable_to', 'Unknown'),
             'escalation_urgency':   'IMMEDIATE' if escalation_type == 'unsafe' else 'STANDARD',

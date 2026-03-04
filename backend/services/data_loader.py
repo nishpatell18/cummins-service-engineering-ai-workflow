@@ -23,6 +23,8 @@ PARTS_INVENTORY    = _load('parts_inventory.json')     # list
 ECM_SNAPSHOTS      = _load('ecm_snapshots.json')       # list
 ACTIVE_TICKETS     = _load('active_tickets.json')      # list
 HISTORICAL_TICKETS = _load('historical_tickets.json')  # list
+TECHNICIANS        = _load('technicians.json')           # list
+MANAGERS           = _load('managers.json')              # list
 
 # Build fast lookup indexes
 _product_by_serial  = {p['serial_number']: p  for p in PRODUCT_CONFIG}
@@ -65,4 +67,6 @@ print(f"[DataLoader] Loaded: "
       f"{len(PRODUCT_CONFIG)} products, "
       f"{len(WARRANTY_RECORDS)} warranty records, "
       f"{len(PARTS_INVENTORY)} parts, "
-      f"{len(HISTORICAL_TICKETS)} historical tickets")
+      f"{len(HISTORICAL_TICKETS)} historical tickets, "
+      f"{len(TECHNICIANS)} technicians, "
+      f"{len(MANAGERS)} managers")

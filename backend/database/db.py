@@ -1,5 +1,6 @@
 # database/db.py - In-memory database
-# Stores tickets, triage, chat, resolution, and file metadata.
+# Stores tickets, triage, chat, resolution, file metadata, RCA, escalation,
+# RCA skip declarations, and closing approval requests.
 
 from datetime import datetime, timezone
 from typing import Dict, List, Optional
@@ -83,14 +84,19 @@ class Database:
 db = Database()
 
 
-# ── RCA AND ESCALATION (appended) ─────────────────────────────────────────
+# ── EXTENDED DB (RCA, ESCALATION, SKIP, APPROVAL) ─────────────────────────────
 
 class DatabaseExtended(Database):
 
     def __init__(self):
         super().__init__()
-        self.rca_data    = {}   # RCA sessions per ticket
-        self.escalations = {}   # escalation packages per ticket
+        self.rca_data          = {}   # RCA sessions per ticket
+        self.rca_skips         = {}   # RCA skip declarations per ticket
+        self.escalations       = {}   # escalation packages per ticket
+        self.assignments       = {}   # tech assignment decisions per ticket
+        self.approval_requests = {}   # closing approval requests per ticket
+
+    # ── RCA ───────────────────────────────────────────────────────────────────
 
     def save_rca(self, ticket_id: str, rca_data: dict):
         self.rca_data[ticket_id] = rca_data
@@ -98,6 +104,20 @@ class DatabaseExtended(Database):
 
     def get_rca(self, ticket_id: str):
         return self.rca_data.get(ticket_id)
+
+    # ── RCA SKIP ──────────────────────────────────────────────────────────────
+    # Logged when a tech declares they are skipping the RCA checklist.
+    # Existence of a skip record satisfies the ACTION tab gate,
+    # same as a completed RCA.
+
+    def save_rca_skip(self, ticket_id: str, skip_record: dict):
+        self.rca_skips[ticket_id] = skip_record
+        print(f"[Database] RCA skip for {ticket_id} — reason: {skip_record.get('reason')}")
+
+    def get_rca_skip(self, ticket_id: str):
+        return self.rca_skips.get(ticket_id)
+
+    # ── ESCALATION ────────────────────────────────────────────────────────────
 
     def save_escalation(self, ticket_id: str, package: dict):
         self.escalations[ticket_id] = package
@@ -108,28 +128,116 @@ class DatabaseExtended(Database):
     def get_escalation(self, ticket_id: str):
         return self.escalations.get(ticket_id)
 
-    def get_all_data(self, ticket_id: str) -> dict:
-        return {
-            'ticket':       self.get_ticket(ticket_id),
-            'triage':       self.get_triage_results(ticket_id),
-            'chat_history': self.get_chat_history(ticket_id),
-            'evidence':     self.get_evidence_log(ticket_id),
-            'resolution':   self.get_resolution(ticket_id),
-            'files':        self.get_file_metadata(ticket_id),
-            'rca':          self.get_rca(ticket_id),
-            'escalation':   self.get_escalation(ticket_id),
-        }
+    # ── CLOSING APPROVAL ──────────────────────────────────────────────────────
+    # Created when a tech submits their work for senior sign-off.
+    # status lifecycle: pending → approved | rejected
 
+    def save_approval_request(self, ticket_id: str, approval: dict):
+        self.approval_requests[ticket_id] = approval
+        print(f"[Database] Approval request {approval.get('approval_id')} for: {ticket_id}")
+
+    def get_approval_request(self, ticket_id: str):
+        return self.approval_requests.get(ticket_id)
+
+    def update_approval_status(self, ticket_id: str, status: str,
+                                approver_notes: str = '') -> bool:
+        """
+        Senior approves or rejects a closing approval request.
+        status: 'approved' | 'rejected'
+        Returns True if updated successfully, False if not found.
+        """
+        approval = self.approval_requests.get(ticket_id)
+        if not approval:
+            return False
+
+        approval['status']         = status
+        approval['approver_notes'] = approver_notes
+        approval['responded_at']   = datetime.now(timezone.utc).isoformat()
+
+        if status == 'approved' and ticket_id in self.tickets:
+            self.tickets[ticket_id]['status']      = 'resolved'
+            self.tickets[ticket_id]['resolved_at'] = datetime.now(timezone.utc).isoformat()
+
+        print(f"[Database] Approval {approval.get('approval_id')} → {status}")
+        return True
+
+    # ── ASSIGNMENT ────────────────────────────────────────────────────────────
 
     def save_assignment(self, ticket_id: str, assignment: dict):
-        if not hasattr(self, 'assignments'):
-            self.assignments = {}
         self.assignments[ticket_id] = assignment
         print(f"[Database] Saved assignment for: {ticket_id}")
 
     def get_assignment(self, ticket_id: str):
-        return getattr(self, 'assignments', {}).get(ticket_id)
+        return self.assignments.get(ticket_id)
+
+    # ── REPORTS QUERIES ───────────────────────────────────────────────────────
+
+    def get_pending_approvals_by_tech(self, tech_id: str) -> list:
+        """Return all closing approval requests submitted by this tech that are pending or rejected."""
+        results = []
+        for ticket_id, approval in self.approval_requests.items():
+            if approval.get('tech_id') != tech_id:
+                continue
+            status = approval.get('status', 'pending')
+            if status in ('pending', 'rejected'):
+                ticket = self.get_ticket(ticket_id)
+                results.append({
+                    **approval,
+                    'ticket_id':    ticket_id,
+                    'customer':     ticket.get('customer', '') if ticket else '',
+                    'type':         'closing_approval',
+                })
+        return sorted(results, key=lambda x: x.get('submitted_at', ''), reverse=True)
+
+    def get_completed_reports_by_tech(self, tech_id: str) -> list:
+        """Return resolved tickets for this tech with their full report data."""
+        results = []
+        for ticket_id, ticket in self.tickets.items():
+            if ticket.get('tech_id') != tech_id:
+                continue
+            if ticket.get('status') != 'resolved':
+                continue
+            approval = self.get_approval_request(ticket_id)
+            report   = self.resolutions.get(ticket_id)
+            results.append({
+                'ticket_id':   ticket_id,
+                'customer':    ticket.get('customer', ''),
+                'resolved_at': ticket.get('resolved_at', ''),
+                'fix_type':    approval.get('fix_type', '') if approval else '',
+                'report':      report,
+            })
+        return sorted(results, key=lambda x: x.get('resolved_at', ''), reverse=True)
+
+    def get_escalations_by_tech(self, tech_id: str) -> list:
+        """Return all escalations for tickets assigned to this tech."""
+        results = []
+        for ticket_id, escalation in self.escalations.items():
+            ticket = self.get_ticket(ticket_id)
+            if not ticket or ticket.get('tech_id') != tech_id:
+                continue
+            results.append({
+                **escalation,
+                'ticket_id': ticket_id,
+                'customer':  ticket.get('customer', ''),
+            })
+        return sorted(results, key=lambda x: x.get('escalated_at', ''), reverse=True)
+
+    # ── FULL DATA ─────────────────────────────────────────────────────────────
+
+    def get_all_data(self, ticket_id: str) -> dict:
+        return {
+            'ticket':           self.get_ticket(ticket_id),
+            'triage':           self.get_triage_results(ticket_id),
+            'chat_history':     self.get_chat_history(ticket_id),
+            'evidence':         self.get_evidence_log(ticket_id),
+            'resolution':       self.get_resolution(ticket_id),
+            'files':            self.get_file_metadata(ticket_id),
+            'rca':              self.get_rca(ticket_id),
+            'rca_skip':         self.get_rca_skip(ticket_id),
+            'escalation':       self.get_escalation(ticket_id),
+            'approval_request': self.get_approval_request(ticket_id),
+        }
 
 
-# Replace the global db instance with extended version
+# Replace the global db instance with the extended version
 db = DatabaseExtended()

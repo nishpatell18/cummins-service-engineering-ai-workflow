@@ -77,7 +77,8 @@ class ChatAssistant:
             answer_text = self.llm.generate(
                 prompt,
                 temperature=0.3,
-                image_paths=image_paths if image_paths else None
+                image_paths=image_paths if image_paths else None,
+                language=lang
             )
             print("[ChatAssistant] Answer generated")
         except Exception as e:

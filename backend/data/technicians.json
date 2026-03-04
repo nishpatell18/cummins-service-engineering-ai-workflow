@@ -3,180 +3,462 @@
     "tech_id": "TECH-001",
     "name": "Marcus Johnson",
     "certification_level": 3,
-    "specializations": ["DEF", "DPF", "EGR", "Fuel", "Cooling", "Oil", "Turbo", "MAF"],
+    "specializations": [
+      "DEF",
+      "DPF",
+      "EGR",
+      "Fuel",
+      "Cooling",
+      "Oil",
+      "Turbo",
+      "MAF"
+    ],
     "depot": "Denver-North",
-    "location": {"lat": 39.7817, "lng": -104.9922},
+    "location": {
+      "lat": 39.7817,
+      "lng": -104.9922
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 12,
-    "languages": ["en", "es"]
+    "languages": [
+      "en",
+      "es"
+    ]
   },
   {
     "tech_id": "TECH-002",
     "name": "Sarah Chen",
     "certification_level": 3,
-    "specializations": ["DEF", "DPF", "EGR", "Cooling", "Oil"],
+    "specializations": [
+      "DEF",
+      "DPF",
+      "EGR",
+      "Cooling",
+      "Oil"
+    ],
     "depot": "Denver-South",
-    "location": {"lat": 39.6461, "lng": -104.9942},
+    "location": {
+      "lat": 39.6461,
+      "lng": -104.9942
+    },
     "status": "available",
     "active_tickets": 1,
     "years_experience": 9,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-003",
     "name": "Diego Ramirez",
     "certification_level": 2,
-    "specializations": ["DEF", "Fuel", "MAF", "Turbo"],
+    "specializations": [
+      "DEF",
+      "Fuel",
+      "MAF",
+      "Turbo"
+    ],
     "depot": "Denver-West",
-    "location": {"lat": 39.7392, "lng": -105.1033},
+    "location": {
+      "lat": 39.7392,
+      "lng": -105.1033
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 5,
-    "languages": ["en", "es"]
+    "languages": [
+      "en",
+      "es"
+    ]
   },
   {
     "tech_id": "TECH-004",
     "name": "James Okafor",
     "certification_level": 2,
-    "specializations": ["DPF", "EGR", "Cooling"],
+    "specializations": [
+      "DPF",
+      "EGR",
+      "Cooling"
+    ],
     "depot": "Boulder",
-    "location": {"lat": 40.0150, "lng": -105.2705},
+    "location": {
+      "lat": 40.015,
+      "lng": -105.2705
+    },
     "status": "busy",
     "active_tickets": 2,
     "years_experience": 4,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-005",
     "name": "Priya Patel",
     "certification_level": 3,
-    "specializations": ["Oil", "Cooling", "Turbo", "Fuel", "EGR"],
+    "specializations": [
+      "Oil",
+      "Cooling",
+      "Turbo",
+      "Fuel",
+      "EGR"
+    ],
     "depot": "Denver-North",
-    "location": {"lat": 39.8028, "lng": -104.9711},
+    "location": {
+      "lat": 39.8028,
+      "lng": -104.9711
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 11,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-006",
     "name": "Tyler Brooks",
     "certification_level": 1,
-    "specializations": ["MAF", "DEF"],
+    "specializations": [
+      "MAF",
+      "DEF"
+    ],
     "depot": "Denver-East",
-    "location": {"lat": 39.7285, "lng": -104.8317},
+    "location": {
+      "lat": 39.7285,
+      "lng": -104.8317
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 1,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-007",
-    "name": "Amanda Foster",
+    "name": "Sofia Rodriguez",
     "certification_level": 2,
-    "specializations": ["DEF", "DPF", "MAF", "Fuel"],
+    "specializations": [
+      "DEF",
+      "DPF",
+      "MAF",
+      "Fuel"
+    ],
     "depot": "Denver-South",
-    "location": {"lat": 39.6100, "lng": -104.9000},
+    "location": {
+      "lat": 39.61,
+      "lng": -104.9
+    },
     "status": "available",
     "active_tickets": 1,
     "years_experience": 6,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-008",
     "name": "Carlos Mendez",
     "certification_level": 3,
-    "specializations": ["EGR", "Cooling", "Oil", "Turbo", "DPF"],
+    "specializations": [
+      "EGR",
+      "Cooling",
+      "Oil",
+      "Turbo",
+      "DPF"
+    ],
     "depot": "Fort-Collins",
-    "location": {"lat": 40.5853, "lng": -105.0844},
+    "location": {
+      "lat": 40.5853,
+      "lng": -105.0844
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 15,
-    "languages": ["en", "es"]
+    "languages": [
+      "en",
+      "es"
+    ]
   },
   {
     "tech_id": "TECH-009",
     "name": "Rachel Kim",
     "certification_level": 2,
-    "specializations": ["Fuel", "Turbo", "MAF"],
+    "specializations": [
+      "Fuel",
+      "Turbo",
+      "MAF"
+    ],
     "depot": "Denver-West",
-    "location": {"lat": 39.7550, "lng": -105.0800},
+    "location": {
+      "lat": 39.755,
+      "lng": -105.08
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 3,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-010",
     "name": "Michael Torres",
     "certification_level": 1,
-    "specializations": ["MAF", "Fuel"],
+    "specializations": [
+      "MAF",
+      "Fuel"
+    ],
     "depot": "Denver-East",
-    "location": {"lat": 39.7100, "lng": -104.8500},
+    "location": {
+      "lat": 39.71,
+      "lng": -104.85
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 2,
-    "languages": ["en", "es"]
+    "languages": [
+      "en",
+      "es"
+    ]
   },
   {
     "tech_id": "TECH-011",
     "name": "Lisa Nguyen",
     "certification_level": 3,
-    "specializations": ["DEF", "DPF", "EGR", "Fuel", "Oil"],
+    "specializations": [
+      "DEF",
+      "DPF",
+      "EGR",
+      "Fuel",
+      "Oil"
+    ],
     "depot": "Denver-North",
-    "location": {"lat": 39.8200, "lng": -104.9600},
+    "location": {
+      "lat": 39.82,
+      "lng": -104.96
+    },
     "status": "busy",
     "active_tickets": 1,
     "years_experience": 8,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-012",
     "name": "Robert Hayes",
     "certification_level": 2,
-    "specializations": ["Cooling", "Oil", "Turbo"],
+    "specializations": [
+      "Cooling",
+      "Oil",
+      "Turbo"
+    ],
     "depot": "Boulder",
-    "location": {"lat": 40.0274, "lng": -105.2519},
+    "location": {
+      "lat": 40.0274,
+      "lng": -105.2519
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 7,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-013",
     "name": "Elena Vasquez",
     "certification_level": 2,
-    "specializations": ["DEF", "EGR", "MAF"],
+    "specializations": [
+      "DEF",
+      "EGR",
+      "MAF"
+    ],
     "depot": "Denver-South",
-    "location": {"lat": 39.6300, "lng": -104.9200},
+    "location": {
+      "lat": 39.63,
+      "lng": -104.92
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 4,
-    "languages": ["en", "es"]
+    "languages": [
+      "en",
+      "es"
+    ]
   },
   {
     "tech_id": "TECH-014",
-    "name": "Kevin Walsh",
-    "certification_level": 2,
-    "specializations": ["DEF", "DPF", "Fuel"],
+    "name": "Marcus Johnson",
+    "certification_level": 3,
+    "specializations": [
+      "DEF",
+      "DPF",
+      "Fuel"
+    ],
     "depot": "Denver-North",
-    "location": {"lat": 39.7900, "lng": -104.9800},
+    "location": {
+      "lat": 39.79,
+      "lng": -104.98
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 5,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   {
     "tech_id": "TECH-015",
     "name": "Sandra Mitchell",
     "certification_level": 3,
-    "specializations": ["Oil", "Cooling", "Turbo", "EGR", "DPF", "DEF"],
+    "specializations": [
+      "Oil",
+      "Cooling",
+      "Turbo",
+      "EGR",
+      "DPF",
+      "DEF"
+    ],
     "depot": "Fort-Collins",
-    "location": {"lat": 40.5500, "lng": -105.0700},
+    "location": {
+      "lat": 40.55,
+      "lng": -105.07
+    },
     "status": "available",
     "active_tickets": 0,
     "years_experience": 14,
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "tech_id": "TECH-018",
+    "name": "Danny Kowalski",
+    "certification_level": 2,
+    "specializations": [
+      "DEF",
+      "DPF",
+      "EGR"
+    ],
+    "depot": "Denver-Central",
+    "location": {
+      "lat": 39.7392,
+      "lng": -104.9903
+    },
+    "status": "available",
+    "active_tickets": 1,
+    "years_experience": 5,
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "tech_id": "TECH-019",
+    "name": "Fatima Al-Hassan",
+    "certification_level": 2,
+    "specializations": [
+      "Fuel",
+      "Cooling",
+      "Oil"
+    ],
+    "depot": "Denver-East",
+    "location": {
+      "lat": 39.7294,
+      "lng": -104.8319
+    },
+    "status": "available",
+    "active_tickets": 1,
+    "years_experience": 4,
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "tech_id": "TECH-022",
+    "name": "James Park",
+    "certification_level": 1,
+    "specializations": [
+      "DEF",
+      "DPF"
+    ],
+    "depot": "Denver-Central",
+    "location": {
+      "lat": 39.7392,
+      "lng": -104.9903
+    },
+    "status": "available",
+    "active_tickets": 1,
+    "years_experience": 2,
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "tech_id": "TECH-025",
+    "name": "Brendan O'Neill",
+    "certification_level": 2,
+    "specializations": [
+      "EGR",
+      "Turbo",
+      "MAF"
+    ],
+    "depot": "Boulder",
+    "location": {
+      "lat": 40.015,
+      "lng": -105.2705
+    },
+    "status": "available",
+    "active_tickets": 1,
+    "years_experience": 6,
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "tech_id": "TECH-028",
+    "name": "Yuki Tanaka",
+    "certification_level": 3,
+    "specializations": [
+      "DEF",
+      "DPF",
+      "EGR",
+      "Fuel",
+      "Cooling"
+    ],
+    "depot": "Fort-Collins",
+    "location": {
+      "lat": 40.5853,
+      "lng": -105.0844
+    },
+    "status": "available",
+    "active_tickets": 1,
+    "years_experience": 9,
+    "languages": [
+      "en"
+    ]
+  },
+  {
+    "tech_id": "TECH-031",
+    "name": "Caleb Thornton",
+    "certification_level": 1,
+    "specializations": [
+      "DEF",
+      "Fuel"
+    ],
+    "depot": "Denver-North",
+    "location": {
+      "lat": 39.7817,
+      "lng": -104.9922
+    },
+    "status": "available",
+    "active_tickets": 1,
+    "years_experience": 1,
+    "languages": [
+      "en"
+    ]
   }
 ]

@@ -20,10 +20,11 @@ class LLMClient:
         return cls._instance
 
     def generate(self, prompt: str, temperature: float = 0.2,
-                 image_paths: list = None) -> str:
+                 image_paths: list = None, language: str = 'en') -> str:
         """
         Call Gemma 3.
         image_paths: optional list of local file paths — Gemma 3 will analyze them.
+        language: 'en' or 'es' — controls the system-level language instruction.
         """
         try:
             user_msg = {'role': 'user', 'content': prompt}
@@ -38,10 +39,17 @@ class LLMClient:
                 if encoded:
                     user_msg['images'] = encoded
 
+            lang_instruction = (
+                " You MUST respond entirely in Spanish (Español). "
+                "Do not switch to English under any circumstances, even when quoting technical terms — "
+                "translate or transliterate them."
+                if language == 'es' else ""
+            )
+
             response = self.client.chat(
                 model=self.model,
                 messages=[
-                    {'role': 'system', 'content': 'You are a Cummins X15 field service assistant.'},
+                    {'role': 'system', 'content': f'You are a Cummins X15 field service assistant.{lang_instruction}'},
                     user_msg
                 ],
                 options={'temperature': temperature, 'num_predict': 2000}
