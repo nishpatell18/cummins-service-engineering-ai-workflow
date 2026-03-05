@@ -1,11 +1,11 @@
 # Cummins AI Service Engineering Workflow
-### Multi-agent AI system for field technicians — v0.3.0
+### Multi-agent AI system for field technicians
 
-> A FastAPI + React system that guides junior field technicians through engine fault diagnosis, root cause analysis, and back-office escalation — powered by a local LLM (Gemma 3 via Ollama), RAG over service manuals, and a Random Forest assignment model.
+> A FastAPI + React system that guides junior field technicians through engine fault diagnosis, root cause analysis, and back-office escalation built using a local LLM (Gemma 3 via Ollama), RAG over service manuals, and a Random Forest assignment model.
 
 ---
 
-Team 19 
+Cummins Xtern challenge - Service Engineering Reboot - Team 19 
 ---
 
 ## What It Does
@@ -167,7 +167,6 @@ Two-phase design — the LLM **explains** evidence, it does not generate it.
 **Phase 2 (LLM narrative):**
 - Structured prompt with all Phase 1 evidence
 - Gemma 3 generates a clinical diagnostic narrative for the tech
-- Falls back to a `[ZZZ FALLBACK]` plaintext message if Ollama is offline
 
 Every run writes a decision log to `backend/logs/{ticket_id}_triage.json`.
 
@@ -176,7 +175,7 @@ Every run writes a decision log to `backend/logs/{ticket_id}_triage.json`.
 ### Agent 2 — Chat Assistant  `POST /api/chat`
 
 - Full ticket + triage context injected into every request
-- RAG over 9 Cummins service manuals (ChromaDB + `all-MiniLM-L6-v2` embeddings)
+- RAG over 9 Cummins service manuals (ChromaDB + `all-MiniLM-L6-v2` embeddings). All manuals are Synthetic data, not original manuals.
 - Vision support: upload a photo via `POST /api/upload/{ticket_id}`, then reference the `file_id` in chat — Gemma 3 analyses the image
 - English / Spanish language support (`language: "en"` or `"es"`)
 
@@ -217,7 +216,6 @@ Every action that affects warranty, billing, or ticket status requires a **named
 | Escalation gate | RCA must be started or explicitly skipped before escalating (except `unsafe`) |
 | Safety stop | `escalation_type: "unsafe"` bypasses all gates — immediate stop, logged |
 | Short-term fix flag | `fix_type: "short_term"` prompts the approving senior to schedule follow-up |
-| AI transparency | LLM fallback outputs `[ZZZ FALLBACK]` prefix — always visible when AI did not run |
 
 ---
 
@@ -297,17 +295,3 @@ Full interactive docs are available at **http://localhost:8000/docs** when the b
 | Random Forest (scikit-learn) | BSD 3-Clause | Technician assignment scoring |
 
 ---
-
-## Project Checklist
-
-- [x] Runnable demo — local + student cloud (Render / Railway)
-- [x] Mobile-first UI with simulated phone shell
-- [x] Back-office dashboard
-- [x] Multi-agent orchestration (Triage · Chat · RCA · Report Generator)
-- [x] Open-source LLM (Gemma 3, local via Ollama)
-- [x] RAG over domain documents (service manuals)
-- [x] Synthetic dataset — 15 tickets, 100+ historical cases
-- [x] Persistent audit log (`backend/logs/`)
-- [x] Governance controls (approval gates, escalation guards, named approvers)
-- [x] Offline fallback (seed data + backend status banner)
-- [x] README with full setup steps (this file)

@@ -1203,32 +1203,16 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
 
   const [autoSafety, setAutoSafety] = useState(cached?.safety || null);
 
-  // Auto-fetch safety warnings as soon as ticket opens (lightweight triage call)
+  // Auto-fetch safety warnings instantly via dedicated endpoint (no LLM wait)
   useEffect(() => {
     if (cached?.safety || autoSafety) return;
-    fetch(`${API}/api/triage`, { method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ ticket_id:t.ticket_id, customer:t.customer, location:t.location, serial_number:t.serial_number, issue_description:t.issue_description, tech_id:t.tech_id }) })
-    .then(r=>r.ok?r.json():null).then(d=>{
-      if (!d) return;
-      const tr = d.triage_results;
-      const safety = tr?.safety?.warnings||[];
-      setAutoSafety(safety);
-      // Also cache the full result so "Run AI Diagnosis" reuses it
-      const result = {
-        priority:     tr?.severity?.priority||"P1",
-        sla:          tr?.severity?.sla_hours||t.sla_label,
-        impact:       tr?.severity?.impact||"",
-        likely_cause: tr?.diagnosis?.narrative||"Unable to generate diagnosis.",
-        confidence:   tr?.diagnosis?.evidence?.success_rate_pct??0,
-        similar_cases:tr?.diagnosis?.evidence?.similar_cases_found??0,
-        ref:          (tr?.diagnosis?.evidence?.tsb_references||[]).join(", "),
-        resolution:   tr?.diagnosis?.evidence?.most_common_resolution||"",
-        safety,
-        rec_parts:    (tr?.resources?.parts||[]).map(p=>`${p.description} (${p.part_number})`),
-      };
-      setAi(result);
-      if (setTriageCache) setTriageCache(prev=>({...prev,[t.ticket_id]:result}));
-    }).catch(()=>{});
+    fetch(`${API}/api/safety/${t.ticket_id}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        if (!d) return;
+        setAutoSafety(d.warnings || []);
+      })
+      .catch(() => {});
   }, [t.ticket_id]);
 
   const runDiagnosis = () => {
@@ -1831,11 +1815,10 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
   const [done, setDone]           = useState(false);
   const [doneMsg, setDoneMsg]     = useState("");
   // Escalation form (when path=escalate)
-  const [escType, setEscType]         = useState("parts_warranty");
-  const [escReason, setEscReason]     = useState("");
-  const [escName, setEscName]         = useState("");
-  const [escId, setEscId]             = useState("");
-  const [escApprover, setEscApprover] = useState(null);  // moved from inside if block — fixes blank screen
+  const [escType, setEscType]     = useState("parts_warranty");
+  const [escReason, setEscReason] = useState("");
+  const [escName, setEscName]     = useState("");
+  const [escId, setEscId]         = useState("");
   const photoRef = useRef(null);
 
   // Gate: RCA must be done
@@ -1887,6 +1870,7 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
 
   // ── PATH: escalate ────────────────────────────────────────────────────────────
   if (path==="escalate") {
+    const [escApprover, setEscApprover] = useState(null);
     const submitEsc = async () => {
       if (!escReason.trim()||!escApprover) { setErr("All fields required."); return; }
       setLoading(true); setErr("");

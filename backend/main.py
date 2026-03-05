@@ -363,6 +363,44 @@ def list_fault_codes():
     return {"fault_codes": FAULT_CODES, "count": len(FAULT_CODES)}
 
 
+@app.get("/api/safety/{ticket_id}")
+def get_safety(ticket_id: str):
+    """
+    Returns safety warnings for a ticket instantly — no LLM involved.
+    Runs only: fault lookup + freeze frame threshold checks + safety rules.
+    Use this to load the Safety section immediately when a ticket opens,
+    instead of waiting for the full triage (which blocks on the LLM).
+    """
+    from services.data_loader import get_ecm_snapshot_by_ticket, get_ecm_snapshot_by_serial
+    from services.fault_lookup import lookup_fault_codes
+    from services.safety_rules import derive_safety_warnings
+
+    ticket = db.get_ticket(ticket_id)
+    if not ticket:
+        raise HTTPException(status_code=404, detail=f"Ticket '{ticket_id}' not found.")
+
+    ecm = get_ecm_snapshot_by_ticket(ticket_id)
+    if not ecm:
+        ecm = get_ecm_snapshot_by_serial(ticket.get("serial_number", ""))
+    if not ecm:
+        ecm = {}
+
+    active_codes   = ecm.get("fault_codes", {}).get("active",   ticket.get("fault_codes", []))
+    inactive_codes = ecm.get("fault_codes", {}).get("inactive", [])
+    fault_counts   = ecm.get("fault_codes", {}).get("fault_counts", {})
+
+    fault_info = lookup_fault_codes(active_codes, inactive_codes, fault_counts)
+    safety     = derive_safety_warnings(fault_info, ecm)
+
+    return {
+        "success":    True,
+        "ticket_id":  ticket_id,
+        "warnings":   safety["warnings"],
+        "precautions": safety["precautions"],
+        "critical":   safety["critical"],
+    }
+
+
 @app.get("/api/tickets")
 def list_tickets():
     summary = db.list_tickets()
