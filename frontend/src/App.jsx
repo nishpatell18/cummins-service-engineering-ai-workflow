@@ -30,13 +30,10 @@ const T = {
   blueBg:       "#E3F2FD",
   yellowBg:     "#FFFDE7",
   yellowBorder: "#F9A825",
-  chip:         "#1E1E1E",   // dark fault-code chips matching mockup
+  chip:         "#1E1E1E",
   chipText:     "#FFFFFF",
 };
 
-// (no hardcoded mock data — all loaded from backend API)
-
-// ─── API ──────────────────────────────────────────────────────────────────────
 async function apiHealth()       { return fetch(`${API}/`).then(r=>r.json()); }
 async function apiListTickets()  { return fetch(`${API}/api/tickets`).then(r=>r.json()); }
 
@@ -67,7 +64,6 @@ async function apiRCAStep(ticketId, stepNumber, outcome, observation) {
   });
   return r.json();
 }
-
 
 async function apiRCAComplete(ticketId, finalOutcome) {
   const r = await fetch(`${API}/api/rca/${ticketId}/complete`, {
@@ -261,7 +257,6 @@ function LoginScreen({ onLogin }) {
           style={{ width:"100%", padding:"14px 16px", borderRadius:10, border:`1px solid ${selected?"#D32F2F":"#2a2a2a"}`,
             background:"#111", color:T.white, fontSize:14, outline:"none" }}
         />
-        {/* Dropdown suggestions */}
         {!selected && matches.length > 0 && (
           <div style={{ background:"#1a1a1a", border:"1px solid #2a2a2a", borderRadius:10, marginTop:4, overflow:"hidden" }}>
             {matches.slice(0,5).map(t => (
@@ -318,7 +313,6 @@ function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading })
 
   return (
     <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
-      {/* Top bar */}
       <div style={{ background:T.charcoal, flexShrink:0 }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 16px 0" }}>
           <button style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
@@ -329,7 +323,6 @@ function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading })
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           </button>
         </div>
-        {/* Welcome banner */}
         <div style={{ padding:"12px 16px 16px" }}>
           <div style={{ fontSize:12, color:T.gray3, fontWeight:500, marginBottom:3 }}>Welcome back,</div>
           <div style={{ fontSize:20, fontWeight:900, color:T.white, letterSpacing:0.2, marginBottom:4 }}>{currentUser?.name || "Technician"}</div>
@@ -341,8 +334,6 @@ function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading })
       </div>
 
       <div style={{ flex:1, overflowY:"auto", background:T.bgPage }}>
-
-        {/* Stats row */}
         <div style={{ background:T.white, display:"flex", borderBottom:`1px solid ${T.border}`, marginBottom:8 }}>
           {[
             { label:"ACTIVE FAULTS", value:high.length, badge:high.length>0?`+${high.length} new`:null, bColor:T.red },
@@ -357,13 +348,11 @@ function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading })
           ))}
         </div>
 
-        {/* Active faults header + filter */}
         <div style={{ padding:"4px 16px 8px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <span style={{ fontSize:13, fontWeight:800, color:T.black }}>Tickets</span>
           <span style={{ fontSize:10, fontWeight:600, color:T.gray3 }}>{currentUser?.tech_id}</span>
         </div>
 
-        {/* Filter pills */}
         <div style={{ padding:"0 16px 10px", display:"flex", gap:6 }}>
           {filters.map(f=>(
             <button key={f} onClick={()=>setFilter(f)}
@@ -375,14 +364,12 @@ function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading })
           ))}
         </div>
 
-        {/* Section label */}
         {!ticketsLoading && filtered.length>0 && (
           <div style={{ padding:"0 16px 6px" }}>
             <span style={{ fontSize:10, fontWeight:700, color:T.gray3, letterSpacing:0.8 }}>ACTIVE · {filtered.length} TICKET{filtered.length!==1?"S":""}</span>
           </div>
         )}
 
-        {/* Ticket list */}
         <div style={{ padding:"0 12px 16px" }}>
           {ticketsLoading
             ? <div style={{ padding:"40px 0", textAlign:"center", fontSize:13, color:T.gray3 }}>Loading tickets…</div>
@@ -449,30 +436,21 @@ function TicketCard({ ticket:t, onPress }) {
 
   return (
     <button onClick={onPress} style={{ background:T.white, borderRadius:8, padding:"13px 14px 11px", border:`1px solid ${T.border}`, textAlign:"left", cursor:"pointer", width:"100%", marginBottom:8, display:"block" }}>
-      {/* Row 1: ID + badge */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:5 }}>
         <span style={{ fontSize:10, color:T.gray3, fontWeight:600, letterSpacing:0.3 }}>{t.ticket_id}</span>
         <div style={{ background:badgeBg, color:T.white, fontSize:10, fontWeight:800, padding:"2px 9px", borderRadius:4, letterSpacing:0.8 }}>
           {isHigh ? "High" : "Medium"}
         </div>
       </div>
-
-      {/* Row 2: Customer name */}
       <div style={{ fontSize:16, fontWeight:900, color:T.black, marginBottom:5, lineHeight:1.2 }}>{t.customer}</div>
-
-      {/* Row 3: Location */}
       <div style={{ display:"flex", alignItems:"center", gap:4, marginBottom:7 }}>
         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={T.gray3} strokeWidth="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <span style={{ fontSize:11, color:T.gray3 }}>{t.location} · {t.equipment_model}</span>
       </div>
-
-      {/* Row 4: Fault chips + system label */}
       <div style={{ display:"flex", alignItems:"center", gap:5, marginBottom:8, flexWrap:"wrap" }}>
         {(t.fault_codes||[]).slice(0,4).map(c => <FaultChip key={c} code={c}/>)}
         {systems && <span style={{ fontSize:11, fontWeight:600, color:T.gray2 }}>{systems}</span>}
       </div>
-
-      {/* Row 5: SLA + derate */}
       <div style={{ display:"flex", alignItems:"center", gap:8 }}>
         <span style={{ width:7, height:7, borderRadius:"50%", background:T.red, flexShrink:0, display:"inline-block" }}/>
         <span style={{ fontSize:11, fontWeight:700, color:T.gray1 }}>SLA: {t.sla_label || "—"}</span>
@@ -488,10 +466,8 @@ function TicketCard({ ticket:t, onPress }) {
 }
 
 // ─── TSB RESOLVER ─────────────────────────────────────────────────────────────
-// Runtime fault code map — populated from /api/fault_codes on startup
 let FAULT_SYSTEM_MAP = {};
 
-// Maps system names (from fault_codes.json) to manual filenames
 const SYSTEM_TO_MANUAL = {
   "Aftertreatment": "DEF_Aftertreatment_System.txt",
   "EGR":            "EGR_System.txt",
@@ -504,10 +480,8 @@ const SYSTEM_TO_MANUAL = {
 };
 function resolveTSB(ref) {
   if (!ref) return null;
-  // Try to match a system keyword in the ref string
   const systemMatch = Object.keys(SYSTEM_TO_MANUAL).find(s => ref.toUpperCase().includes(s.toUpperCase()));
   if (systemMatch) return { file: SYSTEM_TO_MANUAL[systemMatch], chunk: ref };
-  // Fallback: default to DEF manual
   return { file: "DEF_Aftertreatment_System.txt", chunk: ref };
 }
 
@@ -618,7 +592,7 @@ function UnsafeEscalationModal({ ticket, onClose, onSuccess }) {
   );
 }
 
-// ─── CHAT TAB (inline, full-height tab) ───────────────────────────────────────
+// ─── CHAT TAB ─────────────────────────────────────────────────────────────────
 function ChatTab({ ticket, currentUser, chatCache, setChatCache }) {
   const [messages, setMessages]       = useState(chatCache?.[ticket.ticket_id] || []);
   const [input, setInput]             = useState("");
@@ -693,7 +667,6 @@ function ChatTab({ ticket, currentUser, chatCache, setChatCache }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
-      {/* Sub-header */}
       <div style={{ background:T.white, padding:"9px 14px 8px", borderBottom:`1px solid ${T.border}`, flexShrink:0, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
         <div style={{ fontSize:12, color:T.gray2, lineHeight:1.4 }}>Fault codes &amp; manuals loaded for this ticket</div>
         <div style={{ display:"flex", background:T.bgPage, borderRadius:16, overflow:"hidden", border:`1px solid ${T.border}` }}>
@@ -703,7 +676,6 @@ function ChatTab({ ticket, currentUser, chatCache, setChatCache }) {
         </div>
       </div>
 
-      {/* Messages or welcome */}
       {messages.length===0 && !loading ? (
         <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 18px 16px", gap:20 }}>
           <div style={{ width:52, height:52, borderRadius:14, background:T.black, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -772,7 +744,6 @@ function ChatTab({ ticket, currentUser, chatCache, setChatCache }) {
         </div>
       )}
 
-      {/* Pending file preview */}
       {pendingFile && (
         <div style={{ background:T.white, borderTop:`1px solid ${T.border}`, padding:"8px 12px", display:"flex", alignItems:"center", gap:10, flexShrink:0 }}>
           {pendingFile.type==="image"&&pendingFile.url
@@ -789,7 +760,6 @@ function ChatTab({ ticket, currentUser, chatCache, setChatCache }) {
       <input ref={cameraRef} type="file" accept="image/*" capture="environment" onChange={handleFilePicked} style={{ display:"none" }}/>
       <input ref={attachRef} type="file" accept="image/*,.pdf,.doc,.docx,.txt,.csv" onChange={handleFilePicked} style={{ display:"none" }}/>
 
-      {/* Input bar */}
       <div style={{ background:T.white, borderTop:`1px solid ${T.border}`, padding:"10px 12px", display:"flex", gap:8, alignItems:"center", flexShrink:0 }}>
         <button onClick={()=>cameraRef.current?.click()} style={{ width:36,height:36,borderRadius:"50%",background:T.bgPage,border:`1px solid ${T.border}`,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={T.gray2} strokeWidth="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
@@ -813,214 +783,6 @@ function ChatTab({ ticket, currentUser, chatCache, setChatCache }) {
   );
 }
 
-// ─── CHAT DRAWER ──────────────────────────────────────────────────────────────
-function ChatDrawer({ ticket, currentUser, chatCache, setChatCache, onClose }) {
-  const [messages, setMessages]       = useState(chatCache?.[ticket.ticket_id] || []);
-  const [input, setInput]             = useState("");
-  const [lang, setLang]               = useState("en");
-  const [loading, setLoading]         = useState(false);
-  const [pendingFile, setPendingFile] = useState(null);
-  const [docViewer, setDocViewer]     = useState(null);
-  const bottomRef  = useRef(null);
-  const cameraRef  = useRef(null);
-  const attachRef  = useRef(null);
-
-  useEffect(() => { bottomRef.current?.scrollIntoView({ behavior:"smooth" }); }, [messages]);
-  useEffect(() => {
-    if (setChatCache && messages.length > 0)
-      setChatCache(prev => ({ ...prev, [ticket.ticket_id]: messages }));
-  }, [messages]);
-
-  const uploadFile = async (file) => {
-    const fd = new FormData(); fd.append("file", file); fd.append("context","chat");
-    try {
-      const r = await fetch(`${API}/api/upload/${ticket.ticket_id}`, { method:"POST", body:fd });
-      if (!r.ok) throw new Error();
-      const d = await r.json(); return d.file_id;
-    } catch { return null; }
-  };
-
-  const handleFilePicked = async (e) => {
-    const file = e.target.files?.[0]; if (!file) return;
-    const isImage = file.type.startsWith("image/");
-    const localUrl = isImage ? URL.createObjectURL(file) : null;
-    const file_id = await uploadFile(file);
-    setPendingFile({ url:localUrl, file_id, type:isImage?"image":"doc", name:file.name });
-    e.target.value = "";
-  };
-
-  const sendSuggestion = useCallback((text) => {
-    if (loading) return;
-    setMessages([{ role:"user", text, image:null, sources:[] }]);
-    setLoading(true);
-    fetch(`${API}/api/chat`, { method:"POST", headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({ ticket_id:ticket.ticket_id, message:text, language:lang, file_ids:[] }),
-    })
-    .then(r=>r.ok?r.json():null).then(d => {
-      if (!d) throw new Error();
-      setMessages(m=>[...m,{ role:"assistant", text:d.response?.answer??d.response?.message??JSON.stringify(d.response), sources:d.response?.sources||[] }]);
-    }).catch(()=>setMessages(m=>[...m,{ role:"assistant", text:"Could not reach backend.", sources:[] }]))
-    .finally(()=>setLoading(false));
-  }, [loading, lang, ticket.ticket_id]);
-
-  const send = useCallback(async () => {
-    const q = input.trim(); const hasFile = !!pendingFile;
-    if ((!q && !hasFile) || loading) return;
-    const userText = q || "What can you see in this image?";
-    setInput(""); setMessages(m=>[...m,{ role:"user", text:userText, image:pendingFile?.url||null, sources:[] }]);
-    const pf = pendingFile; setPendingFile(null); setLoading(true);
-    try {
-      const r = await fetch(`${API}/api/chat`, { method:"POST", headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({ ticket_id:ticket.ticket_id, message:userText, language:lang, file_ids:pf?.file_id?[pf.file_id]:[] }) });
-      if (!r.ok) throw new Error();
-      const d = await r.json();
-      setMessages(m=>[...m,{ role:"assistant", text:d.response?.answer??d.response?.message??JSON.stringify(d.response), sources:d.response?.sources||[] }]);
-    } catch { setMessages(m=>[...m,{ role:"assistant", text:"Could not reach backend.", sources:[] }]); }
-    finally { setLoading(false); }
-  }, [input, loading, lang, ticket.ticket_id, pendingFile]);
-
-  const userInitial = currentUser?.name?.[0]?.toUpperCase() || "T";
-  const SUGGESTIONS = ["DEF sensor resistance spec for X15?","How do I diagnose fault code 3714?","Step-by-step DEF system test procedure","Any TSBs for DEF sensor failure on X15?"];
-
-  return (
-    <>
-      <div onClick={onClose} style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.4)", zIndex:200 }}/>
-      <div style={{ position:"absolute", bottom:0, left:0, right:0, top:"8%", zIndex:201, background:T.white, borderRadius:"20px 20px 0 0", display:"flex", flexDirection:"column", animation:"slidein 0.3s ease" }}>
-        {/* Handle + header */}
-        <div style={{ flexShrink:0 }}>
-          <div style={{ display:"flex", justifyContent:"center", padding:"10px 0 0" }}>
-            <div style={{ width:32, height:3, borderRadius:2, background:T.border }}/>
-          </div>
-          <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"10px 16px 8px", borderBottom:`1px solid ${T.border}` }}>
-            <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-              <div style={{ width:28, height:28, borderRadius:8, background:T.black, display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><circle cx="12" cy="12" r="3" fill="#fff" stroke="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.64 5.64l2.12 2.12M16.24 16.24l2.12 2.12M5.64 18.36l2.12-2.12M16.24 7.76l2.12-2.12"/></svg>
-              </div>
-              <div>
-                <div style={{ fontSize:13, fontWeight:800, color:T.black }}>AI Assistant</div>
-                <div style={{ fontSize:10, color:T.gray3 }}>Fault codes & manuals loaded</div>
-              </div>
-            </div>
-            <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-              <div style={{ display:"flex", background:T.bgPage, borderRadius:16, overflow:"hidden", border:`1px solid ${T.border}` }}>
-                {["en","es"].map(l=>(
-                  <button key={l} onClick={()=>setLang(l)} style={{ padding:"3px 10px", fontSize:11, fontWeight:700, border:"none", cursor:"pointer", background:lang===l?T.black:"transparent", color:lang===l?T.white:T.gray2, borderRadius:14 }}>{l.toUpperCase()}</button>
-                ))}
-              </div>
-              <button onClick={onClose} style={{ width:28, height:28, borderRadius:"50%", background:T.bgPage, border:`1px solid ${T.border}`, cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center" }}>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={T.gray2} strokeWidth="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Messages */}
-        {messages.length===0 && !loading ? (
-          <div style={{ flex:1, overflowY:"auto", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"0 18px 16px", gap:20 }}>
-            <div style={{ textAlign:"center" }}>
-              <div style={{ fontSize:15, fontWeight:800, color:T.black, marginBottom:4 }}>How can I help?</div>
-              <div style={{ fontSize:11, color:T.gray3, lineHeight:1.6 }}>Ask about fault codes, procedures, or send a photo.</div>
-            </div>
-            <div style={{ width:"100%", display:"flex", flexDirection:"column", gap:6 }}>
-              {SUGGESTIONS.map((s,i)=>(
-                <button key={i} onClick={()=>sendSuggestion(s)}
-                  style={{ width:"100%", padding:"10px 13px", background:T.white, border:`1px solid ${T.border}`, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"space-between", cursor:"pointer", fontFamily:"inherit" }}>
-                  <span style={{ fontSize:12, color:T.gray1, textAlign:"left", lineHeight:1.4, flex:1 }}>{s}</span>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={T.gray4} strokeWidth="2.5"><polyline points="9 18 15 12 9 6"/></svg>
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div style={{ flex:1, overflowY:"auto", padding:"12px 14px", background:T.bgPage, display:"flex", flexDirection:"column", gap:10 }}>
-            {messages.map((m,i)=>{
-              const isUser = m.role==="user"; const hasRAG = !isUser && m.sources?.length>0;
-              if (isUser) return (
-                <div key={i} style={{ display:"flex", justifyContent:"flex-end", alignItems:"flex-end", gap:8 }}>
-                  <div style={{ maxWidth:"76%", display:"flex", flexDirection:"column", gap:4 }}>
-                    {m.image && <img src={m.image} alt="attached" style={{ width:"100%", borderRadius:12, objectFit:"cover", maxHeight:140 }}/>}
-                    <div style={{ padding:"10px 13px", borderRadius:"16px 16px 4px 16px", background:T.black, color:T.white, fontSize:13, lineHeight:1.6 }}>{m.text}</div>
-                  </div>
-                  <div style={{ width:28, height:28, borderRadius:"50%", background:T.red, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:12, fontWeight:700, color:T.white }}>{userInitial}</div>
-                </div>
-              );
-              return (
-                <div key={i} style={{ display:"flex", alignItems:"flex-start", gap:8 }}>
-                  <div style={{ width:28, height:28, borderRadius:"50%", background:T.red, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, marginTop:2 }}>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><circle cx="12" cy="12" r="3" fill="#fff" stroke="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.64 5.64l2.12 2.12M16.24 16.24l2.12 2.12M5.64 18.36l2.12-2.12M16.24 7.76l2.12-2.12"/></svg>
-                  </div>
-                  <div style={{ maxWidth:"84%", display:"flex", flexDirection:"column" }}>
-                    <div style={{ padding:"10px 13px", borderRadius:hasRAG?"16px 16px 0 4px":"16px 16px 16px 4px", background:T.white, color:T.gray1, fontSize:13, lineHeight:1.7, boxShadow:"0 1px 3px rgba(0,0,0,0.06)", borderLeft:`3px solid ${T.red}` }}>{m.text}</div>
-                    {hasRAG && (
-                      <div style={{ background:T.white, borderRadius:"0 0 16px 4px", padding:"7px 10px", display:"flex", gap:5, flexWrap:"wrap", boxShadow:"0 1px 3px rgba(0,0,0,0.06)" }}>
-                        <span style={{ fontSize:9, fontWeight:700, color:T.red, letterSpacing:0.8 }}>FROM</span>
-                        {m.sources.filter((s,i,arr)=>arr.findIndex(x=>x.source===s.source)===i).map((s,si)=>(
-                          <button key={si} onClick={()=>setDocViewer(s)} style={{ display:"flex", alignItems:"center", gap:4, padding:"3px 9px", borderRadius:6, border:`1px solid ${T.border}`, background:T.white, color:T.gray1, fontSize:11, fontWeight:600, cursor:"pointer" }}>
-                            <svg width="9" height="10" viewBox="0 0 24 24" fill="none" stroke={T.gray2} strokeWidth="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                            {(s.source||"").replace(/_/g," ").replace(".txt","").split(" ").slice(0,3).join(" ")}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-            {loading && (
-              <div style={{ display:"flex", alignItems:"flex-start", gap:8 }}>
-                <div style={{ width:28, height:28, borderRadius:"50%", background:T.red, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0 }}>
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2"><circle cx="12" cy="12" r="3" fill="#fff" stroke="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5.64 5.64l2.12 2.12M16.24 16.24l2.12 2.12M5.64 18.36l2.12-2.12M16.24 7.76l2.12-2.12"/></svg>
-                </div>
-                <div style={{ padding:"10px 14px", background:T.white, borderRadius:"16px 16px 16px 4px", display:"flex", gap:6 }}>
-                  {[0,1,2].map(d=><span key={d} style={{ width:6,height:6,borderRadius:"50%",background:T.border,display:"block",animation:"pulse 1s infinite",animationDelay:`${d*0.2}s` }}/>)}
-                </div>
-              </div>
-            )}
-            <div ref={bottomRef}/>
-          </div>
-        )}
-
-        {/* Pending file */}
-        {pendingFile && (
-          <div style={{ background:T.white, borderTop:`1px solid ${T.border}`, padding:"8px 12px", display:"flex", alignItems:"center", gap:10, flexShrink:0 }}>
-            {pendingFile.type==="image"&&pendingFile.url
-              ? <img src={pendingFile.url} alt="preview" style={{ width:44,height:44,borderRadius:6,objectFit:"cover" }}/>
-              : <div style={{ width:44,height:44,borderRadius:6,background:T.blueBg,display:"flex",alignItems:"center",justifyContent:"center" }}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={T.blue} strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>}
-            <div style={{ flex:1, minWidth:0 }}>
-              <div style={{ fontSize:11, fontWeight:700, color:T.gray1 }}>{pendingFile.type==="doc"?"Document":"Photo"} ready</div>
-              <div style={{ fontSize:10, color:T.gray3, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{pendingFile.name}</div>
-            </div>
-            <button onClick={()=>setPendingFile(null)} style={{ background:"none",border:"none",cursor:"pointer",color:T.gray3,fontSize:20 }}>×</button>
-          </div>
-        )}
-
-        <input ref={cameraRef} type="file" accept="image/*" capture="environment" onChange={handleFilePicked} style={{ display:"none" }}/>
-        <input ref={attachRef} type="file" accept="image/*,.pdf,.doc,.docx,.txt,.csv" onChange={handleFilePicked} style={{ display:"none" }}/>
-
-        {/* Input bar */}
-        <div style={{ background:T.white, borderTop:`1px solid ${T.border}`, padding:"10px 12px", display:"flex", gap:8, alignItems:"center", flexShrink:0 }}>
-          <button onClick={()=>cameraRef.current?.click()} style={{ width:36,height:36,borderRadius:"50%",background:T.bgPage,border:`1px solid ${T.border}`,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={T.gray2} strokeWidth="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-          </button>
-          <button onClick={()=>attachRef.current?.click()} style={{ width:36,height:36,borderRadius:"50%",background:T.black,border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </button>
-          <input value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>e.key==="Enter"&&send()}
-            placeholder="Ask about this fault…"
-            style={{ flex:1,padding:"10px 14px",border:`1px solid ${T.border}`,borderRadius:24,fontSize:13,outline:"none",background:T.bgPage,color:T.black }}/>
-          <button onClick={send} style={{ width:36,height:36,borderRadius:"50%",background:(input.trim()||pendingFile)?T.red:"#ccc",border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={T.white} strokeWidth="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-          </button>
-        </div>
-        <div style={{ background:T.white, padding:"4px 0 6px", textAlign:"center" }}>
-          <span style={{ fontSize:10, color:T.gray4 }}>AI can make mistakes. Please double-check information.</span>
-        </div>
-        {docViewer && <DocViewer source={docViewer} onClose={()=>setDocViewer(null)}/>}
-      </div>
-    </>
-  );
-}
-
 // ─── TICKET DETAIL ────────────────────────────────────────────────────────────
 function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCache, setChatCache }) {
   const [tab, setTab]             = useState("triage");
@@ -1028,11 +790,10 @@ function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCa
   const [escalated, setEscalated] = useState(false);
   const [rcaDone, setRcaDone]     = useState(false);
   const [goToAction, setGoAction] = useState(false);
-  const [triageDoc, setTriageDoc] = useState(null);  // lifted here so DocViewer covers full phone shell
+  const [triageDoc, setTriageDoc] = useState(null);
 
   useEffect(() => { if (goToAction) { setTab("action"); setGoAction(false); } }, [goToAction]);
 
-  // TRIAGE → CHAT → RCA → ACTION
   const tabs = [
     { id:"triage", label:"TRIAGE",
       icon:<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> },
@@ -1046,9 +807,7 @@ function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCa
 
   return (
     <div style={{ display:"flex", flexDirection:"column", height:"100%", position:"relative" }}>
-      {/* Header */}
       <div style={{ background:T.charcoal, color:T.white, flexShrink:0 }}>
-        {/* Top row: consistent hamburger | CUMMINS | bell */}
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 16px 0" }}>
           <button style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -1059,7 +818,6 @@ function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCa
           </button>
         </div>
 
-        {/* Ticket identity row: ID + customer name | priority + unsafe */}
         <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", padding:"10px 14px 10px" }}>
           <div>
             <div style={{ fontSize:9, color:"#666", letterSpacing:0.8, marginBottom:3 }}>{ticket.ticket_id}</div>
@@ -1085,7 +843,6 @@ function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCa
           </div>
         </div>
 
-        {/* Tab bar */}
         <div style={{ display:"flex", borderTop:"1px solid #2a2a2a" }}>
           {tabs.map(tb => {
             const a      = tab===tb.id;
@@ -1109,7 +866,6 @@ function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCa
         </div>
       </div>
 
-      {/* Tab content */}
       <div style={{ flex:1, overflowY:"auto", background:T.bgPage, position:"relative" }}>
         {tab==="triage" && <TriageTab ticket={ticket} onStartRCA={() => setTab("rca")} triageCache={triageCache} setTriageCache={setTriageCache} setTriageDoc={setTriageDoc}/>}
         {tab==="chat"   && <ChatTab ticket={ticket} currentUser={currentUser} chatCache={chatCache} setChatCache={setChatCache}/>}
@@ -1117,10 +873,7 @@ function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCa
         {tab==="action" && <ActionTab ticket={ticket} currentUser={currentUser} rcaDone={rcaDone}/>}
       </div>
 
-      {/* Unsafe modal */}
       {unsafeOpen && <UnsafeEscalationModal ticket={ticket} onClose={() => setUnsafe(false)} onSuccess={() => { setUnsafe(false); setEscalated(true); }}/>}
-
-      {/* DocViewer at top level so it covers full phone shell */}
       {triageDoc && <DocViewer source={triageDoc} onClose={() => setTriageDoc(null)}/>}
     </div>
   );
@@ -1203,7 +956,6 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
 
   const [autoSafety, setAutoSafety] = useState(cached?.safety || null);
 
-  // Auto-fetch safety warnings instantly via dedicated endpoint (no LLM wait)
   useEffect(() => {
     if (cached?.safety || autoSafety) return;
     fetch(`${API}/api/safety/${t.ticket_id}`)
@@ -1239,6 +991,7 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
       if (setTriageCache) setTriageCache(prev=>({...prev,[t.ticket_id]:result}));
     }).catch(()=>{}).finally(()=>setLoading(false));
   };
+
   const isShutdown = t.shutdown_active; const isDerate = t.derate_active!==false;
   const priorityRaw = ai?.priority||(isDerate?"P1":"P2");
   const priorityLabel = priorityRaw==="P1"||priorityRaw==="High"||priorityRaw==="1" ? "PRIORITY 1" : "PRIORITY 2";
@@ -1275,7 +1028,7 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
           )}
         </Card>
 
-
+        {/* Equipment card */}
         <Card><Label>EQUIPMENT</Label>
           {[
             ["CUSTOMER", t.customer],
@@ -1327,7 +1080,8 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
           </button>
         </Card>
 
-        <Card><Label>FREEZE FRAME <span style={{fontSize:9,fontWeight:600,color:T.gray3,letterSpacing:0}}></span></Label>
+        {/* Freeze frame card */}
+        <Card><Label>FREEZE FRAME</Label>
           {(()=>{
             const ff=t.freeze_frame||{};
             const defPct=ff.def_level_pct??null;
@@ -1374,7 +1128,7 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
           })()}
         </Card>
 
-        {/* AI Diagnosis */}
+        {/* ── AI DIAGNOSIS CARD ─────────────────────────────────────────────── */}
         <Card>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:10 }}>
             <div style={{ display:"flex", alignItems:"center", gap:8 }}>
@@ -1385,6 +1139,7 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
             </div>
             {loading && <span style={{ fontSize:9, color:T.amber, fontWeight:800, letterSpacing:0.8, border:`1px solid ${T.amberBorder}`, padding:"2px 7px", borderRadius:3 }}>ANALYSING</span>}
           </div>
+
           {loading ? (
             <><Skeleton w="40%" h={10} mb={8}/><Skeleton w="100%" h={13} mb={4}/><Skeleton w="90%" h={13} mb={4}/><Skeleton w="70%" h={13}/></>
           ) : !ai ? (
@@ -1406,8 +1161,19 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
             </>
           ) : (
             <>
+              {/* ── FIX: always render a preview, expand to full structured content ── */}
               {(() => {
                 const text = ai.likely_cause || "";
+
+                // Build a short preview: up to first sentence break or 160 chars
+                const sentenceEnd = text.search(/[.!?]\s/);
+                const previewLen = sentenceEnd > 0 && sentenceEnd < 160
+                  ? sentenceEnd + 1
+                  : Math.min(160, text.length);
+                const preview = text.slice(0, previewLen).trim();
+                const isTruncated = previewLen < text.length;
+
+                // Full structured parse for expanded view
                 const matches = [...text.matchAll(/(PRIMARY FAULT|FAULT EVIDENCE|RECOMMENDED ACTION)\s*[:·]?\s*/g)];
                 const parts = [];
                 if (matches.length > 0) {
@@ -1419,22 +1185,26 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
                 } else {
                   parts.push({ label: null, text });
                 }
-                const hasMore = parts.length > 1 || (ai.rec_parts?.length > 0);
-                const visibleParts = showMoreAI ? parts : parts.slice(0,1);
+                const hasMore = isTruncated || parts.length > 1 || (ai.rec_parts?.length > 0);
+
                 return (<>
-                  {visibleParts.map((p, i) => p.label ? (
-                    <div key={i} style={{ marginBottom:10, paddingBottom:10, borderBottom: showMoreAI && i < parts.length-1 ? `1px solid ${T.border}` : "none" }}>
+                  {/* Always-visible preview */}
+                  {!showMoreAI && (
+                    <div style={{ fontSize:12, color:T.gray1, lineHeight:1.7, marginBottom: hasMore ? 6 : 10 }}>
+                      {preview}{isTruncated ? "\u2026" : ""}
+                    </div>
+                  )}
+
+                  {/* Expanded: full structured content */}
+                  {showMoreAI && parts.map((p, i) => p.label ? (
+                    <div key={i} style={{ marginBottom:10, paddingBottom:10, borderBottom: i < parts.length-1 ? `1px solid ${T.border}` : "none" }}>
                       <div style={{ fontSize:9, fontWeight:700, color:T.gray3, letterSpacing:1, marginBottom:4 }}>{p.label}</div>
                       <div style={{ fontSize:12, color:T.gray1, lineHeight:1.7 }}>{p.text}</div>
                     </div>
                   ) : p.text ? (
                     <div key={i} style={{ fontSize:12, color:T.gray1, lineHeight:1.7, marginBottom:10 }}>{p.text}</div>
                   ) : null)}
-                  {hasMore && !showMoreAI && (
-                    <button onClick={()=>setShowMoreAI(p=>!p)} style={{marginTop:4,background:"none",border:"none",padding:"4px 0 2px",cursor:"pointer",fontSize:9,fontWeight:700,color:T.gray3,letterSpacing:0.8,display:"block",marginLeft:"auto",fontFamily:"inherit"}}>
-                      {"\u2193 SHOW MORE"}
-                    </button>
-                  )}
+
                   {showMoreAI && ai.rec_parts?.length>0 && (
                     <div style={{ marginTop:4, paddingTop:10, borderTop:`1px solid ${T.border}` }}>
                       <Label>LIKELY PARTS NEEDED</Label>
@@ -1446,13 +1216,15 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
                       ))}
                     </div>
                   )}
-                  {hasMore && showMoreAI && (
-                    <button onClick={()=>setShowMoreAI(p=>!p)} style={{marginTop:6,background:"none",border:"none",padding:"4px 0 2px",cursor:"pointer",fontSize:9,fontWeight:700,color:T.gray3,letterSpacing:0.8,display:"block",marginLeft:"auto",fontFamily:"inherit"}}>
-                      {"\u2191 SHOW LESS"}
+
+                  {hasMore && (
+                    <button onClick={()=>setShowMoreAI(p=>!p)} style={{marginTop:4,background:"none",border:"none",padding:"4px 0 2px",cursor:"pointer",fontSize:9,fontWeight:700,color:T.gray3,letterSpacing:0.8,display:"block",marginLeft:"auto",fontFamily:"inherit"}}>
+                      {showMoreAI ? "\u2191 SHOW LESS" : "\u2193 SHOW MORE"}
                     </button>
                   )}
                 </>);
               })()}
+
               <div style={{ marginTop:10, paddingTop:10, borderTop:`1px solid ${T.border}`, textAlign:"center" }}>
                 <div style={{ fontSize:11, color:T.gray2, fontWeight:700, marginBottom:4 }}>AI can make mistakes. Please double-check all information.</div>
                 <div style={{ fontSize:11, color:T.gray3, lineHeight:1.6 }}>
@@ -1465,7 +1237,7 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
           )}
         </Card>
 
-        {/* Safety */}
+        {/* Safety card */}
         <Card style={{ border:`1.5px solid ${T.redBorder}`, background:T.redBg }}>
           <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:8 }}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={T.red} strokeWidth="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
@@ -1503,8 +1275,9 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
   );
 }
 
+// ─── RCA TAB ──────────────────────────────────────────────────────────────────
 function RCATab({ ticket, currentUser, onComplete }) {
-  const [phase, setPhase]           = useState("intro");  // intro|skip|checklist|final_assessment
+  const [phase, setPhase]           = useState("intro");
   const [steps, setSteps]           = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
   const [findings, setFindings]     = useState([]);
@@ -1515,10 +1288,8 @@ function RCATab({ ticket, currentUser, onComplete }) {
   const [warning, setWarning]       = useState("");
   const [finalData, setFinalData]   = useState(null);
   const [showFindings, setShowFindings] = useState(false);
-  // Skip state
   const [skipReason, setSkipReason] = useState("");
   const [skipDetail, setSkipDetail] = useState("");
-  // Escalation handled in Action tab
 
   const totalSteps = steps.length;
   const currentStep = steps[currentIdx];
@@ -1542,7 +1313,7 @@ function RCATab({ ticket, currentUser, onComplete }) {
     setLoading(true);
     try {
       await apiRCASkip(ticket.ticket_id, skipReason, skipDetail, currentUser?.tech_id||"");
-      onComplete(); // unlocks ACTION tab, goes there
+      onComplete();
     } catch { setErr("Could not record skip — check backend."); }
     finally { setLoading(false); }
   };
@@ -1553,17 +1324,12 @@ function RCATab({ ticket, currentUser, onComplete }) {
     try {
       const d = await apiRCAStep(ticket.ticket_id, currentIdx+1, outcome, observation.trim());
       const result = d.result || d;
-      // Mark step as completed locally
       const updatedSteps = steps.map((s,i)=> i===currentIdx ? {...s, completed:true, outcome, observation:observation.trim()} : s);
       setSteps(updatedSteps);
       setObs("");
 
-      if (result.status==="solved") {
-        onComplete(); return;
-      }
-      if (result.status==="final_assessment") {
-        setFinalData(result); setPhase("final_assessment"); return;
-      }
+      if (result.status==="solved") { onComplete(); return; }
+      if (result.status==="final_assessment") { setFinalData(result); setPhase("final_assessment"); return; }
       if (result.notice) setNotice(result.notice);
       if (result.warning) setWarning(result.warning);
       if (outcome==="found_issue") setFindings(f=>[...f,{ step:currentIdx+1, title:currentStep?.title||"", observation:observation.trim() }]);
@@ -1574,14 +1340,10 @@ function RCATab({ ticket, currentUser, onComplete }) {
 
   const completeRCA = async () => {
     setLoading(true);
-    try {
-      await apiRCAComplete(ticket.ticket_id, "proceed");
-    } catch { /* non-blocking */ }
+    try { await apiRCAComplete(ticket.ticket_id, "proceed"); } catch { }
     finally { setLoading(false); }
     onComplete();
   };
-
-
 
   const SKIP_REASONS = [
     { v:"familiar_fault",   l:"Familiar fault — resolved this before" },
@@ -1590,9 +1352,6 @@ function RCATab({ ticket, currentUser, onComplete }) {
     { v:"other",            l:"Other" },
   ];
 
-
-
-  // ── PHASE: intro ─────────────────────────────────────────────────────────────
   if (phase==="intro") return (
     <div style={{ padding:"24px 16px", display:"flex", flexDirection:"column", gap:12 }}>
       <Card>
@@ -1617,7 +1376,6 @@ function RCATab({ ticket, currentUser, onComplete }) {
     </div>
   );
 
-  // ── PHASE: skip ──────────────────────────────────────────────────────────────
   if (phase==="skip") return (
     <div style={{ padding:"24px 16px" }}>
       <Card>
@@ -1647,11 +1405,8 @@ function RCATab({ ticket, currentUser, onComplete }) {
     </div>
   );
 
-  // ── PHASE: checklist ─────────────────────────────────────────────────────────
   if (phase==="checklist") return (
     <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
-
-      {/* Sticky progress header */}
       <div style={{ flexShrink:0, background:T.white, borderBottom:`1px solid ${T.border}`, padding:"12px 14px" }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:7 }}>
           <span style={{ fontSize:9, fontWeight:800, color:T.gray3, letterSpacing:1 }}>ROOT CAUSE ANALYSIS</span>
@@ -1683,7 +1438,6 @@ function RCATab({ ticket, currentUser, onComplete }) {
         {warning && <div style={{ marginTop:8, background:T.redBg, border:`1px solid ${T.redBorder}`, borderRadius:6, padding:"8px 10px", fontSize:12, color:T.red, fontWeight:600, lineHeight:1.5, wordBreak:"break-word", overflow:"hidden" }}>{warning}</div>}
       </div>
 
-      {/* Scrollable step cards */}
       <div style={{ flex:1, overflowY:"auto", background:T.bgPage, padding:"8px 12px 24px" }}>
         {steps.map((step,i)=>{
           const isDone = step.completed;
@@ -1708,7 +1462,6 @@ function RCATab({ ticket, currentUser, onComplete }) {
 
               {isCur && (
                 <div style={{ padding:"0 14px 14px", borderTop:`1px solid ${T.bgPage}` }}>
-                  {/* Step content */}
                   <div style={{ marginTop:10, marginBottom:10 }}>
                     <div style={{ fontSize:12, color:T.gray1, lineHeight:1.65 }}>{step.content}</div>
                   </div>
@@ -1725,14 +1478,12 @@ function RCATab({ ticket, currentUser, onComplete }) {
                     </div>
                   )}
 
-                  {/* Observation input */}
                   <Label>WHAT DID YOU SEE AT THIS STEP? *</Label>
                   <textarea value={observation} onChange={e=>setObs(e.target.value)} placeholder="Briefly describe what you observed…" rows={2}
                     style={{ width:"100%", padding:"10px 12px", border:`1px solid ${err&&!observation.trim()?T.red:T.border}`, borderRadius:6, fontSize:12, resize:"none", outline:"none", marginBottom:10, background:T.bgPage }}/>
 
                   {err && <div style={{ fontSize:12, color:T.red, marginBottom:10 }}>{err}</div>}
 
-                  {/* Outcome buttons */}
                   <Label>WHAT IS YOUR OUTCOME?</Label>
                   <div style={{ display:"flex", flexDirection:"column", gap:7 }}>
                     {[
@@ -1753,11 +1504,10 @@ function RCATab({ ticket, currentUser, onComplete }) {
             </div>
           );
         })}
-        </div>
       </div>
+    </div>
   );
 
-  // ── PHASE: final_assessment ───────────────────────────────────────────────────
   if (phase==="final_assessment") {
     const allFindings = findings.filter((f,i,arr)=>arr.findIndex(x=>x.step===f.step)===i);
     const hasFindings = allFindings.length > 0;
@@ -1801,12 +1551,11 @@ function RCATab({ ticket, currentUser, onComplete }) {
       </div>
     );
   }
-
 }
 
 // ─── ACTION TAB ───────────────────────────────────────────────────────────────
 function ActionTab({ ticket, currentUser, rcaDone }) {
-  const [path, setPath]           = useState("");   // "resolve" | "escalate"
+  const [path, setPath]           = useState("");
   const [form, setForm]           = useState({ fixType:"", action:"", parts:"", disposition:"", testResults:"", hours:"", ai:"", notes:"", safetyConfirmed:false });
   const [photos, setPhotos]       = useState([]);
   const [approver, setApprover]   = useState(null);
@@ -1814,14 +1563,11 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
   const [err, setErr]             = useState("");
   const [done, setDone]           = useState(false);
   const [doneMsg, setDoneMsg]     = useState("");
-  // Escalation form (when path=escalate)
-  const [escType, setEscType]     = useState("parts_warranty");
-  const [escReason, setEscReason] = useState("");
-  const [escName, setEscName]     = useState("");
-  const [escId, setEscId]         = useState("");
+  const [escType, setEscType]       = useState("parts_warranty");
+  const [escReason, setEscReason]   = useState("");
+  const [escApprover, setEscApprover] = useState(null);
   const photoRef = useRef(null);
 
-  // Gate: RCA must be done
   if (!rcaDone) return (
     <div style={{ padding:"48px 24px 24px", display:"flex", flexDirection:"column", alignItems:"center", gap:12 }}>
       <div style={{ width:52, height:52, borderRadius:"50%", background:T.bgPage, border:`1px solid ${T.border}`, display:"flex", alignItems:"center", justifyContent:"center" }}>
@@ -1846,7 +1592,6 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
     </div>
   );
 
-  // Path selection
   if (!path) return (
     <div style={{ padding:"24px 16px" }}>
       <Card>
@@ -1868,9 +1613,7 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
     </div>
   );
 
-  // ── PATH: escalate ────────────────────────────────────────────────────────────
   if (path==="escalate") {
-    const [escApprover, setEscApprover] = useState(null);
     const submitEsc = async () => {
       if (!escReason.trim()||!escApprover) { setErr("All fields required."); return; }
       setLoading(true); setErr("");
@@ -1909,7 +1652,6 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
     );
   }
 
-  // ── PATH: resolve ─────────────────────────────────────────────────────────────
   const set = (k,v) => setForm(f=>({...f,[k]:v}));
 
   const handlePhoto = async (e) => {
@@ -1966,7 +1708,6 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
       <Card>
         <div style={{ fontSize:14, fontWeight:800, color:T.black, marginBottom:16 }}>Resolution Form</div>
 
-        {/* Fix type */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>SHORT TERM OR LONG TERM FIX? *</div>
           {chips("fixType",[{v:"short_term",l:"Short Term"},{v:"long_term",l:"Long Term"}])}
@@ -1977,40 +1718,34 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
           )}
         </div>
 
-        {/* Action taken */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>ACTION TAKEN *</div>
           {chips("action",[{v:"replaced_part",l:"Replaced Part"},{v:"cleaned",l:"Cleaned"},{v:"adjusted",l:"Adjusted"},{v:"other",l:"Other"}])}
         </div>
 
-        {/* Parts used */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>PARTS USED</div>
           <input value={form.parts} onChange={e=>set("parts",e.target.value)} placeholder="e.g. DEF-SENSOR-001, FILTER-042"
             style={{ width:"100%", padding:"10px 12px", border:`1px solid ${T.border}`, borderRadius:6, fontSize:12, outline:"none", background:T.bgPage }}/>
         </div>
 
-        {/* Parts disposition */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>PARTS DISPOSITION</div>
           {chips("disposition",[{v:"retained_for_oem",l:"Retained for OEM"},{v:"returned",l:"Returned"},{v:"disposed",l:"Disposed"}])}
         </div>
 
-        {/* Test results */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>TEST RESULTS AFTER FIX *</div>
-          <textarea value={form.testResults} onChange={e=>set("testResults",e.target.value)} placeholder="Describe what happened after the fix was applied — e.g. fault codes cleared, engine started normally…" rows={3}
+          <textarea value={form.testResults} onChange={e=>set("testResults",e.target.value)} placeholder="Describe what happened after the fix was applied…" rows={3}
             style={{ width:"100%", padding:"10px 12px", border:`1px solid ${T.border}`, borderRadius:6, fontSize:12, resize:"none", outline:"none", background:T.bgPage }}/>
         </div>
 
-        {/* Labor hours */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>LABOR HOURS *</div>
           <input type="number" value={form.hours} onChange={e=>set("hours",e.target.value)} placeholder="e.g. 1.5"
             style={{ width:"100%", padding:"10px 12px", border:`1px solid ${T.border}`, borderRadius:6, fontSize:12, outline:"none", background:T.bgPage }}/>
         </div>
 
-        {/* Photos */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>PHOTOS OF COMPLETED WORK</div>
           <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
@@ -2027,20 +1762,17 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
           </div>
         </div>
 
-        {/* AI correct */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>WAS AI DIAGNOSIS CORRECT? *</div>
           {chips("ai",[{v:"yes",l:"Yes"},{v:"partially",l:"Partially"},{v:"no",l:"No"}])}
         </div>
 
-        {/* Tech notes */}
         <div style={{ marginBottom:14 }}>
           <div style={{ fontSize:10, fontWeight:700, color:T.gray2, letterSpacing:0.5, marginBottom:6 }}>TECH NOTES</div>
           <textarea value={form.notes} onChange={e=>set("notes",e.target.value)} placeholder="Additional observations…" rows={2}
             style={{ width:"100%", padding:"10px 12px", border:`1px solid ${T.border}`, borderRadius:6, fontSize:12, resize:"none", outline:"none", background:T.bgPage }}/>
         </div>
 
-        {/* Safety confirmation */}
         <div style={{ marginBottom:14 }}>
           <button onClick={()=>set("safetyConfirmed",!form.safetyConfirmed)}
             style={{ display:"flex", alignItems:"center", gap:10, width:"100%", padding:"12px 14px", borderRadius:6,
@@ -2054,7 +1786,6 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
           </button>
         </div>
 
-        {/* Approver */}
         <div style={{ borderTop:`1px solid ${T.border}`, paddingTop:14, marginBottom:14 }}>
           <Label>CLOSING APPROVER *</Label>
           <div style={{ fontSize:11, color:T.gray3, marginBottom:10, lineHeight:1.5 }}>A named senior must approve before this ticket closes. They will receive your full submission for review.</div>
@@ -2103,7 +1834,6 @@ function ReportsScreen({ currentUser }) {
   };
   const ESC_BADGE = { parts_warranty:"Parts / Warranty & Billing", technical_support:"Technical Support", unsafe:"UNSAFE" };
 
-  // Derive counts from actual arrays (not a counts field from backend)
   const pendingCount    = data?.pending_approvals?.length    || 0;
   const completedCount  = data?.completed_reports?.length    || 0;
   const escalationCount = data?.escalation_history?.length   || 0;
@@ -2127,7 +1857,6 @@ function ReportsScreen({ currentUser }) {
   return (
     <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
       <TopBar />
-      {/* Filter tabs */}
       <div style={{ background:T.white, padding:"10px 14px", borderBottom:`1px solid ${T.border}`, display:"flex", gap:6, flexShrink:0 }}>
         {tabs.map(s=>(
           <button key={s.id} onClick={()=>setSection(s.id)}
@@ -2153,8 +1882,7 @@ function ReportsScreen({ currentUser }) {
           ? <div style={{ padding:40, textAlign:"center", color:T.gray3, fontSize:13 }}>Loading…</div>
           : err
           ? <div style={{ background:T.redBg, border:`1px solid ${T.redBorder}`, borderRadius:8, padding:"14px 16px", margin:"8px 0", fontSize:12, color:T.red, lineHeight:1.6 }}>
-              <strong>Backend error:</strong> {err}<br/>
-              <span style={{ opacity:0.8 }}>Make sure FastAPI is running on port 8000.</span>
+              <strong>Backend error:</strong> {err}
             </div>
           : !data
           ? <EmptyState icon="📡" title="No data" subtitle="Could not load — check backend."/>
@@ -2162,7 +1890,7 @@ function ReportsScreen({ currentUser }) {
           <>
             {section==="pending" && (
               pendingCount===0
-              ? <EmptyState icon="✅" title="Nothing pending" subtitle={"Submit a resolution from the ACTION tab\nand it will appear here for senior review."}/>
+              ? <EmptyState icon="✅" title="Nothing pending" subtitle="Submit a resolution from the ACTION tab and it will appear here for senior review."/>
               : data.pending_approvals.map((item,i)=>{
                 const badge = STATUS_BADGE[item.status] || STATUS_BADGE.pending;
                 return (
@@ -2193,7 +1921,7 @@ function ReportsScreen({ currentUser }) {
 
             {section==="completed" && (
               completedCount===0
-              ? <EmptyState icon="📋" title="No completed reports yet" subtitle={"Tickets approved by a senior will\nappear here with their full report."}/>
+              ? <EmptyState icon="📋" title="No completed reports yet" subtitle="Tickets approved by a senior will appear here."/>
               : data.completed_reports.map((item,i)=>(
                 <div key={i} onClick={()=>setExpanded(expandedReport===i?null:i)}
                   style={{ background:T.white, borderRadius:8, padding:"12px 14px", marginBottom:8, boxShadow:"0 1px 3px rgba(0,0,0,0.04)", cursor:"pointer" }}>
@@ -2227,7 +1955,7 @@ function ReportsScreen({ currentUser }) {
 
             {section==="escalations" && (
               escalationCount===0
-              ? <EmptyState icon="↑" title="No escalations" subtitle={"Escalations submitted from RCA\nor the ACTION tab appear here."}/>
+              ? <EmptyState icon="↑" title="No escalations" subtitle="Escalations submitted from RCA or the ACTION tab appear here."/>
               : data.escalation_history.map((item,i)=>(
                 <div key={i} style={{ background:T.white, borderRadius:8, padding:"12px 14px", marginBottom:8, boxShadow:"0 1px 3px rgba(0,0,0,0.04)" }}>
                   <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8 }}>
@@ -2304,7 +2032,6 @@ export default function App() {
     apiHealth()
       .then(()=>{ setBStatus("online"); return Promise.all([apiListTickets(), apiListFaultCodes()]); })
       .then(([d, fc])=>{
-        // Build fault code → system map from real backend data
         if (fc?.fault_codes) {
           faultCodeMap = Object.fromEntries(
             Object.entries(fc.fault_codes).map(([code, info]) => [code, info.system])
@@ -2356,7 +2083,7 @@ export default function App() {
         }));
         setAllTickets(mapped); setTLoad(false);
       })
-      .catch(()=>{ setBStatus("offline"); setAllTickets(TICKETS); setTLoad(false); });
+      .catch(()=>{ setBStatus("offline"); setTLoad(false); });
   },[]);
 
   const tickets = currentUser ? allTickets.filter(t=>t.tech_id===currentUser.tech_id) : [];
@@ -2365,9 +2092,7 @@ export default function App() {
   const handleLogin  = (user) => { setCurrentUser(user); showToast(`Welcome, ${user.name.split(" ")[0]}! ${allTickets.filter(t=>t.tech_id===user.tech_id).length} ticket(s) assigned.`); };
   const handleLogout = () => { setCurrentUser(null); setScreen("home"); setTicket(null); };
   const nav = id => {
-    // Troubleshoot tap: always go to tickets list (even from ticket_detail)
     if (id === "tickets") { setScreen("tickets"); setTicket(null); return; }
-    // Already on that tab — do nothing
     if (id === screen) return;
     setScreen(id); setTicket(null);
   };
@@ -2397,7 +2122,6 @@ export default function App() {
       `}</style>
 
       <div style={{ width:390, height:844, background:currentUser?T.white:T.black, borderRadius:44, overflow:"hidden", display:"flex", flexDirection:"column", boxShadow:"0 40px 100px rgba(0,0,0,0.7)", position:"relative" }}>
-        {/* Status bar */}
         <div style={{ background:T.black, padding:"10px 24px 6px", display:"flex", justifyContent:"space-between", alignItems:"center", flexShrink:0 }}>
           <span style={{ fontSize:12, fontWeight:700, color:T.white }}>9:41</span>
           <div style={{ width:110, height:26, background:"#111", borderRadius:18, border:"2px solid #2a2a2a" }}/>
