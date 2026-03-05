@@ -1,0 +1,9 @@
+[
+  { "manager_id": "MGR-001", "name": "David Reyes",      "role": "Field Service Manager",  "depot": "Denver-North",   "phone": "720-555-0101" },
+  { "manager_id": "MGR-002", "name": "Karen Stafford",   "role": "Senior Service Manager",  "depot": "Denver-South",   "phone": "720-555-0102" },
+  { "manager_id": "MGR-003", "name": "Paul Whitfield",   "role": "Field Service Manager",  "depot": "Denver-West",    "phone": "720-555-0103" },
+  { "manager_id": "MGR-004", "name": "Angela Moore",     "role": "Regional Manager",        "depot": "Boulder",        "phone": "720-555-0104" },
+  { "manager_id": "MGR-005", "name": "Brian Castellano", "role": "Field Service Manager",  "depot": "Fort-Collins",   "phone": "970-555-0105" },
+  { "manager_id": "MGR-006", "name": "Tina Oduya",       "role": "Senior Service Manager",  "depot": "Denver-Central", "phone": "720-555-0106" },
+  { "manager_id": "MGR-007", "name": "Steve Harmon",     "role": "Regional Manager",        "depot": "Denver-East",    "phone": "720-555-0107" }
+]
