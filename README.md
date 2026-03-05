@@ -5,16 +5,7 @@
 
 ---
 
-## Team
-
-| Role | Name |
-|---|---|
-| Product / Problem Framing | Mannan |
-| UI / Figma Design | Karuna |
-| Backend / Agents | Tina |
-| Governance & Safety | Kyra |
-| Frontend + Integration | Nishad |
-
+Team 19 
 ---
 
 ## What It Does
