@@ -663,7 +663,7 @@ function AssignTicket({ managers }) {
               <textarea value={form.issue_description} onChange={e=>set("issue_description",e.target.value)} placeholder="Describe the fault symptoms reported by the operator…" rows={3} style={{ width:"100%", padding:"9px 12px", border:`1px solid ${T.border}`, borderRadius:5, fontSize:12, outline:"none", resize:"none", color:T.ink, background:T.paper, fontFamily:"inherit", boxSizing:"border-box" }}/>
             </div>
             <button onClick={runAnalysis} disabled={loading} style={{ width:"100%", padding:"11px 0", background:loading?T.paperDark:T.void, color:loading?T.ink4:T.white, border:`1px solid ${loading?T.border:"#2a2a2a"}`, borderRadius:5, fontSize:13, fontWeight:700, cursor:loading?"default":"pointer", letterSpacing:0.8, display:"flex", alignItems:"center", justifyContent:"center", gap:8 }}>
-              {loading ? loadingMsg||"Analysing…" : "⚡  Analyse & Get AI Recommendation"}
+              {loading ? loadingMsg||"Analysing…" : "Get Assignment Recommendation"}
             </button>
             <div style={{ fontSize:10, color:T.ink4, textAlign:"center", marginTop:7 }}>Fault codes auto-read from ECM · ML model scores all available technicians</div>
           </div>
