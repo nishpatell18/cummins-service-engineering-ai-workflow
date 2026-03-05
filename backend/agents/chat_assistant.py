@@ -3,7 +3,7 @@
 # Grounded Q&A assistant for field technicians.
 # - Loaded with triage context from the start
 # - RAG over service manuals
-# - Accepts photos and PDF documents — Gemma 3 analyzes them
+# - Accepts photos and PDF documents
 # - English and Spanish support
 # - Conversation memory per ticket session
 # - ZZZ fallback if LLM unavailable

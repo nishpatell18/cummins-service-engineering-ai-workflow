@@ -1,6 +1,6 @@
 @echo off
 REM start.bat — starts both backend and frontend on Windows
-REM Requirements: Python 3.11+, Node 18+, Ollama running with gemma3
+REM Requirements: Python 3.11+, Node 18+, Ollama running with misrtal
 
 
 SET ROOT=%~dp0

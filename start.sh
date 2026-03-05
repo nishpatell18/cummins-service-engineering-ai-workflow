@@ -1,7 +1,7 @@
 #!/bin/bash
 # start.sh — starts both backend and frontend in one command
 # Usage: ./start.sh
-# Requirements: Python 3.11+, Node 18+, Ollama running with gemma3
+# Requirements: Python 3.11+, Node 18+, Ollama running with mistral
 
 set -e
 

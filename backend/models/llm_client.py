@@ -1,6 +1,5 @@
 # models/llm_client.py
-# Gemma 3 via Ollama — open-source, vision-capable.
-# License: Google Gemma Terms of Use — permits commercial use.
+# mistral via Ollama
 # Singleton shared by all agents.
 
 from ollama import Client
@@ -15,15 +14,15 @@ class LLMClient:
         if cls._instance is None:
             cls._instance = super().__new__(cls)
             cls._instance.client = Client(host='http://localhost:11434')
-            cls._instance.model  = 'gemma3:latest'
+            cls._instance.model  = os.environ.get('OLLAMA_MODEL', 'mistral')
             print(f"[LLMClient] Connected to Ollama — model: {cls._instance.model}")
         return cls._instance
 
     def generate(self, prompt: str, temperature: float = 0.2,
                  image_paths: list = None, language: str = 'en') -> str:
         """
-        Call Gemma 3.
-        image_paths: optional list of local file paths — Gemma 3 will analyze them.
+        Call mistral.
+        image_paths: optional list of local file paths — mistral will analyze them.
         language: 'en' or 'es' — controls the system-level language instruction.
         """
         try:

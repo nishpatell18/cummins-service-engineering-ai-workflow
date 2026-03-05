@@ -1,11 +1,12 @@
 # Cummins AI Service Engineering Workflow
 ### Multi-agent AI system for field technicians
 
-> A FastAPI + React system that guides junior field technicians through engine fault diagnosis, root cause analysis, and back-office escalation built using a local LLM (Gemma 3 via Ollama), RAG over service manuals, and a Random Forest assignment model.
+> A FastAPI + React system that guides junior field technicians through engine fault diagnosis, root cause analysis, and back-office escalation — built using a local LLM (Mistral via Ollama), RAG over service manuals, and a Random Forest assignment model.
 
 ---
 
-Cummins Xtern challenge - Service Engineering Reboot - Team 19 
+Cummins Xtern Challenge — Service Engineering Reboot — Team 19
+
 ---
 
 ## What It Does
@@ -15,10 +16,11 @@ A field technician opens a service ticket on their phone. The system automatical
 1. **Pulls ECM data** (fault codes, freeze frame, derate status) for the serial number
 2. **Triages the fault** — severity P1–P4, historical match rate, parts needed, warranty status
 3. **Generates an AI narrative** explaining the likely root cause in plain English
-4. **Guides the tech through RCA** — a 5-step personalised checklist from service manual templates
-5. **Assists via chat** — RAG Q&A grounded in Cummins manuals + full ticket context
-6. **Routes escalations** to back-office with a pre-populated evidence package
-7. **Requires senior sign-off** before a ticket closes — governance enforced in code
+4. **Shows safety warnings instantly** — rule-based, no LLM wait, derived from fault codes and freeze frame thresholds
+5. **Guides the tech through RCA** — a 5-step personalised checklist from service manual templates
+6. **Assists via chat** — RAG Q&A grounded in Cummins manuals + full ticket context
+7. **Routes escalations** to back-office with a pre-populated evidence package
+8. **Requires senior sign-off** before a ticket closes — governance enforced in code
 
 ---
 
@@ -35,16 +37,16 @@ A field technician opens a service ticket on their phone. The system automatical
 ### Step 1 — Pull the AI model (once)
 
 ```bash
-ollama pull gemma3
+ollama pull mistral
 ```
 
-> This pulls Gemma 3 (~5 GB). Only needed once. Leave Ollama running in the background.
+> This pulls Mistral (~4 GB). Only needed once. Leave Ollama running in the background.
 
 ### Step 2 — Clone and start
 
 **Mac / Linux:**
 ```bash
-git clone <repo-url>
+git clone https://github.com/nishpatell18/cummins-service-engineering-ai-workflow
 cd cummins-service-engineering-ai-workflow
 chmod +x start.sh
 ./start.sh
@@ -78,7 +80,7 @@ python3 -m venv venv
 source venv/bin/activate          # Windows: venv\Scripts\activate
 pip install -r requirements.txt
 python scripts/load_data.py       # Load manuals into ChromaDB — run once
-python main.py                    # Starts on port 8000
+uvicorn main:app --reload --port 8000
 ```
 
 ### Frontend
@@ -96,14 +98,15 @@ npm run dev                       # Starts on port 5173
 Copy `.env.example` to `.env` in the `backend/` directory:
 
 ```bash
-cp .env.example backend/.env
+cp backend/.env.example backend/.env
 ```
 
 | Variable | Default | Description |
 |---|---|---|
-| `OLLAMA_BASE_URL` | `http://localhost:11434` | Ollama server URL |
-| `LLM_MODEL` | `gemma3` | Model name for all agents |
-| `MAX_TOKENS` | `1000` | Max tokens per LLM response |
+| `OLLAMA_URL` | `http://localhost:11434` | Ollama server URL |
+| `OLLAMA_MODEL` | `mistral` | Model name for all agents |
+| `CHROMA_PATH` | `./chroma_db` | ChromaDB persistence path |
+| `LOG_DIR` | `./logs` | Triage decision log directory |
 
 No API keys required — everything runs locally.
 
@@ -123,6 +126,7 @@ No API keys required — everything runs locally.
 │  FastAPI Backend  (port 8000)                           │
 │                                                         │
 │  POST /api/triage          →  Triage Agent              │
+│  GET  /api/safety/{id}     →  Safety Rules (no LLM)     │
 │  POST /api/chat            →  Chat Assistant Agent      │
 │  GET  /api/rca/{id}        →  RCA Agent                 │
 │  POST /api/rca/{id}/step   →  RCA Agent (step logic)    │
@@ -134,7 +138,7 @@ No API keys required — everything runs locally.
               │
    ┌──────────▼──────────────────────────┐
    │  Ollama  (localhost:11434)          │
-   │  Model: gemma3 (vision-capable)     │
+   │  Model: mistral (Apache 2.0)        │
    │  Used by: Triage · Chat · RCA ·     │
    │           Report Generator          │
    └──────────┬──────────────────────────┘
@@ -158,7 +162,7 @@ Two-phase design — the LLM **explains** evidence, it does not generate it.
 **Phase 1 (deterministic — no LLM):**
 - Fault code enrichment via `fault_codes.json`
 - Severity scoring (P1–P4) by rules — derate/shutdown flags, code criticality, hours
-- Exact fault code match against 100+ historical cases
+- Exact fault code match against historical cases
 - Semantic RAG search over historical resolution notes (ChromaDB)
 - Parts lookup + approval flag
 - Warranty lookup
@@ -166,17 +170,28 @@ Two-phase design — the LLM **explains** evidence, it does not generate it.
 
 **Phase 2 (LLM narrative):**
 - Structured prompt with all Phase 1 evidence
-- Gemma 3 generates a clinical diagnostic narrative for the tech
+- Mistral generates a clinical diagnostic narrative for the tech
 
 Every run writes a decision log to `backend/logs/{ticket_id}_triage.json`.
+
+---
+
+### Safety Rules  `GET /api/safety/{ticket_id}`
+
+Dedicated endpoint — returns instantly with no LLM involved. Safety warnings are hardcoded deterministic rules in `services/safety_rules.py`:
+
+- **System-level rules** — derived from the fault code's system (Cooling, Aftertreatment, EGR, Turbocharger, etc.)
+- **Freeze frame threshold rules** — coolant ≥ 215°F, oil pressure ≤ 25 psi, DEF ≤ 10%, shutdown active
+
+The frontend fetches this endpoint immediately when a ticket opens, so safety warnings appear before the triage LLM finishes.
 
 ---
 
 ### Agent 2 — Chat Assistant  `POST /api/chat`
 
 - Full ticket + triage context injected into every request
-- RAG over 9 Cummins service manuals (ChromaDB + `all-MiniLM-L6-v2` embeddings). All manuals are Synthetic data, not original manuals.
-- Vision support: upload a photo via `POST /api/upload/{ticket_id}`, then reference the `file_id` in chat — Gemma 3 analyses the image
+- RAG over 9 synthetic Cummins service manuals (ChromaDB + `all-MiniLM-L6-v2` embeddings)
+- Vision support: upload a photo via `POST /api/upload/{ticket_id}`, then reference the `file_id` in chat
 - English / Spanish language support (`language: "en"` or `"es"`)
 
 ---
@@ -201,7 +216,7 @@ Steps support a `help` request — one additional LLM call returns a plain-Engli
 Auto-triggered when a ticket is approved and closed. Compiles:
 - Triage results, RCA findings, chat transcript summary, resolution form
 - LLM generates a structured narrative summary
-- Output stored in the in-memory `DatabaseExtended`
+- Output stored and retrievable via `GET /api/reports`
 
 ---
 
@@ -223,45 +238,57 @@ Every action that affects warranty, billing, or ticket status requires a **named
 
 All data is **synthetic** — no real PII or live engine data.
 
-| File | Description | Records |
+| File | Records | Description |
 |---|---|---|
-| `data/active_tickets.json` | Demo service tickets | 15 |
-| `data/ecm_snapshots.json` | ECM fault codes + freeze frames per ticket | 15 |
-| `data/fault_codes.json` | Fault code definitions with severity and system | 50+ |
-| `data/historical_tickets.json` | Past resolved cases for RAG + exact matching | 100+ |
-| `data/technicians.json` | Field technician roster with skills + location | 21 |
-| `data/managers.json` | Back-office approvers | 5 |
-| `data/parts_inventory.json` | Parts stock with approval thresholds | 20 |
-| `data/warranty_records.json` | Serial number → warranty status | 15 |
-| `data/product_config.json` | Serial number → engine model + CM version | 15 |
-| `data/rca_templates.json` | Step templates per fault system (DEF, DPF, EGR…) | 8 systems |
-| `data/manuals/` | Cummins X15 service manual text files | 9 files |
+| `data/active_tickets.json` | 15 | Open service tickets with fault codes and customer info |
+| `data/ecm_snapshots.json` | 15 | ECM fault codes and freeze frame data per ticket |
+| `data/fault_codes.json` | 18 | Fault code definitions with severity, system, and triggers |
+| `data/historical_tickets.json` | 10 | Past resolved cases for RAG and exact matching |
+| `data/technicians.json` | 21 | Field technician roster with skills and location |
+| `data/managers.json` | 7 | Back-office approvers for governance gates |
+| `data/parts_inventory.json` | 20 | Parts stock with approval thresholds |
+| `data/warranty_records.json` | 15 | Serial number → warranty status and expiry |
+| `data/product_config.json` | 15 | Serial number → engine model and CM version |
+| `data/rca_templates.json` | 8 systems | Step templates per fault system (DEF, DPF, EGR…) |
+| `data/manuals/` | 9 files | Synthetic Cummins X15 service manual text files |
 
 ---
 
 ## API Reference
 
-Full interactive docs are available at **http://localhost:8000/docs** when the backend is running.
+Full interactive docs available at **http://localhost:8000/docs** when the backend is running.
 
 | Method | Endpoint | Description |
 |---|---|---|
 | `GET` | `/` | Health check |
-| `POST` | `/api/triage` | Create ticket + run triage |
+| `POST` | `/api/triage` | Run full triage (Phase 1 + LLM narrative) |
+| `GET` | `/api/safety/{ticket_id}` | Safety warnings — instant, no LLM |
 | `POST` | `/api/chat` | Chat with AI assistant |
 | `POST` | `/api/upload/{ticket_id}` | Upload photo for vision chat |
+| `GET` | `/api/tickets` | List all tickets |
+| `GET` | `/api/tickets/{ticket_id}` | Get full ticket data |
+| `GET` | `/api/tickets/{ticket_id}/files` | List uploaded files for a ticket |
 | `GET` | `/api/rca/{ticket_id}` | Generate / fetch RCA checklist |
 | `POST` | `/api/rca/{ticket_id}/step` | Submit RCA step outcome |
 | `POST` | `/api/rca/{ticket_id}/help` | Get plain-English step explanation |
 | `POST` | `/api/rca/{ticket_id}/complete` | Finalise RCA with outcome decision |
 | `POST` | `/api/rca/{ticket_id}/skip` | Skip RCA with declared reason |
+| `GET` | `/api/rca/{ticket_id}/status` | Get RCA progress |
 | `POST` | `/api/escalate/{ticket_id}` | Create escalation package |
+| `GET` | `/api/escalate/{ticket_id}` | Get escalation status |
 | `POST` | `/api/approve/{ticket_id}` | Tech submits closing approval request |
 | `PATCH` | `/api/approve/{ticket_id}` | Senior approves or rejects closing |
+| `GET` | `/api/approve/{ticket_id}` | Get approval status |
+| `POST` | `/api/resolve/{ticket_id}` | Mark ticket resolved |
+| `POST` | `/api/report` | Generate service report |
+| `GET` | `/api/reports` | Get reports for a technician |
 | `GET` | `/api/assign/{ticket_id}` | Get ML-based technician recommendations |
 | `POST` | `/api/assign/{ticket_id}/approve` | Approve technician assignment |
-| `GET` | `/api/tickets` | List all tickets |
-| `GET` | `/api/tickets/{ticket_id}` | Get full ticket data |
-| `GET` | `/api/reports` | Get pending + completed reports for a tech |
+| `GET` | `/api/assign/{ticket_id}/status` | Get assignment status |
+| `GET` | `/api/technicians` | List all technicians |
+| `GET` | `/api/managers` | List all managers |
+| `GET` | `/api/fault_codes` | List all fault codes |
+| `GET` | `/api/manual/{filename}` | Retrieve a service manual |
 
 ---
 
@@ -290,8 +317,6 @@ Full interactive docs are available at **http://localhost:8000/docs** when the b
 
 | Model | Licence | Use |
 |---|---|---|
-| Gemma 3 (via Ollama) | Google Gemma Terms — permits commercial use | Triage · Chat · RCA · Report |
-| all-MiniLM-L6-v2 | Apache 2.0 | RAG embeddings (ChromaDB) |
-| Random Forest (scikit-learn) | BSD 3-Clause | Technician assignment scoring |
-
----
+| Mistral (via Ollama) | Apache 2.0 — commercial use permitted | Triage · Chat · RCA · Report Generator |
+| all-MiniLM-L6-v2 | Apache 2.0 — commercial use permitted | RAG embeddings (ChromaDB) |
+| Random Forest (scikit-learn) | BSD 3-Clause — commercial use permitted | Technician assignment scoring |

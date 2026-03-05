@@ -72,7 +72,7 @@ class FileStorageService:
             return base64.b64encode(f.read()).decode('utf-8')
 
     def get_image_paths_for_llm(self, ticket_id: str, file_ids: list = None) -> list:
-        """Return disk paths for images to pass directly to Gemma 3."""
+        """Return disk paths for images to pass directly to mistral."""
         ticket_dir = os.path.join(UPLOADS_DIR, ticket_id)
         if not os.path.exists(ticket_dir):
             return []

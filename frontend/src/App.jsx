@@ -2266,7 +2266,7 @@ function SettingsScreen({ backendStatus, currentUser, onLogout }) {
     ["Backend URL",    API],
     ["Offline Mode",   "Auto-sync on reconnect"],
     ["Language",       "English / Español"],
-    ["Model",          "Gemma 3 (Ollama local)"],
+    ["Model",          "Mistral (Ollama local)"],
     ["Version",        "0.2.0"],
   ];
   return (
