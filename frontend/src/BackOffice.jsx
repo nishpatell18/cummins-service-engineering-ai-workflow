@@ -10,15 +10,15 @@ const T = {
   dark:       "#111111",
   darkMid:    "#181818",
   darkBorder: "#1E1E1E",
-  page:       "#F0EDE8",
-  paper:      "#F8F6F2",
-  paperDark:  "#EDE9E3",
+  page:       "#F5F5F5",
+  paper:      "#FFFFFF",
+  paperDark:  "#EBEBEB",
   ink:        "#1A1A1A",
-  ink2:       "#4A4A4A",
-  ink3:       "#888888",
-  ink4:       "#B8B8B8",
-  border:     "#DDD9D3",
-  borderMid:  "#C8C4BE",
+  ink2:       "#3A3A3A",
+  ink3:       "#666666",
+  ink4:       "#999999",
+  border:     "#DCDCDC",
+  borderMid:  "#C0C0C0",
   red:        "#C8371A",
   redBg:      "#FEF1EE",
   redBorder:  "#F0C4BA",
@@ -79,7 +79,7 @@ function Sidebar({ active, onNav, pendingCount }) {
     <div style={{ width:190, flexShrink:0, background:T.dark, borderRight:`1px solid ${T.darkBorder}`, display:"flex", flexDirection:"column" }}>
       <div style={{ padding:"14px 16px 12px", borderBottom:`1px solid ${T.darkBorder}` }}>
         <div style={{ fontSize:10, fontWeight:900, color:T.white, letterSpacing:3.5, fontFamily:"monospace" }}>CUMMINS</div>
-        <div style={{ fontSize:8, color:"#282828", letterSpacing:2, fontFamily:"monospace", marginTop:1 }}>BACK OFFICE</div>
+        <div style={{ fontSize:8, color:"#888888", letterSpacing:2, fontFamily:"monospace", marginTop:1 }}>BACK OFFICE</div>
       </div>
       <div style={{ flex:1, paddingTop:8 }}>
         {[
@@ -93,7 +93,7 @@ function Sidebar({ active, onNav, pendingCount }) {
               padding:"10px 16px", background:a?"#1a1a1a":"none",
               border:"none", borderLeft:`3px solid ${a ? T.red : "transparent"}`, cursor:"pointer",
             }}>
-              <span style={{ fontSize:10, fontWeight:800, letterSpacing:0.8, fontFamily:"monospace", color:a?T.white:item.accent?"#555":"#444" }}>{item.label}</span>
+              <span style={{ fontSize:10, fontWeight:800, letterSpacing:0.8, fontFamily:"monospace", color:a?T.white:"#AAAAAA" }}>{item.label}</span>
               {item.badge != null && <span style={{ width:18, height:18, borderRadius:9, background:T.red, color:T.white, fontSize:9, fontWeight:800, display:"flex", alignItems:"center", justifyContent:"center" }}>{item.badge}</span>}
               {item.accent && !a && <span style={{ fontSize:8, color:T.red, fontFamily:"monospace" }}>◆</span>}
             </button>
@@ -101,7 +101,7 @@ function Sidebar({ active, onNav, pendingCount }) {
         })}
       </div>
       <div style={{ padding:"10px 16px", borderTop:`1px solid ${T.darkBorder}` }}>
-        <div style={{ fontSize:8, color:"#1e1e1e", fontFamily:"monospace", letterSpacing:1 }}>LIVE DATA · v0.4</div>
+        <div style={{ fontSize:8, color:"#666666", fontFamily:"monospace", letterSpacing:1 }}>LIVE DATA · v0.4</div>
       </div>
     </div>
   );
@@ -828,13 +828,21 @@ export default function App() {
       .catch(() => {});
   }, []);
 
+  const loadSampleData = async () => {
+    try {
+      const sr = await fetch("/sample_cases.json");
+      const sample = await sr.json();
+      setTickets(sample);
+      setActive(prev => prev || sample[0] || null);
+    } catch (_) {}
+  };
+
   const loadTickets = useCallback(async () => {
     try {
       const r = await fetch(`${API}/api/tickets`);
       const d = await r.json();
       const all = d.tickets || [];
 
-      // Fetch full data for each ticket (escalation + approval_request live here)
       const full = await Promise.all(
         all.map(t =>
           fetch(`${API}/api/tickets/${t.ticket_id}`)
@@ -843,7 +851,6 @@ export default function App() {
         )
       );
 
-      // Only show tickets needing action
       const actionable = full
         .filter(f => f && f.ticket)
         .filter(f => {
@@ -853,13 +860,21 @@ export default function App() {
           return (hasEsc || hasAppr) && !isDone;
         });
 
-      setTickets(actionable);
-      setActive(prev => {
-        if (!prev) return actionable[0] || null;
-        const updated = actionable.find(f => f.ticket.ticket_id === prev.ticket.ticket_id);
-        return updated || actionable[0] || null;
-      });
-    } catch (_) {}
+      if (actionable.length === 0) {
+        // No live data — load sample_cases.json for demo
+        await loadSampleData();
+      } else {
+        setTickets(actionable);
+        setActive(prev => {
+          if (!prev) return actionable[0] || null;
+          const updated = actionable.find(f => f.ticket.ticket_id === prev.ticket.ticket_id);
+          return updated || actionable[0] || null;
+        });
+      }
+    } catch (_) {
+      // Backend unreachable — fall back to sample data
+      await loadSampleData();
+    }
     setLoading(false);
   }, []);
 
@@ -878,7 +893,7 @@ export default function App() {
           <div style={{ width:3, height:20, background:T.red, borderRadius:1 }}/>
           <div>
             <div style={{ fontSize:12, fontWeight:900, color:T.white, letterSpacing:3.5, fontFamily:"monospace" }}>CUMMINS</div>
-            <div style={{ fontSize:8, color:"#282828", letterSpacing:2.2, fontFamily:"monospace" }}>BACK OFFICE · CASE FILES</div>
+            <div style={{ fontSize:8, color:"#888888", letterSpacing:2.2, fontFamily:"monospace" }}>BACK OFFICE · CASE FILES</div>
           </div>
         </div>
         <div style={{ display:"flex", alignItems:"center", gap:14 }}>
@@ -888,7 +903,7 @@ export default function App() {
               <span style={{ fontSize:9, color:T.red, fontWeight:700, fontFamily:"monospace" }}>{pending} PENDING</span>
             </div>
           )}
-          <span style={{ fontSize:8, color:"#1e1e1e", fontFamily:"monospace", letterSpacing:1 }}>LIVE · {API}</span>
+          <span style={{ fontSize:8, color:"#666666", fontFamily:"monospace", letterSpacing:1 }}>LIVE · {API}</span>
         </div>
       </div>
 

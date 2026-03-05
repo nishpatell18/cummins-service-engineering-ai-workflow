@@ -1,0 +1,251 @@
+[
+  {
+    "ticket": {
+      "ticket_id": "TKT-2024-001",
+      "customer": "Summit Construction LLC",
+      "location": "Denver, CO — Site 4B",
+      "tech_id": "TECH-014",
+      "serial_number": "X15-CM2450-0001",
+      "equipment_model": "X15 Performance CM2450",
+      "fault_codes": ["3714", "3712"],
+      "status": "escalated",
+      "created_at": "2024-09-12T08:20:00Z",
+      "escalated_at": "2024-09-12T09:45:00Z"
+    },
+    "triage": {
+      "saved_at": "2024-09-12T08:25:00Z",
+      "triage_results": {
+        "severity": {
+          "priority": "P1",
+          "sla_hours": 2,
+          "impact": "Engine in derate — machine unable to operate at full capacity. DEF system fault confirmed."
+        },
+        "diagnosis": {
+          "narrative": "Primary fault is a low DEF tank level sensor malfunction triggering fault code 3714, which has induced engine derate (3712). DEF level reads 8% — below the 10% derate threshold. Two historical cases with identical fault codes were resolved by sensor replacement with 100% success rate. Recommend replacing DEF Tank Level Sensor (CUM-4309047)."
+        },
+        "safety": {
+          "warnings": [
+            "DPF/SCR components may be extremely hot — allow 60 min cool-down before service",
+            "DEF fluid is corrosive — wear gloves and eye protection",
+            "DEF level critically low (8%) — refill required before returning to operation"
+          ]
+        },
+        "resources": {
+          "parts": [
+            { "part_number": "CUM-4309047", "description": "DEF Tank Level Sensor", "confidence": 92 },
+            { "part_number": "CUM-5579406", "description": "DEF Dosing Injector", "confidence": 61 }
+          ]
+        }
+      },
+      "ecm_auto_populated": {
+        "fault_codes": ["3714", "3712"],
+        "equipment_hours": 4820,
+        "engine_model": "X15 CM2450",
+        "derate_active": true,
+        "shutdown_active": false
+      }
+    },
+    "escalation": {
+      "escalation_id": "ESC-20240912094500",
+      "ticket_id": "TKT-2024-001",
+      "escalation_type": "parts_warranty",
+      "escalation_label": "Parts / Warranty & Billing",
+      "escalated_at": "2024-09-12T09:45:00Z",
+      "approver_id": "MGE-001",
+      "approver_name": "Sarah Michelle",
+      "requires_response": true,
+      "who_and_where": {
+        "technician": "TECH-014",
+        "customer": "Summit Construction LLC",
+        "location": "Denver, CO — Site 4B",
+        "time_on_site": "1.5 hours",
+        "sla_status": "ON TRACK — 0.5h remaining"
+      },
+      "escalation_reason": {
+        "type": "parts_warranty",
+        "label": "Parts / Warranty & Billing",
+        "reason": "DEF Tank Level Sensor requires replacement. Warranty status unclear — need authorisation to proceed before pulling the part."
+      },
+      "evidence": {
+        "photos_uploaded": 3,
+        "docs_uploaded": 1,
+        "files": []
+      },
+      "narrative": "Priority 1 escalation on X15 CM2450 (S/N X15-CM2450-0001) at Summit Construction Site 4B, Denver. Engine is in derate due to DEF sensor malfunction (3714). Tech-014 has completed RCA — sensor replacement confirmed as fix. Warranty authorisation required before proceeding. Parts cost $455. SLA expires in 0.5 hours."
+    },
+    "rca": {
+      "steps": [
+        { "label": "Check DEF tank level physically", "status": "confirmed", "result": "Tank reads 8% on gauge — confirmed low. Sensor reading inconsistent with physical check." },
+        { "label": "Inspect DEF quality and contamination", "status": "ruled_out", "result": "DEF sample clear, no contamination detected." },
+        { "label": "Test DEF level sensor resistance", "status": "confirmed", "result": "Sensor resistance out of spec — reads 4.2kΩ vs expected 1.8–2.2kΩ. Sensor faulty." },
+        { "label": "Check wiring harness to sensor", "status": "ruled_out", "result": "Continuity confirmed on all pins. No wiring fault." },
+        { "label": "Check DEF pump and dosing injector", "status": "ruled_out", "result": "Pump operating correctly. No injector fault codes active." }
+      ]
+    },
+    "rca_skip": null,
+    "approval_request": null,
+    "chat_history": [],
+    "evidence": [],
+    "resolution": null,
+    "files": []
+  },
+  {
+    "ticket": {
+      "ticket_id": "TKT-2024-015",
+      "customer": "Valley Road Contractors",
+      "location": "Cheyenne, WY — Route 80",
+      "tech_id": "TECH-002",
+      "serial_number": "X15-CM2350-0015",
+      "equipment_model": "X15 Efficiency CM2350",
+      "fault_codes": ["3714"],
+      "status": "escalated",
+      "created_at": "2024-09-15T14:10:00Z",
+      "escalated_at": "2024-09-15T14:20:00Z"
+    },
+    "triage": {
+      "saved_at": "2024-09-15T14:15:00Z",
+      "triage_results": {
+        "severity": {
+          "priority": "P2",
+          "sla_hours": 4,
+          "impact": "DEF system derate active. Machine running at reduced power. Operator unable to complete grading work."
+        },
+        "diagnosis": {
+          "narrative": "Fault code 3714 indicates DEF Tank Level Low. Physical inspection required to confirm whether the tank is actually low or the sensor is faulty. Given equipment hours (11,800h) a sensor replacement is likely. DEF level reading 14% — borderline threshold."
+        },
+        "safety": {
+          "warnings": [
+            "DPF/SCR components may be extremely hot — allow 60 min cool-down before service",
+            "DEF fluid is corrosive — wear gloves and eye protection"
+          ]
+        },
+        "resources": {
+          "parts": [
+            { "part_number": "CUM-4309047", "description": "DEF Tank Level Sensor", "confidence": 78 }
+          ]
+        }
+      },
+      "ecm_auto_populated": {
+        "fault_codes": ["3714"],
+        "equipment_hours": 11800,
+        "engine_model": "X15 CM2350",
+        "derate_active": false,
+        "shutdown_active": false
+      }
+    },
+    "escalation": {
+      "escalation_id": "ESC-20240915142000",
+      "ticket_id": "TKT-2024-015",
+      "escalation_type": "unsafe",
+      "escalation_label": "Unsafe to Proceed — Safety Stop",
+      "escalated_at": "2024-09-15T14:20:00Z",
+      "approver_id": "MGE-004",
+      "approver_name": "David Reyes",
+      "requires_response": true,
+      "who_and_where": {
+        "technician": "TECH-002",
+        "customer": "Valley Road Contractors",
+        "location": "Cheyenne, WY — Route 80",
+        "time_on_site": "0.2 hours",
+        "sla_status": "ON TRACK — 3.8h remaining"
+      },
+      "escalation_reason": {
+        "type": "unsafe",
+        "label": "Unsafe to Proceed — Safety Stop",
+        "reason": "Machine is parked on a live highway shoulder. Traffic passing at speed. Unable to safely perform inspection without road closure or site supervisor present to manage traffic control."
+      },
+      "evidence": {
+        "photos_uploaded": 2,
+        "docs_uploaded": 0,
+        "files": []
+      },
+      "narrative": "Safety stop raised on X15 CM2350 at Valley Road Contractors, Route 80, Cheyenne. Machine parked on active highway shoulder — tech TECH-002 unable to proceed without traffic control. Supervisor David Reyes notified. Site must establish safe work zone before service can continue."
+    },
+    "rca": null,
+    "rca_skip": null,
+    "approval_request": null,
+    "chat_history": [],
+    "evidence": [],
+    "resolution": null,
+    "files": []
+  },
+  {
+    "ticket": {
+      "ticket_id": "TKT-2024-007",
+      "customer": "BlueSky Earthworks",
+      "location": "Phoenix, AZ — Project 5",
+      "tech_id": "TECH-018",
+      "serial_number": "X15-CM2450-0007",
+      "equipment_model": "X15 Performance CM2450",
+      "fault_codes": ["3714", "3241", "3712"],
+      "status": "pending_approval",
+      "created_at": "2024-09-16T11:25:00Z"
+    },
+    "triage": {
+      "saved_at": "2024-09-16T11:30:00Z",
+      "triage_results": {
+        "severity": {
+          "priority": "P1",
+          "sla_hours": 2,
+          "impact": "Active derate — machine down. Suspected wrong fluid (diesel) added to DEF tank. SCR system at risk of contamination damage."
+        },
+        "diagnosis": {
+          "narrative": "Fault codes 3714, 3241, and 3712 indicate DEF quality failure alongside low level and engine derate. Operator confirmed refilling DEF but warning persisted — strongly suggests wrong fluid contamination. SCR catalyst may be damaged. Immediate flush of DEF tank and quality check required. If SCR contaminated, catalyst replacement will be necessary."
+        },
+        "safety": {
+          "warnings": [
+            "Do not restart engine — SCR catalyst may be contaminated",
+            "DEF tank contents unknown — treat as hazardous until tested",
+            "DPF components hot — allow cool-down before inspection"
+          ]
+        },
+        "resources": {
+          "parts": [
+            { "part_number": "CUM-4352686", "description": "DEF Tank Flush Kit", "confidence": 88 },
+            { "part_number": "CUM-4309047", "description": "DEF Tank Level Sensor", "confidence": 71 },
+            { "part_number": "CUM-2871871", "description": "SCR Catalyst Assembly", "confidence": 55 }
+          ]
+        }
+      },
+      "ecm_auto_populated": {
+        "fault_codes": ["3714", "3241", "3712"],
+        "equipment_hours": 7340,
+        "engine_model": "X15 CM2450",
+        "derate_active": true,
+        "shutdown_active": false
+      }
+    },
+    "escalation": null,
+    "rca": {
+      "steps": [
+        { "label": "Sample DEF tank fluid", "status": "confirmed", "result": "Fluid sample tested — diesel contamination confirmed at approximately 30% mix. DEF tank must be fully drained and flushed." },
+        { "label": "Check SCR catalyst condition", "status": "confirmed", "result": "SCR inlet temps elevated. Catalyst shows early signs of poisoning. Recommend replacement to prevent further damage." },
+        { "label": "Inspect DEF pump and lines", "status": "confirmed", "result": "Pump and lines also contaminated. Full system flush required." },
+        { "label": "Check engine for secondary faults", "status": "ruled_out", "result": "No additional engine faults. Derate solely caused by DEF/SCR fault chain." }
+      ]
+    },
+    "rca_skip": null,
+    "approval_request": {
+      "approval_id": "APR-20240916143000",
+      "ticket_id": "TKT-2024-007",
+      "tech_id": "TECH-018",
+      "action_taken": "replaced_part",
+      "fix_type": "long_term",
+      "parts_actually_used": ["CUM-4352686", "CUM-4309047", "CUM-2871871"],
+      "parts_disposition": "returned",
+      "test_results": "DEF tank flushed and refilled with correct fluid. SCR catalyst replaced. All fault codes cleared. Engine returned to full power — no derate active. Post-repair road test completed, no recurrence.",
+      "labor_hours": 4.5,
+      "ai_diagnosis_correct": "yes",
+      "tech_notes": "Operator confirmed they added diesel by mistake thinking it was the DEF fill point. Both caps now labelled clearly on machine. Recommend customer staff training on fluid identification.",
+      "safety_confirmed": true,
+      "approver_id": "MGE-002",
+      "approver_name": "James Thornton",
+      "status": "pending",
+      "submitted_at": "2024-09-16T14:30:00Z"
+    },
+    "chat_history": [],
+    "evidence": [],
+    "resolution": null,
+    "files": []
+  }
+]
