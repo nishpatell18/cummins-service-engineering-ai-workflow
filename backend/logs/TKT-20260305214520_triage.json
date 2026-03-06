@@ -1,0 +1,40 @@
+{
+  "log_id": "LOG-0BF151C8A6AD",
+  "agent_id": "triage_agent_v1",
+  "ticket_id": "TKT-20260305214520",
+  "timestamp": "2026-03-06T02:49:57.853585+00:00",
+  "elapsed_seconds": 277.54,
+  "inputs": {
+    "serial_number": "X15-CM2450-0001",
+    "fault_codes": [
+      "3714",
+      "3712"
+    ],
+    "equipment_hours": 4820,
+    "derate_active": true,
+    "shutdown_active": false
+  },
+  "phase1_outputs": {
+    "severity_priority": "P1",
+    "severity_sla_hours": 2,
+    "severity_bump_reasons": [
+      "Derate active with P1 code",
+      "Multiple engine systems affected (already P1)",
+      "Recurring fault(s): 3714, 3712 \u2014 indicates persistent issue (already P1)"
+    ],
+    "similar_cases_found": 2,
+    "success_rate_pct": 100,
+    "rag_cases_found": 0,
+    "tsb_references": [
+      "TSB-X15-2023-04"
+    ],
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "parts_count": 2,
+    "total_parts_cost": 455.0,
+    "approval_required": false,
+    "safety_critical": false
+  },
+  "llm_used": true,
+  "human_approver": null
+}

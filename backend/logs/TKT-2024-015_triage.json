@@ -1,0 +1,35 @@
+{
+  "log_id": "LOG-A51B5816C947",
+  "agent_id": "triage_agent_v1",
+  "ticket_id": "TKT-2024-015",
+  "timestamp": "2026-03-06T09:06:23.403759+00:00",
+  "elapsed_seconds": 86.54,
+  "inputs": {
+    "serial_number": "X15-CM2350-0015",
+    "fault_codes": [
+      "3714"
+    ],
+    "equipment_hours": 11800,
+    "derate_active": false,
+    "shutdown_active": false
+  },
+  "phase1_outputs": {
+    "severity_priority": "P2",
+    "severity_sla_hours": 4,
+    "severity_bump_reasons": [],
+    "similar_cases_found": 1,
+    "success_rate_pct": 100,
+    "rag_cases_found": 0,
+    "tsb_references": [
+      "TSB-X15-2023-04"
+    ],
+    "warranty_active": false,
+    "billable_to": "Customer - Valley Road Contractors",
+    "parts_count": 2,
+    "total_parts_cost": 455.0,
+    "approval_required": false,
+    "safety_critical": false
+  },
+  "llm_used": true,
+  "human_approver": null
+}

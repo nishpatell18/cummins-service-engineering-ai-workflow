@@ -1,0 +1,39 @@
+{
+  "log_id": "LOG-69EBAB8E46FF",
+  "agent_id": "triage_agent_v1",
+  "ticket_id": "TKT-20260305211154",
+  "timestamp": "2026-03-06T02:15:51.041189+00:00",
+  "elapsed_seconds": 236.85,
+  "inputs": {
+    "serial_number": "X15-CM2450-0002",
+    "fault_codes": [
+      "3719",
+      "3936"
+    ],
+    "equipment_hours": 6210,
+    "derate_active": true,
+    "shutdown_active": false
+  },
+  "phase1_outputs": {
+    "severity_priority": "P1",
+    "severity_sla_hours": 2,
+    "severity_bump_reasons": [
+      "Power derate is active",
+      "Recurring fault(s): 3936 \u2014 indicates persistent issue (already P1)"
+    ],
+    "similar_cases_found": 1,
+    "success_rate_pct": 100,
+    "rag_cases_found": 0,
+    "tsb_references": [
+      "TSB-X15-2022-11"
+    ],
+    "warranty_active": true,
+    "billable_to": "Warranty Claim",
+    "parts_count": 2,
+    "total_parts_cost": 2975.0,
+    "approval_required": true,
+    "safety_critical": false
+  },
+  "llm_used": true,
+  "human_approver": null
+}
