@@ -191,14 +191,14 @@ function BottomNav({ active, onNav }) {
 }
 
 // ─── TOP BAR ──────────────────────────────────────────────────────────────────
-function TopBar({ onBack, rightEl, onMenu }) {
+function TopBar({ onBack, rightEl }) {
   return (
     <div style={{ background:T.charcoal, color:T.white, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 16px", minHeight:52, flexShrink:0 }}>
       {onBack
         ? <button onClick={onBack} style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"/></svg>
           </button>
-        : <button onClick={onMenu} style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
+        : <button style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
       }
@@ -300,7 +300,7 @@ function LoginScreen({ onLogin }) {
 }
 
 // ─── HOME SCREEN ──────────────────────────────────────────────────────────────
-function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading, onMenu }) {
+function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading }) {
   const [filter, setFilter] = useState("ALL");
   const filters = ["ALL", "P1 ONLY", "OPEN"];
 
@@ -315,7 +315,7 @@ function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading, o
     <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
       <div style={{ background:T.charcoal, flexShrink:0 }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 16px 0" }}>
-          <button onClick={onMenu} style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
+          <button style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <span style={{ fontSize:14, fontWeight:900, color:T.white, letterSpacing:2.5 }}>CUMMINS</span>
@@ -384,7 +384,7 @@ function HomeScreen({ tickets=[], onSelectTicket, currentUser, ticketsLoading, o
 }
 
 // ─── TICKETS SCREEN ───────────────────────────────────────────────────────────
-function TicketsScreen({ tickets=[], onSelect, onMenu }) {
+function TicketsScreen({ tickets=[], onSelect }) {
   const [filter, setFilter] = useState("ALL");
   const filters = ["ALL", "P1 ONLY", "OPEN"];
   const filtered = filter==="P1 ONLY" ? tickets.filter(t=>t.priority==="High"||t.derate_active)
@@ -393,7 +393,7 @@ function TicketsScreen({ tickets=[], onSelect, onMenu }) {
   return (
     <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
       <div style={{ background:T.charcoal, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 16px", flexShrink:0 }}>
-        <button onClick={onMenu} style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
+        <button style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <span style={{ fontSize:14, fontWeight:900, color:T.white, letterSpacing:2.5 }}>CUMMINS</span>
@@ -784,7 +784,7 @@ function ChatTab({ ticket, currentUser, chatCache, setChatCache }) {
 }
 
 // ─── TICKET DETAIL ────────────────────────────────────────────────────────────
-function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCache, setChatCache, onMenu }) {
+function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCache, setChatCache }) {
   const [tab, setTab]             = useState("triage");
   const [unsafeOpen, setUnsafe]   = useState(false);
   const [escalated, setEscalated] = useState(false);
@@ -809,7 +809,7 @@ function TicketDetail({ ticket, currentUser, triageCache, setTriageCache, chatCa
     <div style={{ display:"flex", flexDirection:"column", height:"100%", position:"relative" }}>
       <div style={{ background:T.charcoal, color:T.white, flexShrink:0 }}>
         <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", padding:"12px 16px 0" }}>
-          <button onClick={onMenu} style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
+          <button style={{ background:"none", border:"none", color:T.white, cursor:"pointer", padding:0 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
           <span style={{ fontSize:14, fontWeight:900, letterSpacing:2.5 }}>CUMMINS</span>
@@ -1185,14 +1185,8 @@ function TriageTab({ ticket:t, onStartRCA, triageCache, setTriageCache, setTriag
                 } else {
                   parts.push({ label: null, text });
                 }
-<<<<<<< HEAD
                 const hasMore = isTruncated || parts.length > 1 || (ai.rec_parts?.length > 0);
 
-=======
-                const hasMore = parts.length > 1 || (ai.rec_parts?.length > 0);
-                const firstIdx = parts.findIndex(p => p.text && p.text.trim().length > 0);
-                const visibleParts = showMoreAI ? parts : (firstIdx >= 0 ? [parts[firstIdx]] : []);
->>>>>>> 3df37a7 (fix: hamburger menu, AI diagnosis preview, Ollama mistral setup)
                 return (<>
                   {/* Always-visible preview */}
                   {!showMoreAI && (
@@ -1814,7 +1808,7 @@ function ActionTab({ ticket, currentUser, rcaDone }) {
 }
 
 // ─── REPORTS SCREEN ───────────────────────────────────────────────────────────
-function ReportsScreen({ currentUser, onMenu }) {
+function ReportsScreen({ currentUser }) {
   const [data, setData]       = useState(null);
   const [loading, setLoading] = useState(true);
   const [err, setErr]         = useState("");
@@ -1862,12 +1856,7 @@ function ReportsScreen({ currentUser, onMenu }) {
 
   return (
     <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
-<<<<<<< HEAD
       <TopBar />
-=======
-      <TopBar onMenu={onMenu} />
-      {/* Filter tabs */}
->>>>>>> 3df37a7 (fix: hamburger menu, AI diagnosis preview, Ollama mistral setup)
       <div style={{ background:T.white, padding:"10px 14px", borderBottom:`1px solid ${T.border}`, display:"flex", gap:6, flexShrink:0 }}>
         {tabs.map(s=>(
           <button key={s.id} onClick={()=>setSection(s.id)}
@@ -1995,7 +1984,7 @@ function ReportsScreen({ currentUser, onMenu }) {
 }
 
 // ─── SETTINGS SCREEN ──────────────────────────────────────────────────────────
-function SettingsScreen({ backendStatus, currentUser, onLogout, onMenu }) {
+function SettingsScreen({ backendStatus, currentUser, onLogout }) {
   const rows = [
     ["Technician ID",  currentUser?.tech_id || "—"],
     ["Name",           currentUser?.name    || "—"],
@@ -2010,7 +1999,7 @@ function SettingsScreen({ backendStatus, currentUser, onLogout, onMenu }) {
   ];
   return (
     <div style={{ display:"flex", flexDirection:"column", height:"100%" }}>
-      <TopBar onMenu={onMenu} />
+      <TopBar />
       <div style={{ flex:1, overflowY:"auto", background:T.bgPage, padding:16 }}>
         {rows.map(([l,v])=>(
           <div key={l} style={{ background:T.white, padding:"14px 16px", marginBottom:1, display:"flex", justifyContent:"space-between", alignItems:"center" }}>
@@ -2026,51 +2015,6 @@ function SettingsScreen({ backendStatus, currentUser, onLogout, onMenu }) {
   );
 }
 
-// ─── SIDE MENU ────────────────────────────────────────────────────────────────
-function SideMenu({ currentUser, onClose, onNav, onLogout }) {
-  return (
-    <>
-      <div onClick={onClose} style={{ position:"absolute", inset:0, background:"rgba(0,0,0,0.5)", zIndex:500 }}/>
-      <div style={{ position:"absolute", top:0, left:0, width:"75%", height:"100%", background:T.white, zIndex:501, display:"flex", flexDirection:"column", boxShadow:"4px 0 20px rgba(0,0,0,0.3)", animation:"slidein 0.25s ease" }}>
-        {/* Header */}
-        <div style={{ background:T.charcoal, padding:"48px 20px 20px" }}>
-          <div style={{ width:44, height:44, borderRadius:"50%", background:T.red, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:10 }}>
-            <span style={{ fontSize:18, fontWeight:800, color:T.white }}>{currentUser?.name?.[0]?.toUpperCase() || "T"}</span>
-          </div>
-          <div style={{ fontSize:15, fontWeight:800, color:T.white }}>{currentUser?.name || "Technician"}</div>
-          <div style={{ fontSize:11, color:T.gray3, marginTop:2 }}>{currentUser?.tech_id} · Level {currentUser?.certification_level} · {currentUser?.depot}</div>
-        </div>
-        {/* Nav items */}
-        <div style={{ flex:1, padding:"12px 0" }}>
-          {[
-            { id:"home",     label:"Home",         icon:"🏠" },
-            { id:"tickets",  label:"Troubleshoot", icon:"⚡" },
-            { id:"reports",  label:"Reports",      icon:"📋" },
-            { id:"settings", label:"Settings",     icon:"⚙️" },
-          ].map(item => (
-            <button key={item.id} onClick={() => { onNav(item.id); onClose(); }}
-              style={{ width:"100%", display:"flex", alignItems:"center", gap:14, padding:"15px 20px", background:"none", border:"none", borderBottom:`1px solid ${T.borderLight}`, cursor:"pointer", textAlign:"left", fontFamily:"inherit" }}>
-              <span style={{ fontSize:20 }}>{item.icon}</span>
-              <span style={{ fontSize:14, fontWeight:600, color:T.gray1 }}>{item.label}</span>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={T.gray4} strokeWidth="2.5" style={{ marginLeft:"auto" }}><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-          ))}
-        </div>
-        {/* Footer */}
-        <div style={{ padding:"16px 20px 32px", borderTop:`1px solid ${T.border}` }}>
-          <div style={{ fontSize:10, color:T.gray3, marginBottom:12, letterSpacing:0.5 }}>
-            {currentUser?.tech_id} · {currentUser?.depot}
-          </div>
-          <button onClick={() => { onLogout(); onClose(); }}
-            style={{ width:"100%", padding:"12px", background:T.redBg, border:`1px solid ${T.redBorder}`, borderRadius:8, fontSize:13, fontWeight:800, color:T.red, cursor:"pointer" }}>
-            Sign Out
-          </button>
-        </div>
-      </div>
-    </>
-  );
-}
-
 // ─── ROOT ─────────────────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen]           = useState("home");
@@ -2082,7 +2026,6 @@ export default function App() {
   const [toast, setToast]             = useState("");
   const [triageCache, setTriageCache] = useState({});
   const [chatCache, setChatCache]     = useState({});
-  const [menuOpen, setMenuOpen]       = useState(false);
 
   useEffect(()=>{
     let faultCodeMap = {};
@@ -2191,12 +2134,11 @@ export default function App() {
           <>
             <div style={{ flex:1, overflow:"hidden", display:"flex", flexDirection:"column" }}>
               <OfflineBanner/>
-              {screen==="home"          && <HomeScreen tickets={tickets} ticketsLoading={ticketsLoading} currentUser={currentUser} onSelectTicket={openTicket} onMenu={() => setMenuOpen(true)}/>}
-              {screen==="tickets"       && <TicketsScreen tickets={tickets} currentUser={currentUser} onSelect={openTicket} onMenu={() => setMenuOpen(true)}/>}
-              {screen==="ticket_detail" && ticket && <TicketDetail ticket={ticket} currentUser={currentUser} backendOnline={backendStatus==="online"} triageCache={triageCache} setTriageCache={setTriageCache} chatCache={chatCache} setChatCache={setChatCache} onMenu={() => setMenuOpen(true)}/>}
-              {screen==="reports"       && <ReportsScreen currentUser={currentUser} onMenu={() => setMenuOpen(true)}/>}
-              {screen==="settings" && <SettingsScreen backendStatus={backendStatus} currentUser={currentUser} onLogout={handleLogout} onMenu={() => setMenuOpen(true)}/>}
-              {menuOpen && <SideMenu currentUser={currentUser} onClose={() => setMenuOpen(false)} onNav={nav} onLogout={handleLogout}/>}
+              {screen==="home"          && <HomeScreen tickets={tickets} ticketsLoading={ticketsLoading} currentUser={currentUser} onSelectTicket={openTicket}/>}
+              {screen==="tickets"       && <TicketsScreen tickets={tickets} currentUser={currentUser} onSelect={openTicket}/>}
+              {screen==="ticket_detail" && ticket && <TicketDetail ticket={ticket} currentUser={currentUser} backendOnline={backendStatus==="online"} triageCache={triageCache} setTriageCache={setTriageCache} chatCache={chatCache} setChatCache={setChatCache}/>}
+              {screen==="reports"       && <ReportsScreen currentUser={currentUser}/>}
+              {screen==="settings"      && <SettingsScreen backendStatus={backendStatus} currentUser={currentUser} onLogout={handleLogout}/>}
             </div>
             <BottomNav active={navActive} onNav={nav}/>
           </>
